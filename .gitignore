@@ -1,0 +1,15 @@
+# Godot 4+
+.godot/
+android/
+# Mono / C#
+.mono/
+.export/
+data_*/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
