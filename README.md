@@ -34,3 +34,21 @@ BaM - top-down проект Maev dev. Игра, в которой ты игра�
 ...
 
 ## Структура проекта
+
+Scripts
+├── Player
+├── Enemy
+├── Components
+├── UI
+├── World
+├── Systems
+
+Scenes
+├── Player
+├── World
+├── UI
+
+Assets
+├── Sprites
+├── Sounds
+├── Fonts
