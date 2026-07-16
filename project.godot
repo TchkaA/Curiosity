@@ -12,8 +12,7 @@ config_version=5
 
 config/name="Build and mine"
 run/main_scene="uid://d364xt2wtg34v"
-config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="res://icon.svg"
+config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 
 [display]
 
