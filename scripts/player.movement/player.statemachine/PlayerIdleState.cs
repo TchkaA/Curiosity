@@ -14,12 +14,17 @@ public partial class PlayerIdleState : IState
         GD.Print("Exiting Idle State");
     }
 
+    public PlayerIdleState(Player _player)
+    {
+        player = _player;
+    }
+
     public void Update(double delta)
     {
-        input = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+        input = player.inputComponent.MovementInput;
         if (input != Vector2.Zero)
         {
-            Player.Instance.stateMachine.ChangeState(Player.Instance.moveState);
+            player.stateMachine.ChangeState(player.moveState);
         }
     }
 }

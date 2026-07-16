@@ -17,8 +17,8 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
 	{
 		Instance = this;
-		moveState = new PlayerMoveState();
-		idleState = new PlayerIdleState();
+		moveState = new PlayerMoveState(this);
+		idleState = new PlayerIdleState(this);
 		stateMachine.ChangeState(idleState);
 
 		// Initialize the input component

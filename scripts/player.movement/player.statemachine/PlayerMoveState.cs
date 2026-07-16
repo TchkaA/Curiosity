@@ -16,18 +16,23 @@ public partial class PlayerMoveState : IState
         GD.Print("Exiting Move State");
     }
 
+    public PlayerMoveState(Player _player)
+    {
+        Player = _player;
+    }
+
     public void Update(double delta)
     {
-        input = Player.Instance.inputComponent.MovementInput;
+        input = Player.inputComponent.MovementInput;
         if (input != Vector2.Zero)
         {
-            velocity = input * Player.Instance.speed;
-            Player.Instance.Velocity = velocity;
-            Player.Instance.MoveAndSlide();
+            velocity = input * Player.speed;
+            Player.Velocity = velocity;
+            Player.MoveAndSlide();
         }
         else
         {
-            Player.Instance.stateMachine.ChangeState(Player.Instance.idleState);
+            Player.stateMachine.ChangeState(Player.idleState);
         }
     }
 }
