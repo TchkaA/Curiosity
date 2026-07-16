@@ -18,7 +18,7 @@ public partial class PlayerMoveState : IState
 
     public void Update(double delta)
     {
-        input = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+        input = Player.Instance.inputComponent.MovementInput;
         if (input != Vector2.Zero)
         {
             velocity = input * Player.Instance.speed;

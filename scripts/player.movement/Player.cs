@@ -9,7 +9,10 @@ public partial class Player : CharacterBody2D
 	public StateMachine stateMachine = new StateMachine();
 	public PlayerMoveState moveState;
 	public PlayerIdleState idleState;
-	public int speed = 300;
+
+	public InputComponent inputComponent;
+
+	public int speed {get; set; }
 
 	public override void _Ready()
 	{
@@ -17,10 +20,15 @@ public partial class Player : CharacterBody2D
 		moveState = new PlayerMoveState();
 		idleState = new PlayerIdleState();
 		stateMachine.ChangeState(idleState);
+
+		// Initialize the input component
+		inputComponent = new InputComponent();
+		speed = 200; // Set the player's speed
 	}
 
 	public override void _Process(double delta)
 	{
+		inputComponent.Update();
 		stateMachine.Update(delta);
 	}
 }
