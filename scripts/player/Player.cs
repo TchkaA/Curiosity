@@ -12,6 +12,7 @@ public partial class Player : CharacterBody2D
 	public DirectionComponent directionComponent;
 	public InputComponent inputComponent;
 	public MovementComponent movementComponent;
+	public StatsComponent statsComponent = new StatsComponent();
 	public int speed = 200;
 
 	public override void _Ready()
