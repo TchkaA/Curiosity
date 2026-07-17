@@ -9,12 +9,10 @@ public partial class Player : CharacterBody2D
 	public StateMachine stateMachine = new StateMachine();
 	public PlayerMoveState moveState;
 	public PlayerIdleState idleState;
-
 	public DirectionComponent directionComponent;
-
 	public InputComponent inputComponent;
-
-	public int speed {get; set; }
+	public MovementComponent movementComponent;
+	public int speed = 200;
 
 	public override void _Ready()
 	{
@@ -25,7 +23,9 @@ public partial class Player : CharacterBody2D
 
 		// Initialize the input component
 		inputComponent = new InputComponent();
-		speed = 200; // Set the player's speed
+
+		// movement component
+		movementComponent = new MovementComponent(this);
 
 		// direction
 		directionComponent = new DirectionComponent(this);

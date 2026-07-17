@@ -23,12 +23,10 @@ public partial class PlayerMoveState : IState
 
     public void Update(double delta)
     {
-        input = Player.inputComponent.MovementInput;
+        Vector2 input = Player.inputComponent.MovementInput;
         if (input != Vector2.Zero)
         {
-            velocity = input * Player.speed;
-            Player.Velocity = velocity;
-            Player.MoveAndSlide();
+            Player.movementComponent.Move(input);
         }
         else
         {
