@@ -7,6 +7,14 @@ public class InputComponent
     public bool AttackPressed { get; private set; }
     public bool RollPressed { get; private set; }
     public bool InteractPressed { get; private set; }
+    private Player _player;
+
+
+    public InputComponent(Player player)
+    {
+        _player = player;
+
+    }
 
     public void Update()
     {
@@ -14,5 +22,14 @@ public class InputComponent
             Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left"),
             Input.GetActionStrength("move_down") - Input.GetActionStrength("move_up")
         ).Normalized();
+        UpdateDirection(MovementInput);
+    }
+
+    public void UpdateDirection(Vector2 direction)
+    {
+        if (direction != Vector2.Zero)
+        {
+            _player.directionComponent.SetDirection(direction);
+        }
     }
 }
