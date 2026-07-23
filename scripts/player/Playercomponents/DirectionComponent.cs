@@ -55,18 +55,22 @@ public partial class DirectionComponent
         if (direction.X > 0)
         {
             CurrentDirection = FacingDirection.Right;
+            NotifyAnimation();
         }
         else if (direction.X < 0)
         {
             CurrentDirection = FacingDirection.Left;
+            NotifyAnimation();
         }
         else if (direction.Y > 0)
         {
             CurrentDirection = FacingDirection.Down;
+            NotifyAnimation();
         }
         else if (direction.Y < 0)
         {
             CurrentDirection = FacingDirection.Up;
+            NotifyAnimation();
         }
     }
 
@@ -88,6 +92,29 @@ public partial class DirectionComponent
                 break;
             default:
                 GD.PrintErr("Invalid direction string: " + direction);
+                break;
+        }
+    }
+
+    public void NotifyAnimation()
+    {
+        switch (CurrentDirection)
+        {
+            case FacingDirection.Up:
+                _owner.animationComponent.SetDirection("up");
+                break;
+            case FacingDirection.Down:
+                _owner.animationComponent.SetDirection("down");
+                break;
+            case FacingDirection.Left:
+                _owner.animationComponent.SetDirection("left");
+                break;
+            case FacingDirection.Right:
+                _owner.animationComponent.SetDirection("right");
+                break;
+            default:
+                GD.PrintErr("Invalid direction string");
+                _owner.animationComponent.SetDirection("down");
                 break;
         }
     }

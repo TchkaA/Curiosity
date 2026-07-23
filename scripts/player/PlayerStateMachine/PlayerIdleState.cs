@@ -8,6 +8,7 @@ public partial class PlayerIdleState : IState
     {
         GD.Print("Entering Idle State");
         GD.Print(_player.directionComponent.CurrentDirection);
+        _player.animationComponent.SetAnimation("idle");
     }
 
     public void Exit()
@@ -26,6 +27,7 @@ public partial class PlayerIdleState : IState
         if (input != Vector2.Zero)
         {
             _player.stateMachine.ChangeState(_player.moveState);
+            return;
         }
     }
 }
