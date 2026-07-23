@@ -9,38 +9,86 @@ public partial class DirectionComponent
         Left,
         Right
     }
-    private Player _player;
+    private BaseEntity _owner;
     public FacingDirection CurrentDirection { get; private set; } = FacingDirection.Down;
-    public DirectionComponent(Player player)
+    public DirectionComponent(BaseEntity owner)
     {
-        _player = player;
+        _owner = owner;
     }
-    public void UpdateDirection()
+    // public void UpdateDirection()
+    // {
+    //     if (_owner.inputComponent?.MovementInput != Vector2.Zero)
+    //     {
+    //         UpdateCurrentDirection();
+    //     }
+    // }
+
+    // private void UpdateCurrentDirection()
+    // {
+    //     var _playerDirection = _owner.inputComponent.MovementInput;
+    //     if (_playerDirection.X > 0)
+    //     {
+    //         CurrentDirection = FacingDirection.Right;
+    //     }
+    //     else if (_playerDirection.X < 0)
+    //     {
+    //         CurrentDirection = FacingDirection.Left;
+    //     }
+    //     else if (_playerDirection.Y > 0)
+    //     {
+    //         CurrentDirection = FacingDirection.Down;
+    //     }
+    //     else if (_playerDirection.Y < 0)
+    //     {
+    //         CurrentDirection = FacingDirection.Up;
+    //     }
+    // }
+
+    public void SetDirection(FacingDirection direction)
     {
-        if (_player.inputComponent.MovementInput != Vector2.Zero)
-        {
-            UpdateCurrentDirection();
-        }
+        CurrentDirection = direction;
     }
 
-    private void UpdateCurrentDirection()
+
+    public void SetDirection(Vector2 direction)
     {
-        var _playerDirection = _player.inputComponent.MovementInput;
-        if (_playerDirection.X > 0)
+        if (direction.X > 0)
         {
             CurrentDirection = FacingDirection.Right;
         }
-        else if (_playerDirection.X < 0)
+        else if (direction.X < 0)
         {
             CurrentDirection = FacingDirection.Left;
         }
-        else if (_playerDirection.Y > 0)
+        else if (direction.Y > 0)
         {
             CurrentDirection = FacingDirection.Down;
         }
-        else if (_playerDirection.Y < 0)
+        else if (direction.Y < 0)
         {
             CurrentDirection = FacingDirection.Up;
+        }
+    }
+
+    public void SetDirection(string direction)
+    {
+        switch (direction.ToLower())
+        {
+            case "up":
+                CurrentDirection = FacingDirection.Up;
+                break;
+            case "down":
+                CurrentDirection = FacingDirection.Down;
+                break;
+            case "left":
+                CurrentDirection = FacingDirection.Left;
+                break;
+            case "right":
+                CurrentDirection = FacingDirection.Right;
+                break;
+            default:
+                GD.PrintErr("Invalid direction string: " + direction);
+                break;
         }
     }
 }
