@@ -17,7 +17,7 @@ public class StatsComponent
     public float TickInterval { get; private set; } = 2.0f; // How often the stats are updated, in seconds
 
     // ------- Constructor ---------
-    public StatsComponent(int health = 100, int stamina = 100, int speed = 400, int strength = 10)
+    public StatsComponent(int health = 100, int stamina = 100, int speed = 150, int strength = 10)
     {
         MaxHealth = health;
         Health = MaxHealth;
