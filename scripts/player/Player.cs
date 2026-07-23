@@ -10,6 +10,7 @@ public partial class Player : BaseEntity
 	public PlayerIdleState idleState;
 	public InputComponent inputComponent;
 	public MovementComponent movementComponent;
+	public AnimatedSprite2D sprite;
 
 	public override void _Ready()
 	{

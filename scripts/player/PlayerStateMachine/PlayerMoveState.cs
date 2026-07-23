@@ -27,6 +27,7 @@ public partial class PlayerMoveState : IState
         if (input != Vector2.Zero)
         {
             Player.movementComponent.Move(input);
+            Player.animationComponent.SetAnimation("move");
         }
         else
         {
