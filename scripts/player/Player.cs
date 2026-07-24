@@ -50,6 +50,7 @@ public partial class Player : BaseEntity
 			{
 				obj.Interact();
 			}
+			break;
 		}
     }
     public virtual void InteractEnter(Node2D body)
