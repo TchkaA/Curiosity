@@ -1,11 +1,12 @@
 using Godot;
 
-public partial class BaseEntity : CharacterBody2D, IDamagable, IInteractable, IDirectable
+public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
 {
     public StatsComponent Stats { get; set; }
     public DirectionComponent directionComponent;
     public AnimationComponent animationComponent;
     public AnimatedSprite2D Sprite;
+    protected Area2D _interactionArea;
     public override void _Ready()
     {
         GD.Print("BaseEntity is ready");
@@ -20,6 +21,7 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IInteractable, ID
             animationComponent = new AnimationComponent(this, Sprite);
         }
 
+        
     }
     
     public override void _Process(double delta)
@@ -34,26 +36,14 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IInteractable, ID
         Stats.TakeDamage(damage);
     }
 
-    public virtual void Interact()
-    {
-        // TODO
-    }
-
-    public virtual void InteractEnter()
-    {
-        // TODO
-    }
-
-    public virtual void InteractExit()
-    {
-        // TODO
-    }
 
 
     public virtual void SetDirection()
     {
         // TODO
     }
+
+
 
 
 

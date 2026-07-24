@@ -1,4 +1,5 @@
-public interface IInteractable
+using Godot;
+interface IInteractable
 {
     void Interact();
     void InteractEnter();
