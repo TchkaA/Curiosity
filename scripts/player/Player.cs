@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 
 
@@ -10,6 +11,7 @@ public partial class Player : BaseEntity
 	public PlayerIdleState idleState;
 	public InputComponent inputComponent;
 	public MovementComponent movementComponent;
+	public InteractionComponent Interact;
 	public AnimatedSprite2D sprite;
 
 	public override void _Ready()
@@ -27,8 +29,9 @@ public partial class Player : BaseEntity
 		// Initialize the input component
 		inputComponent = new InputComponent(this);
 
-
-		InitialInteractionArea();
+		// Interact Component
+		Interact = new InteractionComponent(this);
+		Interact.InitialInteractionArea();
 	}
 
 	public override void _Process(double delta)
@@ -38,58 +41,4 @@ public partial class Player : BaseEntity
 		stateMachine?.Update(delta);
 	}
 
-
-
-
-	public virtual void Interact()
-    {
-        var bodies = _interactionArea.GetOverlappingBodies();
-		foreach (var body in bodies)
-		{
-			if (body is IInteractable obj)
-			{
-				obj.Interact();
-			}
-			break;
-		}
-    }
-    public virtual void InteractEnter(Node2D body)
-    {
-        if (body is IInteractable obj)
-		{
-			obj.InteractEnter();
-		}
-    }
-
-    public virtual void InteractExit(Node2D body)
-    {
-        if (body is IInteractable obj)
-		{
-			obj.InteractExit();
-		}
-    }
-
-	private void InitialInteractionArea()
-    {
-        _interactionArea = new Area2D
-        {
-            Name = "InteractionArea"
-        };
-
-        var shape = new CollisionShape2D();
-        var circleShape = new CircleShape2D
-        {
-            Radius = 40.0f // Радиус зоны взаимодействия
-        };
-        shape.Shape = circleShape;
-        _interactionArea.CollisionLayer = 0; // Не участвует в коллизиях физики
-        _interactionArea.CollisionMask = 1 << 2;
-        _interactionArea.InputPickable = true;
-        
-        // Добавляем Area2D в текущую ноду
-        AddChild(_interactionArea);
-
-        _interactionArea.BodyEntered += InteractEnter;
-        _interactionArea.BodyExited += InteractExit;
-    }
 }
