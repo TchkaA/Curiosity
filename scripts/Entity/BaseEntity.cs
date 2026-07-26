@@ -6,7 +6,7 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
     public DirectionComponent directionComponent;
     public AnimationComponent animationComponent;
     public AnimatedSprite2D Sprite;
-    protected Area2D _interactionArea;
+    
     public override void _Ready()
     {
         GD.Print("BaseEntity is ready");
