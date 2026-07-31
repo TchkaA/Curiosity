@@ -208,7 +208,7 @@ animations = [{
 radius = 5.75
 height = 17.0
 
-[node name="Player" type="CharacterBody2D" unique_id=1527947335]
+[node name="Player" type="CharacterBody2D" unique_id=1527947335 groups=["Player"]]
 scale = Vector2(4, 4)
 script = ExtResource("1_dqkch")
 

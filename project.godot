@@ -23,6 +23,10 @@ window/stretch/aspect="expand"
 
 project/assembly_name="Build and mine"
 
+[global_group]
+
+Player="Main character"
+
 [input]
 
 move_left={
