@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bsw72h63jl5y1"]
+
+[ext_resource type="Texture2D" uid="uid://yxe5cn62r16j" path="res://assets/Pixel Crawler - Free Pack/Environment/Props/Static/smth.tres" id="1_7xvqc"]
+[ext_resource type="Script" uid="uid://dflltvwb3wik0" path="res://scripts/Objects/PickUp.cs" id="1_8qvao"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4iymr"]
+
+[node name="ItemPickUp" type="RigidBody2D" unique_id=639620459]
+gravity_scale = 0.0
+script = ExtResource("1_8qvao")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1490385267]
+scale = Vector2(3, 3)
+texture = ExtResource("1_7xvqc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1218329245]
+shape = SubResource("RectangleShape2D_4iymr")
