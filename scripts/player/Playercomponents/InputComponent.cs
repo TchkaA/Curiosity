@@ -23,8 +23,8 @@ public class InputComponent
             Input.GetActionStrength("move_down") - Input.GetActionStrength("move_up")
         ).Normalized();
         UpdateDirection(MovementInput);
+        if(Input.IsActionJustPressed("interact")) _player.Interact.Interact();
     }
-
     public void UpdateDirection(Vector2 direction)
     {
         if (direction != Vector2.Zero)

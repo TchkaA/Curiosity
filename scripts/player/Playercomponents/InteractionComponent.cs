@@ -52,8 +52,8 @@ public partial class InteractionComponent
             Radius = 30.0f // Радиус зоны взаимодействия
         };
         shape.Shape = circleShape;
-        _interactionArea.CollisionLayer = 0; // Не участвует в коллизиях физики
-        _interactionArea.CollisionMask = 1 << 2;
+        // _interactionArea.CollisionLayer = 0; // Не участвует в коллизиях физики
+        // _interactionArea.CollisionMask = 1 << 2;
         _interactionArea.InputPickable = true;
         
         // Добавляем Area2D в текущую ноду

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3 uid="uid://yxe5cn62r16j"]
+
+[ext_resource type="Texture2D" uid="uid://bmr84jda6a3h5" path="res://assets/Pixel Crawler - Free Pack/Environment/Props/Static/Vegetation.png" id="1_fa831"]
+
+[resource]
+atlas = ExtResource("1_fa831")
+region = Rect2(52.51018, 403.96707, 8.81007, 8.942871)
