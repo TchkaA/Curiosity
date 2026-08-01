@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://cvwc4itvt3kch"]
+
+[ext_resource type="Texture2D" uid="uid://c40fpx0ybdld3" path="res://assets/UI/BookUI.tres" id="1_4wwdt"]
+[ext_resource type="Texture2D" uid="uid://cgwdxcv8vq8ww" path="res://assets/UI/BookMark1.tres" id="2_hmuju"]
+[ext_resource type="Texture2D" uid="uid://cwi34tia86skv" path="res://assets/UI/BookMark2.tres" id="3_gqd0i"]
+[ext_resource type="Texture2D" uid="uid://bqit47m5rpkke" path="res://assets/UI/UIIcon1.tres" id="3_hmuju"]
+[ext_resource type="Texture2D" uid="uid://drc5cglb3whev" path="res://assets/UI/UIIcon2.tres" id="5_gqd0i"]
+
+[node name="BookMenu" type="CanvasLayer" unique_id=595888724]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1042373934]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 101.0
+offset_top = 83.0
+offset_right = -99.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4wwdt")
+
+[node name="TextureButton" type="TextureButton" parent="TextureRect" unique_id=461172051]
+layout_mode = 0
+offset_left = 539.0
+offset_top = -60.0
+offset_right = 601.0
+texture_normal = ExtResource("2_hmuju")
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/TextureButton" unique_id=734025794]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 16.0
+offset_right = 50.0
+offset_bottom = 52.0
+texture = ExtResource("3_hmuju")
+stretch_mode = 5
+
+[node name="TextureButton2" type="TextureButton" parent="TextureRect" unique_id=71875406]
+layout_mode = 0
+offset_left = 615.0
+offset_top = -60.0
+offset_right = 677.0
+texture_normal = ExtResource("3_gqd0i")
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/TextureButton2" unique_id=837540060]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 15.0
+offset_right = 50.0
+offset_bottom = 51.0
+texture = ExtResource("5_gqd0i")
+stretch_mode = 5
