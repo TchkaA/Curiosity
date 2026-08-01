@@ -4,7 +4,7 @@ using System.Security.Cryptography.X509Certificates;
 
 
 
-public partial class Player : BaseEntity
+public partial class Player : BaseEntity, IInventoryOwner
 {
 	public StateMachine stateMachine = new StateMachine();
 	public PlayerMoveState moveState;
@@ -13,6 +13,7 @@ public partial class Player : BaseEntity
 	public MovementComponent movementComponent;
 	public InteractionComponent Interact;
 	public AnimatedSprite2D sprite;
+	public Inventory Inventory { get; private set; } = new();
 
 	public override void _Ready()
 	{

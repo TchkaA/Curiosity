@@ -1,7 +1,8 @@
 using Godot;
-interface IInteractable
+
+public interface IInteractable
 {
-    void Interact();
+    void Interact(Node2D interactor);
     void InteractEnter();
     void InteractExit();
 }

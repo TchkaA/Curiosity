@@ -3,32 +3,41 @@ using System;
 
 public partial class InteractableObject : Node2D, IInteractable
 {
-	private Sprite2D Visual => GetNode<Sprite2D>("Sprite2D");
+	protected Sprite2D Visual;
 	protected Shader shader = GD.Load<Shader>("res://shaders/outline/outline.gdshader");
 	protected ShaderMaterial material;
+
 	public override void _Ready()
 	{
 		InitShader();
 	}
 
-	public virtual void Interact()
+	public virtual void Interact(Node2D interactor)
 	{
 		GD.Print("sosi hyi");
 	}
 
     public virtual void InteractEnter()
     {
+        if (material == null)
+            return;
+
         material.SetShaderParameter("outline_size", 0.8f);
     }
 
     public virtual void InteractExit()
 	{
+		if (material == null)
+			return;
+
 		material.SetShaderParameter("outline_size", 0f);
 	}
 
 
 	private void InitShader()
 	{
+		Visual = GetNode<Sprite2D>("Sprite2D");
+
 		material = new ShaderMaterial();
         material.Shader = shader;
 		material.SetShaderParameter("outline_size", 0f);

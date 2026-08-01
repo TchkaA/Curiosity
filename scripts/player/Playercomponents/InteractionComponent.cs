@@ -18,7 +18,7 @@ public partial class InteractionComponent
 		{
 			if (body is IInteractable obj)
 			{
-				obj.Interact();
+				obj.Interact(_owner);
                 break;
 			}
 		}
