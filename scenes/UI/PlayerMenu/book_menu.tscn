@@ -25,7 +25,10 @@ layout_mode = 0
 offset_left = 539.0
 offset_top = -60.0
 offset_right = 601.0
-texture_normal = ExtResource("2_hmuju")
+toggle_mode = true
+button_pressed = true
+texture_normal = ExtResource("3_gqd0i")
+texture_pressed = ExtResource("2_hmuju")
 stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="TextureRect/TextureButton" unique_id=734025794]
@@ -42,7 +45,11 @@ layout_mode = 0
 offset_left = 615.0
 offset_top = -60.0
 offset_right = 677.0
+toggle_mode = true
+button_pressed = true
+action_mode = 0
 texture_normal = ExtResource("3_gqd0i")
+texture_pressed = ExtResource("2_hmuju")
 stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="TextureRect/TextureButton2" unique_id=837540060]
