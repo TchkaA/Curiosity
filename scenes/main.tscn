@@ -5,6 +5,7 @@
 [ext_resource type="TileSet" uid="uid://bfj0r130s47kl" path="res://assets/Pixel Crawler - Free Pack/Environment/FirstTileSet.tres" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://bsw72h63jl5y1" path="res://scenes/Objects/item_pick_up.tscn" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://tw5l1fpcixv" path="res://scenes/camera.tscn" id="5_tbgi4"]
+[ext_resource type="Resource" uid="uid://bp1a7eb75hl1v" path="res://assets/Origin/objects/Resources/HealthPoitions/health_poition.tres" id="5_tefeu"]
 
 [node name="main" type="Node2D" unique_id=1142821517]
 
@@ -22,6 +23,7 @@ tile_set = ExtResource("3_sugp2")
 
 [node name="ItemPickUp" parent="." unique_id=639620459 instance=ExtResource("4_jyhfs")]
 position = Vector2(781, 35)
+item = ExtResource("5_tefeu")
 
 [node name="Camera" parent="." unique_id=1360370880 instance=ExtResource("5_tbgi4")]
 position = Vector2(577, 321)

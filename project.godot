@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Build and mine"
+config/name="Curiosity"
 run/main_scene="uid://d364xt2wtg34v"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 
