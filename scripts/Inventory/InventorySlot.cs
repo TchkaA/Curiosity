@@ -8,10 +8,18 @@ public partial class InventorySlot : Control
     public TextureButton Icon;
     [Export]
     public Label LabelCount;
+    private Player _player => MainManager.Instance.Player;
 
+    public override void _Ready()
+    {
+        if (Icon != null)
+        {
+            Icon.Pressed += UseItem;
+        }
+    }
     public void SetItem(InventorySlotData item)
     {
-        if (item == null || item.Item == null || item.Item.Icon == null)
+        if (item == null || item.Item == null || item.Item.Icon == null || item.Count == 0)
         {
             Clear();
             return;
@@ -31,10 +39,18 @@ public partial class InventorySlot : Control
     {
         CurrentItem = null;
         Count = 0;
+        LabelCount.Text = null;
 
         if (Icon != null)
         {
             Icon.TextureNormal = null;
         }
+    }
+
+    public void UseItem()
+    {
+        if(CurrentItem == null) return; // Maybe later add notification
+        _player.Inventory.Use(CurrentItem.Item);
+        SetItem(CurrentItem);
     }
 }

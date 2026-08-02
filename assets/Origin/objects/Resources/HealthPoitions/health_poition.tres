@@ -1,10 +1,11 @@
 [gd_resource type="Resource" format=3 uid="uid://bp1a7eb75hl1v"]
 
 [ext_resource type="Texture2D" uid="uid://clh0v8xnip57m" path="res://assets/Origin/objects/Resources/HealthPoitions/HealthPotion.png" id="1_l8ac1"]
-[ext_resource type="Script" uid="uid://tnyx88sam1f7" path="res://scripts/Objects/Item/Item.cs" id="2_tul8d"]
+[ext_resource type="Script" uid="uid://i7pamj0uub7s" path="res://scripts/Objects/Item/UseItems/HealingPotion.cs" id="2_dl53h"]
 
 [resource]
-script = ExtResource("2_tul8d")
+script = ExtResource("2_dl53h")
+HealAmount = 30
 Name = "Health Poition"
 Description = "Really useful thing when u feel afwul"
 Icon = ExtResource("1_l8ac1")

@@ -25,5 +25,9 @@ tile_set = ExtResource("3_sugp2")
 position = Vector2(781, 35)
 item = ExtResource("5_tefeu")
 
+[node name="ItemPickUp2" parent="." unique_id=2069194066 instance=ExtResource("4_jyhfs")]
+position = Vector2(771, 80)
+item = ExtResource("5_tefeu")
+
 [node name="Camera" parent="." unique_id=1360370880 instance=ExtResource("5_tbgi4")]
 position = Vector2(577, 321)

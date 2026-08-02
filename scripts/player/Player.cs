@@ -14,7 +14,12 @@ public partial class Player : BaseEntity, IInventoryOwner
 	public MovementComponent movementComponent;
 	public InteractionComponent Interact;
 	public AnimatedSprite2D sprite;
-	public Inventory Inventory { get; private set; } = new();
+	public Inventory Inventory { get; private set; }
+
+	public Player()	//TODO: Перенести логику создания в конструктор.
+	{
+		Inventory = new Inventory(this);
+	}
 
 	public override void _Ready()
 	{

@@ -8,6 +8,12 @@ public class Inventory
 
     public int SlotCount => _slots.Count;
     public IReadOnlyList<InventorySlotData> Slots => _slots;
+    private Node2D _owner;
+
+    public Inventory(Node2D owner)
+    {
+        _owner = owner;
+    }
 
     public InventorySlotData GetSlot(int index)
     {
@@ -134,6 +140,12 @@ public class Inventory
         }
 
         return total;
+    }
+
+    public void Use(Item item)
+    {
+        item.Use(_owner);
+        RemoveItem(item);
     }
 }
 

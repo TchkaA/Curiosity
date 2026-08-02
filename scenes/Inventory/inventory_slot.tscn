@@ -41,3 +41,5 @@ offset_bottom = 30.666666
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 8
 horizontal_alignment = 2
+
+[connection signal="pressed" from="Slot/CenterContainer/TextureButton" to="." method="_on_texture_button_pressed"]

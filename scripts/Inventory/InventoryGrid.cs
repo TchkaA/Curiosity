@@ -3,7 +3,7 @@ using Godot;
 
 public partial class InventoryGrid : GridContainer
 {
-    private Inventory _inventory = new();
+    private Inventory _inventory;
     private readonly List<InventorySlot> _slots = new();
 
     public override void _Ready()
@@ -33,7 +33,7 @@ public partial class InventoryGrid : GridContainer
 
     public void Bind(Inventory inventory)
     {
-        _inventory = inventory ?? new Inventory();
+        _inventory = inventory;
 
         if (_slots.Count == 0)
         {
