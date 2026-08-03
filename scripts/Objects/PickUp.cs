@@ -1,7 +1,8 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
-public partial class PickUp : InteractableObject
+public partial class PickUp : InteractableObject, IContextMenuProvider
 {
 	[Export]
 	public Item item;
@@ -26,4 +27,20 @@ public partial class PickUp : InteractableObject
 			GD.Print($"Cannot add item {item.Name}: interactor has no inventory");
 		}
     }
+
+    public IEnumerable<ContextAction> GetContextAction(Node2D interactor)
+    {
+        yield return new ContextAction(
+			"Подобрать", () => Interact(this)
+		);
+		yield return new ContextAction(
+			"Осмотреть", Inspect
+		);
+	}
+
+
+	public void Inspect()
+	{
+		GD.Print($"Название - {item.Name}\nОписание - {item.Description}");
+	}
 }
