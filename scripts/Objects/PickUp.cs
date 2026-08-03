@@ -31,7 +31,7 @@ public partial class PickUp : InteractableObject, IContextMenuProvider
     public IEnumerable<ContextAction> GetContextAction(Node2D interactor)
     {
         yield return new ContextAction(
-			"Подобрать", () => Interact(this)
+			"Подобрать", () => Interact(interactor)
 		);
 		yield return new ContextAction(
 			"Осмотреть", Inspect

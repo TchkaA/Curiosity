@@ -23,7 +23,12 @@ public partial class MainManager : Node
     public override void _Ready()
     {
         Player = GetTree().GetFirstNodeInGroup("Player") as Player;
-        ContextMenu = GetTree().GetFirstNodeInGroup("ContextMenu") as ContextMenu;
+        ContextMenu = GetNodeOrNull<ContextMenu>("/root/ContextMenu");
+
+        if (ContextMenu == null)
+        {
+            GD.PushWarning("ContextMenu autoload not found. Check project.godot autoload configuration.");
+        }
     }
     
     public override void _Input(InputEvent @event)
@@ -74,16 +79,23 @@ public partial class MainManager : Node
 
     private void OpenContextMenu()
     {
-        var mousePosition = GetViewport().GetMousePosition();
+        if (Player == null || ContextMenu == null)
+        {
+            return;
+        }
 
-        var world = GetViewport()
-            .GetCamera2D()
-            .GetWorld2D()
-            .DirectSpaceState;
+        var camera = GetViewport().GetCamera2D();
+        var mousePosition = camera != null
+            ? camera.GetGlobalMousePosition()
+            : GetViewport().GetCamera2D().GetGlobalMousePosition();
+
+        var world = (camera != null ? camera.GetWorld2D() : GetTree().Root.GetWorld2D()).DirectSpaceState;
 
         var query = new PhysicsPointQueryParameters2D
         {
-            Position = mousePosition
+            Position = mousePosition,
+            CollideWithAreas = false,
+            CollideWithBodies = true
         };
 
         var results = world.IntersectPoint(query);
@@ -92,15 +104,13 @@ public partial class MainManager : Node
         {
             var collider = result["collider"].AsGodotObject();
 
-            if (collider is Node2D node &&
-                node is IContextMenuProvider provider)
+            if (collider is Node2D node && node is IContextMenuProvider provider)
             {
-                ContextMenu.ShowMenu(
-                    provider.GetContextAction(Player),
-                    mousePosition);
-
+                ContextMenu.ShowMenu(provider.GetContextAction(Player), mousePosition);
                 return;
             }
         }
+
+        ContextMenu.HideMenu();
     }
 }
