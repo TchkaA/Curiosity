@@ -6,6 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4iymr"]
 
 [node name="ItemPickUp" type="RigidBody2D" unique_id=639620459]
+input_pickable = true
 gravity_scale = 0.0
 script = ExtResource("1_8qvao")
 

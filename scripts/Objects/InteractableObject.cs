@@ -3,9 +3,9 @@ using System;
 
 public partial class InteractableObject : Node2D, IInteractable
 {
-	protected Sprite2D Visual;
-	protected Shader shader = GD.Load<Shader>("res://shaders/outline/outline.gdshader");
-	protected ShaderMaterial material;
+	public Sprite2D Visual;
+	public Shader shader => GD.Load<Shader>("res://shaders/outline/outline.gdshader");
+	public ShaderMaterial material;
 
 	public override void _Ready()
 	{

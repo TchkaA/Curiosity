@@ -9,7 +9,8 @@ public partial class InventorySlot : Control
     [Export]
     public Label LabelCount;
     private Player _player => MainManager.Instance.Player;
-
+    [Export]
+    public MenuButton menuButton;
     public override void _Ready()
     {
         if (Icon != null)

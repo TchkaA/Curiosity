@@ -35,3 +35,4 @@ position = Vector2(577, 321)
 
 [node name="BaseNPC" parent="." unique_id=226350266 instance=ExtResource("7_o6xl0")]
 position = Vector2(-74, 322)
+input_pickable = true

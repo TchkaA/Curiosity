@@ -39,7 +39,7 @@ public partial class MainManager : Node
         }
         if (@event.IsActionPressed("context_menu"))
         {
-            OpenContextMenu();
+            // Later add logic of player context menu
         }
     }
     
@@ -77,40 +77,40 @@ public partial class MainManager : Node
     }
 
 
-    private void OpenContextMenu()
-    {
-        if (Player == null || ContextMenu == null)
-        {
-            return;
-        }
+    // private void OpenContextMenu()
+    // {
+    //     if (Player == null || ContextMenu == null)
+    //     {
+    //         return;
+    //     }
 
-        var camera = GetViewport().GetCamera2D();
-        var mousePosition = camera != null
-            ? camera.GetGlobalMousePosition()
-            : GetViewport().GetCamera2D().GetGlobalMousePosition();
+    //     var camera = GetViewport().GetCamera2D();
+    //     var mousePosition = camera != null
+    //         ? camera.GetGlobalMousePosition()
+    //         : GetViewport().GetCamera2D().GetGlobalMousePosition();
 
-        var world = (camera != null ? camera.GetWorld2D() : GetTree().Root.GetWorld2D()).DirectSpaceState;
+    //     var world = (camera != null ? camera.GetWorld2D() : GetTree().Root.GetWorld2D()).DirectSpaceState;
 
-        var query = new PhysicsPointQueryParameters2D
-        {
-            Position = mousePosition,
-            CollideWithAreas = false,
-            CollideWithBodies = true
-        };
+    //     var query = new PhysicsPointQueryParameters2D
+    //     {
+    //         Position = mousePosition,
+    //         CollideWithAreas = false,
+    //         CollideWithBodies = true
+    //     };
 
-        var results = world.IntersectPoint(query);
+    //     var results = world.IntersectPoint(query);
 
-        foreach (var result in results)
-        {
-            var collider = result["collider"].AsGodotObject();
+    //     foreach (var result in results)
+    //     {
+    //         var collider = result["collider"].AsGodotObject();
 
-            if (collider is Node2D node && node is IContextMenuProvider provider)
-            {
-                ContextMenu.ShowMenu(provider.GetContextAction(Player), mousePosition);
-                return;
-            }
-        }
+    //         if (collider is Node2D node && node is IContextMenuProvider provider)
+    //         {
+    //             ContextMenu.ShowMenu(provider.GetContextAction(Player), mousePosition);
+    //             return;
+    //         }
+    //     }
 
-        ContextMenu.HideMenu();
-    }
+    //     ContextMenu.HideMenu();
+    // }
 }

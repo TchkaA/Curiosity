@@ -1,49 +1,36 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 
-public partial class ContextMenu : Control
+public partial class ContextMenu : VBoxContainer
 {
-    [Export] private VBoxContainer _container;
+    private readonly List<ContextAction> _actions = new();
 
     public override void _Ready()
     {
-        Visible = false;
+        
     }
 
-    public void ShowMenu(IEnumerable<ContextAction> actions, Vector2 position)
+    public void Initialize(IEnumerable<ContextAction> actions)
     {
-        Clear();
-
-        Position = position;
-
+        _actions.Clear();
         foreach (var action in actions)
         {
-            var button = new Button();
-            button.Text = action.Name;
-
-            button.Pressed += () =>
-            {
-                HideMenu();
-                action.Callback?.Invoke();
-            };
-
-            _container.AddChild(button);
+            AddActionButton(action);
         }
-
-        Visible = true;
     }
 
-    public void HideMenu()
+    private void AddActionButton(ContextAction action)
     {
-        Visible = false;
-        Clear();
+        var button = new Button();
+        button.Text = action.Name;
+        button.Pressed += () => OnActionButtonPressed(action);
+        AddChild(button);
     }
 
-    private void Clear()
+    private void OnActionButtonPressed(ContextAction action)
     {
-        foreach (Node child in _container.GetChildren())
-        {
-            child.QueueFree();
-        }
+        action.Callback();
+        QueueFree();
     }
 }

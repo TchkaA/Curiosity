@@ -17,7 +17,6 @@ config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 [autoload]
 
 MainManager="*uid://dytq0dd5gbyx4"
-ContextMenu="*uid://bgc0jlqcchw0g"
 
 [display]
 

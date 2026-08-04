@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dolqp4nx4lr0j" path="res://scripts/Inventory/InventorySlot.cs" id="1_ammow"]
 [ext_resource type="Texture2D" uid="uid://0f36marntkx8" path="res://assets/UI/SquareIcon.tres" id="2_od77r"]
 
-[node name="InventorySlot" type="Control" unique_id=811983990 node_paths=PackedStringArray("Icon", "LabelCount")]
+[node name="InventorySlot" type="Control" unique_id=811983990 node_paths=PackedStringArray("Icon", "LabelCount", "menuButton")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 31.0
@@ -12,6 +12,7 @@ scale = Vector2(3, 3)
 script = ExtResource("1_ammow")
 Icon = NodePath("Slot/CenterContainer/TextureButton")
 LabelCount = NodePath("Slot/Count")
+menuButton = NodePath("MenuButton")
 
 [node name="Slot" type="TextureRect" parent="." unique_id=1531421243]
 layout_mode = 0
@@ -41,5 +42,12 @@ offset_bottom = 30.666666
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 8
 horizontal_alignment = 2
+
+[node name="MenuButton" type="MenuButton" parent="." unique_id=954228964]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 7.666667
+offset_right = 23.0
+offset_bottom = 15.666667
 
 [connection signal="pressed" from="Slot/CenterContainer/TextureButton" to="." method="_on_texture_button_pressed"]
