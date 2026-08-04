@@ -30,7 +30,9 @@ public partial class PickUp : InteractableObject, IContextMenuProvider
 
     public IEnumerable<ContextAction> GetContextAction(Node2D interactor)
     {
-        yield return new ContextAction(
+		if (!CanInteract(interactor)) yield break;
+        
+		yield return new ContextAction(
 			"Подобрать", () => Interact(interactor)
 		);
 		yield return new ContextAction(
@@ -38,6 +40,13 @@ public partial class PickUp : InteractableObject, IContextMenuProvider
 		);
 	}
 
+	public bool CanInteract(Node2D interactor)
+	{
+		if (interactor == null)
+			return false;
+
+		return interactor.GlobalPosition.DistanceTo(GlobalPosition) <= 80f;
+	}
 
 	public void Inspect()
 	{

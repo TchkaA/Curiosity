@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bsw72h63jl5y1" path="res://scenes/Objects/item_pick_up.tscn" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://tw5l1fpcixv" path="res://scenes/camera.tscn" id="5_tbgi4"]
 [ext_resource type="Resource" uid="uid://bp1a7eb75hl1v" path="res://assets/Origin/objects/Resources/HealthPoitions/health_poition.tres" id="5_tefeu"]
+[ext_resource type="PackedScene" uid="uid://dii1a1nwpw8fv" path="res://scenes/Entity/NPC/BaseNPC.tscn" id="7_o6xl0"]
 
 [node name="main" type="Node2D" unique_id=1142821517]
 
@@ -31,3 +32,6 @@ item = ExtResource("5_tefeu")
 
 [node name="Camera" parent="." unique_id=1360370880 instance=ExtResource("5_tbgi4")]
 position = Vector2(577, 321)
+
+[node name="BaseNPC" parent="." unique_id=226350266 instance=ExtResource("7_o6xl0")]
+position = Vector2(-74, 322)

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dii1a1nwpw8fv"]
+
+[ext_resource type="Script" uid="uid://brc872uqhveqw" path="res://scripts/NPC/BaseNPC.cs" id="1_5ct1e"]
+[ext_resource type="Texture2D" uid="uid://b1gojduaui0ic" path="res://assets/Pixel Crawler - Free Pack/Entities/Npc's/Citizen_F/Peasant_A/Idle/Idle-Sheet.png" id="2_o2wd0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5ct1e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4iymr"]
+atlas = ExtResource("2_o2wd0")
+region = Rect2(0, 0, 64.83586, 64.30222)
+
+[node name="BaseNPC" type="CharacterBody2D" unique_id=226350266]
+scale = Vector2(3, 3)
+script = ExtResource("1_5ct1e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1938529248]
+shape = SubResource("CapsuleShape2D_5ct1e")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1286817259]
+texture = SubResource("AtlasTexture_4iymr")
