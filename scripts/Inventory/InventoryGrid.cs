@@ -8,12 +8,20 @@ public partial class InventoryGrid : GridContainer
 
     public override void _Ready()
     {
-        InitializeSlotsFromChildren();
+        
+        if (!IsInGroup("PlayerInventory"))
+            GD.Print(GetGroups());          //fix 
 
-        if (MainManager.Instance != null && MainManager.Instance.Player != null)
-        {
-            Bind(MainManager.Instance.Player.Inventory);
-        }
+        if (MainManager.Instance?.Player == null)
+            return;
+
+        Bind(MainManager.Instance.Player.Inventory);
+        GD.Print(GetGroups());
+    }
+
+    public void Initialize()
+    {
+        GD.Print(GetGroups());
     }
 
     public void InitializeSlotsFromChildren()

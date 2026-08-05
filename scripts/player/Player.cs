@@ -28,7 +28,7 @@ public partial class Player : BaseEntity, IInventoryOwner
 		moveState = new PlayerMoveState(this);
 		idleState = new PlayerIdleState(this);
 		stateMachine.ChangeState(idleState);
-
+		Inventory.AddItem(GD.Load<Item>("res://assets/Origin/objects/Resources/HealthPoitions/health_poition.tres"));
 
 		// movement component
 		movementComponent = new MovementComponent(this);

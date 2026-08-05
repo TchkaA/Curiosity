@@ -31,6 +31,7 @@ project/assembly_name="Build and mine"
 
 Player="Main character"
 ContextMenu=""
+PlayerInventory=""
 
 [input]
 

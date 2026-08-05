@@ -22,6 +22,16 @@ public partial class InteractionComponent
                 break;
 			}
 		}
+        // Проверяем области
+        var areas = _interactionArea.GetOverlappingAreas();
+        foreach (var area in areas)
+        {
+            if (area is IInteractable obj)
+            {
+                obj.Interact(_owner);
+                return;
+            }
+        }
     }
     public void InteractEnter(Node2D body)
     {
@@ -62,5 +72,7 @@ public partial class InteractionComponent
 
         _interactionArea.BodyEntered += InteractEnter;
         _interactionArea.BodyExited += InteractExit;
+        _interactionArea.AreaEntered += InteractEnter;
+        _interactionArea.AreaExited += InteractExit;
     }
 }

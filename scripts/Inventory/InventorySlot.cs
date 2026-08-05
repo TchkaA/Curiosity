@@ -75,33 +75,79 @@ public partial class InventorySlot : Control, IContextMenuProvider
 
 
     private void OnMenuButtonPressed()
+{
+    var popup = menuButton.GetPopup();
+    popup.Clear();
+    
+    // Добавляем пункты меню
+    var actions = new List<ContextAction>(GetContextAction(_player));
+    foreach (var action in actions)
     {
-        var popup = menuButton.GetPopup();
-
-        popup.Clear();
-        foreach (var action in GetContextAction(_player))
+        popup.AddItem(action.Name);
+    }
+    
+    // Создаем локальный обработчик
+    void OnIdPressed(long id)
+    {
+        if (id >= 0 && id < actions.Count)
         {
-            var itemIndex = popup.ItemCount;
-            popup.AddItem(action.Name);
-            popup.IdPressed += id =>
-            {
-                if (id == itemIndex)
-                {
-                    action.Callback.Invoke();
-                }
-            };
+            actions[(int)id].Callback.Invoke();
+        }
+        // Отписываемся после использования, чтобы не накапливать
+        popup.IdPressed -= OnIdPressed;
+    }
+    
+    popup.IdPressed += OnIdPressed;
+}
+
+    // Отдельный метод для обработки нажатий в меню
+    private void OnPopupIdPressed(long id)
+    {
+        var actions = new List<ContextAction>(GetContextAction(_player));
+        if (id >= 0 && id < actions.Count)
+        {
+            actions[(int)id].Callback.Invoke();
         }
     }
 
     public IEnumerable<ContextAction> GetContextAction(Node2D interactor)
     {   
 		yield return new ContextAction(
-			"Подобрать", () => Interact(interactor)
+			"Использовать", () => Interact(interactor)
 		);
 		yield return new ContextAction(
 			"Осмотреть", Inspect
 		);
+        yield return new ContextAction(
+			"Бросить", () => drop(interactor)
+		);
 	}
+
+    private void drop(Node2D interactor)
+    {
+        if (CurrentItem != null)
+        {
+            var pickUp = new PickUp();
+            pickUp.Init(CurrentItem.Item);
+            
+            // Проверяем, что CurrentScene не null
+            var currentScene = GetTree().CurrentScene;
+            if (currentScene != null)
+            {
+                currentScene.AddChild(pickUp);
+                pickUp.GlobalPosition = interactor.GlobalPosition;
+                
+                // Очищаем слот
+                CurrentItem = null;
+                Clear(); // Обновляем UI
+            }
+            else
+            {
+                GD.PrintErr("CurrentScene is null!");
+            }
+        }
+    }
+
 
     private void Interact(Node2D interactor)
     {

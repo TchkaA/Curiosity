@@ -5,6 +5,7 @@ public partial class MainManager : Node
 {
     public static MainManager Instance {get; private set; }
     public Player Player{get; private set; }
+
     public Shader OutlineShader  = GD.Load<Shader>("res://shaders/outline/outline.gdshader");
     public PackedScene menuScene = GD.Load<PackedScene>("res://scenes/UI/PlayerMenu/book_menu.tscn");
     

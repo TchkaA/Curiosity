@@ -6,8 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bqit47m5rpkke" path="res://assets/UI/UIIcon1.tres" id="3_hmuju"]
 [ext_resource type="Texture2D" uid="uid://drc5cglb3whev" path="res://assets/UI/UIIcon2.tres" id="5_gqd0i"]
 [ext_resource type="PackedScene" uid="uid://o30vjs13ky7r" path="res://scenes/UI/PlayerMenu/BookMenus/inventory_page.tscn" id="6_25quv"]
-[ext_resource type="Script" uid="uid://tnyx88sam1f7" path="res://scripts/Objects/Item/Item.cs" id="7_hn1e0"]
-[ext_resource type="Texture2D" uid="uid://clh0v8xnip57m" path="res://assets/Origin/objects/Resources/HealthPoitions/HealthPotion.png" id="8_jl7eb"]
 
 [node name="BookMenu" type="CanvasLayer" unique_id=595888724]
 
@@ -66,4 +64,4 @@ offset_bottom = 51.0
 texture = ExtResource("5_gqd0i")
 stretch_mode = 5
 
-[node name="InventoryPage" parent="." unique_id=1042492033 instance=ExtResource("6_25quv")]
+[node name="InventoryPage" parent="." unique_id=1042492033 groups=["PlayerInventory"] instance=ExtResource("6_25quv")]
