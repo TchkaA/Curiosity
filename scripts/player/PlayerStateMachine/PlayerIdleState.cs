@@ -6,14 +6,11 @@ public partial class PlayerIdleState : IState
     Vector2 input;
     public void Enter()
     {
-        GD.Print("Entering Idle State");
-        GD.Print(_player.directionComponent.CurrentDirection);
         _player.animationComponent.SetAnimation("idle");
     }
 
     public void Exit()
     {
-        GD.Print("Exiting Idle State");
     }
 
     public PlayerIdleState(Player _player)

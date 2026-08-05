@@ -8,12 +8,10 @@ public partial class PlayerMoveState : IState
     Vector2 velocity;
     public void Enter()
     {
-        GD.Print("Entering Move State");
     }
 
     public void Exit()
     {
-        GD.Print("Exiting Move State");
     }
 
     public PlayerMoveState(Player _player)
