@@ -1,6 +1,8 @@
+using System;
+using System.Collections.Generic;
 using Godot;
 
-public partial class InventorySlot : Control
+public partial class InventorySlot : Control, IContextMenuProvider
 {
     public InventorySlotData CurrentItem { get; set; }
     public int Count { get; set; }
@@ -15,7 +17,23 @@ public partial class InventorySlot : Control
     {
         if (Icon != null)
         {
-            Icon.Pressed += UseItem;
+            Icon.MouseFilter = MouseFilterEnum.Ignore;
+        }
+        GuiInput += OnGuiInput;
+        menuButton.Pressed += OnMenuButtonPressed;
+    }
+
+
+    private void OnGuiInput(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.Pressed)
+        {
+            switch (mouseButtonEvent.ButtonIndex)
+            {
+                case MouseButton.Left:
+                    Interact(_player);
+                    break;
+            }
         }
     }
     public void SetItem(InventorySlotData item)
@@ -54,4 +72,46 @@ public partial class InventorySlot : Control
         _player.Inventory.Use(CurrentItem.Item);
         SetItem(CurrentItem);
     }
+
+
+    private void OnMenuButtonPressed()
+    {
+        var popup = menuButton.GetPopup();
+
+        popup.Clear();
+        foreach (var action in GetContextAction(_player))
+        {
+            var itemIndex = popup.ItemCount;
+            popup.AddItem(action.Name);
+            popup.IdPressed += id =>
+            {
+                if (id == itemIndex)
+                {
+                    action.Callback.Invoke();
+                }
+            };
+        }
+    }
+
+    public IEnumerable<ContextAction> GetContextAction(Node2D interactor)
+    {   
+		yield return new ContextAction(
+			"Подобрать", () => Interact(interactor)
+		);
+		yield return new ContextAction(
+			"Осмотреть", Inspect
+		);
+	}
+
+    private void Interact(Node2D interactor)
+    {
+        GD.Print($"Interacting with {CurrentItem.Item.Name} by {interactor.Name}");
+    }
+
+
+    private void Inspect()
+    {
+        GD.Print($"Название - {CurrentItem.Item.Name}\nОписание - {CurrentItem.Item.Description}");
+    }
+
 }

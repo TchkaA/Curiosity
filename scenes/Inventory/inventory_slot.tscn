@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://0f36marntkx8" path="res://assets/UI/SquareIcon.tres" id="2_od77r"]
 
 [node name="InventorySlot" type="Control" unique_id=811983990 node_paths=PackedStringArray("Icon", "LabelCount", "menuButton")]
+z_index = 2
 layout_mode = 3
 anchors_preset = 0
 offset_right = 31.0
@@ -43,11 +44,11 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 8
 horizontal_alignment = 2
 
-[node name="MenuButton" type="MenuButton" parent="." unique_id=954228964]
+[node name="MenuButton" type="MenuButton" parent="." unique_id=1542009028]
 layout_mode = 0
-offset_left = 15.0
-offset_top = 7.666667
-offset_right = 23.0
-offset_bottom = 15.666667
-
-[connection signal="pressed" from="Slot/CenterContainer/TextureButton" to="." method="_on_texture_button_pressed"]
+offset_left = 3.3333335
+offset_top = 4.3333335
+offset_right = 96.4151
+offset_bottom = 93.64151
+scale = Vector2(0.265, 0.265)
+button_mask = 2

@@ -23,11 +23,11 @@ tile_map_data = PackedByteArray("AAAAAAAAAAABAAoAAAAHAAAAAAADAAoAAAABAAAAAAABAAo
 tile_set = ExtResource("3_sugp2")
 
 [node name="ItemPickUp" parent="." unique_id=639620459 instance=ExtResource("4_jyhfs")]
-position = Vector2(781, 35)
+position = Vector2(371, 190)
 item = ExtResource("5_tefeu")
 
 [node name="ItemPickUp2" parent="." unique_id=2069194066 instance=ExtResource("4_jyhfs")]
-position = Vector2(771, 80)
+position = Vector2(314, 110)
 item = ExtResource("5_tefeu")
 
 [node name="Camera" parent="." unique_id=1360370880 instance=ExtResource("5_tbgi4")]
