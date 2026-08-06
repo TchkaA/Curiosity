@@ -10,6 +10,8 @@ public class Inventory
     public IReadOnlyList<InventorySlotData> Slots => _slots;
     private Node2D _owner;
 
+    public Action OnChanged;
+
     public Inventory(Node2D owner)
     {
         _owner = owner;
@@ -59,6 +61,8 @@ public class Inventory
             _slots.Add(new InventorySlotData(item, newStack));
             remaining -= newStack;
         }
+        
+        OnChanged?.Invoke();
     }
 
     public bool RemoveItem(Item item, int count = 1)
@@ -93,7 +97,7 @@ public class Inventory
                 _slots.RemoveAt(i);
             }
         }
-
+        OnChanged?.Invoke();
         return remaining == 0;
     }
 
@@ -146,6 +150,7 @@ public class Inventory
     {
         item.Use(_owner);
         RemoveItem(item);
+        OnChanged?.Invoke();
     }
 }
 

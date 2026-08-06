@@ -13,6 +13,7 @@ public partial class InventorySlot : Control, IContextMenuProvider
     private Player _player => MainManager.Instance.Player;
     [Export]
     public MenuButton menuButton;
+    public InventoryGrid Owner; // or maybe check it by using GetParent
     public override void _Ready()
     {
         if (Icon != null)
@@ -21,9 +22,10 @@ public partial class InventorySlot : Control, IContextMenuProvider
         }
         GuiInput += OnGuiInput;
         menuButton.Pressed += OnMenuButtonPressed;
+        
     }
 
-
+    
     private void OnGuiInput(InputEvent @event)
     {
         if (@event is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.Pressed)
@@ -121,6 +123,9 @@ public partial class InventorySlot : Control, IContextMenuProvider
         yield return new ContextAction(
 			"Бросить", () => drop(interactor)
 		);
+        yield return new ContextAction(
+			"Переложить", Transfer
+		);
 	}
 
     private void drop(Node2D interactor)
@@ -151,13 +156,19 @@ public partial class InventorySlot : Control, IContextMenuProvider
 
     private void Interact(Node2D interactor)
     {
-        GD.Print($"Interacting with {CurrentItem.Item.Name} by {interactor.Name}");
+        Owner.Inventory.Use(CurrentItem.Item);
+        // SetItem(CurrentItem);
     }
 
 
     private void Inspect()
     {
         GD.Print($"Название - {CurrentItem.Item.Name}\nОписание - {CurrentItem.Item.Description}");
+    }
+
+    private void Transfer()
+    {
+        BookMenu.Instance.Transfer(Owner, CurrentItem.Item, CurrentItem.Count);
     }
 
 }

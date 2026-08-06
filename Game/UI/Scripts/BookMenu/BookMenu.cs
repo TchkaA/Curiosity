@@ -35,9 +35,6 @@ public partial class BookMenu : CanvasLayer
         InventoryButton.Pressed += OpenInventory;
         ProfileButton.Pressed += OpenProfile;
 
-
-        // Bind
-        _playerInventory.Bind(MainManager.Instance.Player.Inventory);
     }
 
     private void PauseGame(bool IsPaused)
@@ -103,13 +100,20 @@ public partial class BookMenu : CanvasLayer
         _extraInventory.Visible = true;
     }
 
-    // Transfer(
-    // Inventory from,
-    // Inventory to,    TODO
-    // Item item
-    // )
-
-
+    public void Transfer(InventoryGrid from, Item item, int count)
+    {
+        switch (from.CurInventory)
+        {
+            case InventoryIds.Player:
+                _playerInventory.Inventory.RemoveItem(item, count);
+                _extraInventory.Inventory.AddItem(item, count);
+                break;
+            case InventoryIds.Extra:
+                _extraInventory.Inventory.RemoveItem(item, count);
+                _playerInventory.Inventory.AddItem(item, count);
+                break;
+        }
+    }
 
 
 }

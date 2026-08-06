@@ -5,14 +5,25 @@ using Godot;
 
 public partial class InventoryGrid : GridContainer
 {
-    private Inventory _inventory;
+    public Inventory Inventory {get; private set;}
     private readonly List<InventorySlot> _slots = new();
-    public event Action<Inventory> OnBind;
 
 
+
+    [Export]
+    public string CurInventory = InventoryIds.Player; 
 
     public override void _Ready()
     {
+        switch (CurInventory)
+        {
+            case "player_inventory":
+                Bind(MainManager.Instance.Player.Inventory, CurInventory);
+                break;
+            case "extra_inventory":
+                break;
+        }
+        
     }
 
     public void Initialize()
@@ -35,9 +46,18 @@ public partial class InventoryGrid : GridContainer
         // Refresh();
     }
 
-    public void Bind(Inventory inventory)
+
+    /// <summary>
+    /// Позваляет забиндить текущий инвентарь своим
+    /// </summary>
+    /// <param name="inventory"></param>
+    /// <param name="inv"></param>
+    public void Bind(Inventory inventory, string inv = InventoryIds.Extra)
     {
-        _inventory = inventory;
+        Unbind();
+        Inventory = inventory;
+        Inventory.OnChanged += Refresh;
+        CurInventory = inv;
 
         if (_slots.Count == 0)
         {
@@ -49,17 +69,21 @@ public partial class InventoryGrid : GridContainer
 
     public void Unbind()
     {
-        _inventory = null;
-        _slots.Clear();
+        if (Inventory != null)
+        {
+            Inventory.OnChanged -= Refresh;
+        }
+
+        Inventory = null;
     }
 
     public void Refresh()
     {
         for (int i = 0; i < _slots.Count; i++)
         {
-            if (i < _inventory.SlotCount)
+            if (i < Inventory.SlotCount)
             {
-                _slots[i].SetItem(_inventory.GetSlot(i));
+                _slots[i].SetItem(Inventory.GetSlot(i));
             }
             else
             {
@@ -67,4 +91,11 @@ public partial class InventoryGrid : GridContainer
             }
         }
     }
+
+    public override void _ExitTree()
+    {
+        if (Inventory != null)
+            Inventory.OnChanged -= Refresh;
+    }
+
 }
