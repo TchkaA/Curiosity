@@ -30,5 +30,6 @@ position = Vector2(-74, 322)
 input_pickable = true
 
 [node name="Area2D" type="Area2D" parent="." unique_id=357046190]
+position = Vector2(216, 38)
 script = ExtResource("6_o6xl0")
 Item = ExtResource("5_tefeu")

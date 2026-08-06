@@ -7,13 +7,14 @@ public partial class MainManager : Node
     public Player Player{get; private set; }
 
     public Shader OutlineShader  = GD.Load<Shader>("res://shaders/outline/outline.gdshader");
-    public PackedScene menuScene = GD.Load<PackedScene>("res://scenes/UI/PlayerMenu/book_menu.tscn");
-    
-    public ContextMenu ContextMenu;
+    public PackedScene menuScene = ResourceLoader.Load<PackedScene>("res://scenes/UI/PlayerMenu/book_menu.tscn");
 
+
+    public ContextMenu ContextMenu;
     private bool _isPaused = false;
 
-    private Node pauseMenuInstance;
+    public Action<bool> isPaused;
+    private Node _menu;
 
     public override void _EnterTree()
     {
@@ -30,8 +31,9 @@ public partial class MainManager : Node
         {
             GD.PushWarning("ContextMenu autoload not found. Check project.godot autoload configuration.");
         }
+
     }
-    
+
     public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed("pause"))
@@ -48,70 +50,32 @@ public partial class MainManager : Node
     {
         if (_isPaused)
         {
+            _menu.QueueFree();           
             ResumeGame();
         }
         else
         {
+            _menu = menuScene.Instantiate();
+            AddChild(_menu);
             PauseGame();
         }
     }
     
-    private void PauseGame()
+    public void PauseGame()
     {
-        pauseMenuInstance = menuScene.Instantiate();
-        AddChild(pauseMenuInstance);
-        
+        BookMenu.Instance.ShowPage();
         GetTree().Paused = true;
         _isPaused = true;
+        isPaused?.Invoke(true);
     }
+
     
+
+
     private void ResumeGame()
     {
-        if (pauseMenuInstance != null)
-        {
-            RemoveChild(pauseMenuInstance);
-            pauseMenuInstance.QueueFree();
-            pauseMenuInstance = null;
-        }
         GetTree().Paused = false;
         _isPaused = false;
+        isPaused?.Invoke(false);
     }
-
-
-    // private void OpenContextMenu()
-    // {
-    //     if (Player == null || ContextMenu == null)
-    //     {
-    //         return;
-    //     }
-
-    //     var camera = GetViewport().GetCamera2D();
-    //     var mousePosition = camera != null
-    //         ? camera.GetGlobalMousePosition()
-    //         : GetViewport().GetCamera2D().GetGlobalMousePosition();
-
-    //     var world = (camera != null ? camera.GetWorld2D() : GetTree().Root.GetWorld2D()).DirectSpaceState;
-
-    //     var query = new PhysicsPointQueryParameters2D
-    //     {
-    //         Position = mousePosition,
-    //         CollideWithAreas = false,
-    //         CollideWithBodies = true
-    //     };
-
-    //     var results = world.IntersectPoint(query);
-
-    //     foreach (var result in results)
-    //     {
-    //         var collider = result["collider"].AsGodotObject();
-
-    //         if (collider is Node2D node && node is IContextMenuProvider provider)
-    //         {
-    //             ContextMenu.ShowMenu(provider.GetContextAction(Player), mousePosition);
-    //             return;
-    //         }
-    //     }
-
-    //     ContextMenu.HideMenu();
-    // }
 }
