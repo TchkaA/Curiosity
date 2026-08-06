@@ -59,7 +59,7 @@ public partial class InteractionComponent
         var shape = new CollisionShape2D();
         var circleShape = new CircleShape2D
         {
-            Radius = 30.0f // Радиус зоны взаимодействия
+            Radius = 18.0f // Радиус зоны взаимодействия
         };
         shape.Shape = circleShape;
         // _interactionArea.CollisionLayer = 0; // Не участвует в коллизиях физики

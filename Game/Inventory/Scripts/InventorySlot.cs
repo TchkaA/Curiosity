@@ -168,7 +168,7 @@ public partial class InventorySlot : Control, IContextMenuProvider
 
     private void Transfer()
     {
-        BookMenu.Instance.Transfer(GetParent<InventoryGrid>(), CurrentItem.Item, 1);
+        BookMenu.Instance.Transfer(GetParent<InventoryGrid>(), CurrentItem.Item, CurrentItem.Count);
     }
 
 }

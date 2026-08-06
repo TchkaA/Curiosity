@@ -23,7 +23,7 @@ public partial class DialogueComponent
     // BubbleFactory / DialogueUI later
     public void MakeSound(string text, int act = 0)
     {
-        var bubble = GD.Load<PackedScene>("res://scenes/Objects/word_bubble.tscn").Instantiate<WordBubble>();
+        var bubble = GD.Load<PackedScene>("res://Game/Dialogue/word_bubble.tscn").Instantiate<WordBubble>();
         _owner.GetTree().CurrentScene.AddChild(bubble);
         bubble.GlobalPosition = _owner.GlobalPosition + new Vector2(-20, -90);
         switch (act)
