@@ -75,30 +75,30 @@ public partial class InventorySlot : Control, IContextMenuProvider
 
 
     private void OnMenuButtonPressed()
-{
-    var popup = menuButton.GetPopup();
-    popup.Clear();
-    
-    // Добавляем пункты меню
-    var actions = new List<ContextAction>(GetContextAction(_player));
-    foreach (var action in actions)
     {
-        popup.AddItem(action.Name);
-    }
-    
-    // Создаем локальный обработчик
-    void OnIdPressed(long id)
-    {
-        if (id >= 0 && id < actions.Count)
+        var popup = menuButton.GetPopup();
+        popup.Clear();
+        
+        // Добавляем пункты меню
+        var actions = new List<ContextAction>(GetContextAction(_player));
+        foreach (var action in actions)
         {
-            actions[(int)id].Callback.Invoke();
+            popup.AddItem(action.Name);
         }
-        // Отписываемся после использования, чтобы не накапливать
-        popup.IdPressed -= OnIdPressed;
+        
+        // Создаем локальный обработчик
+        void OnIdPressed(long id)
+        {
+            if (id >= 0 && id < actions.Count)
+            {
+                actions[(int)id].Callback.Invoke();
+            }
+            // Отписываемся после использования, чтобы не накапливать
+            popup.IdPressed -= OnIdPressed;
+        }
+        
+        popup.IdPressed += OnIdPressed;
     }
-    
-    popup.IdPressed += OnIdPressed;
-}
 
     // Отдельный метод для обработки нажатий в меню
     private void OnPopupIdPressed(long id)
