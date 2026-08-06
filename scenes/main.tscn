@@ -7,6 +7,15 @@
 [ext_resource type="Resource" uid="uid://bp1a7eb75hl1v" path="res://assets/Origin/objects/Resources/HealthPoitions/health_poition.tres" id="5_tefeu"]
 [ext_resource type="Script" uid="uid://dflltvwb3wik0" path="res://scripts/Objects/PickUp.cs" id="6_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://dii1a1nwpw8fv" path="res://scenes/Entity/NPC/BaseNPC.tscn" id="7_o6xl0"]
+[ext_resource type="Texture2D" uid="uid://dbw23wjlvlhp8" path="res://assets/Origin/objects/Chest_down.png" id="8_85g3d"]
+[ext_resource type="Script" uid="uid://2ri3011khssj" path="res://scenes/Objects/Chest.cs" id="9_choun"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5xbwf"]
+atlas = ExtResource("8_85g3d")
+region = Rect2(0, 0, 16.456524, 16.013126)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4iymr"]
+size = Vector2(13.395351, 10.666668)
 
 [node name="main" type="Node2D" unique_id=1142821517]
 
@@ -33,3 +42,15 @@ input_pickable = true
 position = Vector2(216, 38)
 script = ExtResource("6_o6xl0")
 Item = ExtResource("5_tefeu")
+
+[node name="Chest" type="StaticBody2D" parent="." unique_id=41200666]
+position = Vector2(307, 56)
+scale = Vector2(2.6875, 3)
+script = ExtResource("9_choun")
+
+[node name="Sprite2D" type="Sprite2D" parent="Chest" unique_id=1978142148]
+texture = SubResource("AtlasTexture_5xbwf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chest" unique_id=1213493998]
+position = Vector2(0, 1.666666)
+shape = SubResource("RectangleShape2D_4iymr")

@@ -50,30 +50,29 @@ public partial class MainManager : Node
     {
         if (_isPaused)
         {
-            _menu.QueueFree();           
+                      
             ResumeGame();
         }
         else
         {
-            _menu = menuScene.Instantiate();
-            AddChild(_menu);
             PauseGame();
         }
     }
     
     public void PauseGame()
     {
-        BookMenu.Instance.ShowPage();
+        _menu = menuScene.Instantiate();
+        AddChild(_menu);
         GetTree().Paused = true;
         _isPaused = true;
         isPaused?.Invoke(true);
     }
-
     
 
 
     private void ResumeGame()
     {
+        _menu.QueueFree(); 
         GetTree().Paused = false;
         _isPaused = false;
         isPaused?.Invoke(false);
