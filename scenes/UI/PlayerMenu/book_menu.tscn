@@ -9,12 +9,14 @@
 [ext_resource type="PackedScene" uid="uid://o30vjs13ky7r" path="res://scenes/UI/PlayerMenu/BookMenus/inventory_page.tscn" id="6_25quv"]
 [ext_resource type="PackedScene" uid="uid://cnosmb280cauf" path="res://scenes/UI/PlayerMenu/BookMenus/Profile_page.tscn" id="7_7gxlc"]
 
-[node name="BookMenu" type="CanvasLayer" unique_id=595888724 node_paths=PackedStringArray("InventoryPage", "ProfilePage", "InventoryButton", "ProfileButton")]
+[node name="BookMenu" type="CanvasLayer" unique_id=595888724 node_paths=PackedStringArray("InventoryPage", "ProfilePage", "InventoryButton", "ProfileButton", "_playerInventory", "_extraInventory")]
 script = ExtResource("1_hn1e0")
 InventoryPage = NodePath("Screens/InventoryPage")
 ProfilePage = NodePath("Screens/Profile_page")
 InventoryButton = NodePath("TextureRect/InventoryButton")
 ProfileButton = NodePath("TextureRect/ProfileButton")
+_playerInventory = NodePath("Screens/InventoryPage/PlayerInventory")
+_extraInventory = NodePath("Screens/InventoryPage/ExtraInventory")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1042373934]
 anchors_preset = -1
@@ -75,6 +77,24 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="InventoryPage" parent="Screens" unique_id=1042492033 groups=["PlayerInventory"] instance=ExtResource("6_25quv")]
-
 [node name="Profile_page" parent="Screens" unique_id=733364337 instance=ExtResource("7_7gxlc")]
+
+[node name="InventoryPage" type="Control" parent="Screens" unique_id=251557428]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PlayerInventory" parent="Screens/InventoryPage" unique_id=1042492033 instance=ExtResource("6_25quv")]
+layout_mode = 0
+offset_left = 172.0
+offset_top = 104.00001
+offset_right = 285.0
+offset_bottom = 256.0
+
+[node name="ExtraInventory" parent="Screens/InventoryPage" unique_id=294969645 instance=ExtResource("6_25quv")]
+visible = false
+layout_mode = 0
+offset_left = 649.0
+offset_top = 104.0
+offset_right = 762.0
+offset_bottom = 256.0

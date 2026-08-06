@@ -11,9 +11,7 @@ public partial class BookMenu : CanvasLayer
 
     [ExportGroup("Страницы")]
     [Export]
-    public string _currentScreen = "profile";
-    [Export]
-    private CanvasLayer InventoryPage;
+    private Control InventoryPage;
     [Export]
     private CanvasLayer ProfilePage;
 
@@ -23,6 +21,12 @@ public partial class BookMenu : CanvasLayer
     [Export]
     public TextureButton ProfileButton;
 
+    [ExportGroup("Инвентари")]
+    [Export]
+    private InventoryGrid _playerInventory;
+    [Export]
+    private InventoryGrid _extraInventory;
+
     public override void _EnterTree()
     {
         Instance = this;
@@ -30,6 +34,10 @@ public partial class BookMenu : CanvasLayer
         ShowPage();
         InventoryButton.Pressed += OpenInventory;
         ProfileButton.Pressed += OpenProfile;
+
+
+        // Bind
+        _playerInventory.Bind(MainManager.Instance.Player.Inventory);
     }
 
     private void PauseGame(bool IsPaused)
@@ -79,8 +87,20 @@ public partial class BookMenu : CanvasLayer
 
         InventoryButton.Pressed -= OpenInventory;
         ProfileButton.Pressed -= OpenProfile;
+        _extraInventory.Visible = false;
     }
 
-    
+    public void BindExtraInventory(Inventory inventory)
+    {
+        if (inventory == null)
+        {
+            _extraInventory.Unbind();
+            _extraInventory.Visible = false;
+            return;
+        }
+
+        _extraInventory.Bind(inventory);
+        _extraInventory.Visible = true;
+    }
 
 }

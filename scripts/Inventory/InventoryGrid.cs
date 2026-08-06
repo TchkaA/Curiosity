@@ -1,22 +1,18 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using Godot;
 
 public partial class InventoryGrid : GridContainer
 {
     private Inventory _inventory;
     private readonly List<InventorySlot> _slots = new();
+    public event Action<Inventory> OnBind;
+
+
 
     public override void _Ready()
     {
-        
-        if (!IsInGroup("PlayerInventory"))
-            GD.Print(GetGroups());          //fix 
-
-        if (MainManager.Instance?.Player == null)
-            return;
-
-        Bind(MainManager.Instance.Player.Inventory);
-        GD.Print(GetGroups());
     }
 
     public void Initialize()
@@ -49,6 +45,12 @@ public partial class InventoryGrid : GridContainer
         }
 
         Refresh();
+    }
+
+    public void Unbind()
+    {
+        _inventory = null;
+        _slots.Clear();
     }
 
     public void Refresh()
