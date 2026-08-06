@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://cvwc4itvt3kch"]
+
+[ext_resource type="Texture2D" uid="uid://c40fpx0ybdld3" path="res://assets/UI/BookUI.tres" id="1_4wwdt"]
+[ext_resource type="Script" uid="uid://msbdtatq8y5q" path="res://Game/UI/Scripts/BookMenu/BookMenu.cs" id="1_hn1e0"]
+[ext_resource type="Texture2D" uid="uid://cgwdxcv8vq8ww" path="res://assets/UI/BookMark1.tres" id="2_hmuju"]
+[ext_resource type="Texture2D" uid="uid://cwi34tia86skv" path="res://assets/UI/BookMark2.tres" id="3_gqd0i"]
+[ext_resource type="Texture2D" uid="uid://bqit47m5rpkke" path="res://assets/UI/UIIcon1.tres" id="3_hmuju"]
+[ext_resource type="Texture2D" uid="uid://drc5cglb3whev" path="res://assets/UI/UIIcon2.tres" id="5_gqd0i"]
+[ext_resource type="PackedScene" uid="uid://o30vjs13ky7r" path="res://Game/UI/Scenes/BookMenus/inventory_page.tscn" id="6_25quv"]
+[ext_resource type="PackedScene" uid="uid://cnosmb280cauf" path="res://Game/UI/Scenes/BookMenus/Profile_page.tscn" id="7_7gxlc"]
+
+[node name="BookMenu" type="CanvasLayer" unique_id=595888724 node_paths=PackedStringArray("InventoryPage", "ProfilePage", "InventoryButton", "ProfileButton", "_playerInventory", "_extraInventory")]
+script = ExtResource("1_hn1e0")
+InventoryPage = NodePath("Screens/InventoryPage")
+ProfilePage = NodePath("Screens/Profile_page")
+InventoryButton = NodePath("TextureRect/InventoryButton")
+ProfileButton = NodePath("TextureRect/ProfileButton")
+_playerInventory = NodePath("Screens/InventoryPage/PlayerInventory")
+_extraInventory = NodePath("Screens/InventoryPage/ExtraInventory")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1042373934]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 101.0
+offset_top = 83.0
+offset_right = -99.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4wwdt")
+
+[node name="InventoryButton" type="TextureButton" parent="TextureRect" unique_id=461172051]
+layout_mode = 0
+offset_left = 539.0
+offset_top = -60.0
+offset_right = 601.0
+mouse_default_cursor_shape = 16
+toggle_mode = true
+texture_normal = ExtResource("3_gqd0i")
+texture_pressed = ExtResource("2_hmuju")
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/InventoryButton" unique_id=734025794]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 16.0
+offset_right = 50.0
+offset_bottom = 52.0
+texture = ExtResource("3_hmuju")
+stretch_mode = 5
+
+[node name="ProfileButton" type="TextureButton" parent="TextureRect" unique_id=71875406]
+layout_mode = 0
+offset_left = 615.0
+offset_top = -60.0
+offset_right = 677.0
+mouse_default_cursor_shape = 2
+toggle_mode = true
+action_mode = 0
+texture_normal = ExtResource("3_gqd0i")
+texture_pressed = ExtResource("2_hmuju")
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/ProfileButton" unique_id=837540060]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 15.0
+offset_right = 50.0
+offset_bottom = 51.0
+texture = ExtResource("5_gqd0i")
+stretch_mode = 5
+
+[node name="Screens" type="Control" parent="." unique_id=1742834444]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Profile_page" parent="Screens" unique_id=733364337 instance=ExtResource("7_7gxlc")]
+
+[node name="InventoryPage" type="Control" parent="Screens" unique_id=251557428]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PlayerInventory" parent="Screens/InventoryPage" unique_id=1042492033 instance=ExtResource("6_25quv")]
+layout_mode = 0
+offset_left = 172.0
+offset_top = 104.00001
+offset_right = 285.0
+offset_bottom = 256.0
+
+[node name="ExtraInventory" parent="Screens/InventoryPage" unique_id=294969645 instance=ExtResource("6_25quv")]
+visible = false
+layout_mode = 0
+offset_left = 649.0
+offset_top = 104.0
+offset_right = 762.0
+offset_bottom = 256.0

@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://66jxroiruq76"]
+
+[ext_resource type="Script" uid="uid://dolqp4nx4lr0j" path="res://Game/Inventory/Scripts/InventorySlot.cs" id="1_ammow"]
+[ext_resource type="Texture2D" uid="uid://0f36marntkx8" path="res://assets/UI/SquareIcon.tres" id="2_od77r"]
+
+[node name="InventorySlot" type="Control" unique_id=811983990 node_paths=PackedStringArray("Icon", "LabelCount", "menuButton")]
+z_index = 2
+layout_mode = 3
+anchors_preset = 0
+offset_right = 31.0
+offset_bottom = 31.0
+scale = Vector2(3, 3)
+script = ExtResource("1_ammow")
+Icon = NodePath("Slot/CenterContainer/TextureButton")
+LabelCount = NodePath("Slot/Count")
+menuButton = NodePath("MenuButton")
+
+[node name="Slot" type="TextureRect" parent="." unique_id=1531421243]
+layout_mode = 0
+offset_left = 0.33333334
+offset_top = 0.33333334
+offset_right = 31.0
+offset_bottom = 31.0
+texture = ExtResource("2_od77r")
+stretch_mode = 5
+
+[node name="CenterContainer" type="CenterContainer" parent="Slot" unique_id=688428665]
+layout_mode = 0
+offset_right = 31.0
+offset_bottom = 31.0
+
+[node name="TextureButton" type="TextureButton" parent="Slot/CenterContainer" unique_id=1757178842]
+custom_minimum_size = Vector2(24.355, 22.6)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="Slot" unique_id=1026552363]
+layout_mode = 0
+offset_left = 13.333334
+offset_top = 18.666666
+offset_right = 27.333334
+offset_bottom = 30.666666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 2
+
+[node name="MenuButton" type="MenuButton" parent="." unique_id=1542009028]
+layout_mode = 0
+offset_left = 3.3333335
+offset_top = 4.3333335
+offset_right = 96.4151
+offset_bottom = 93.64151
+scale = Vector2(0.265, 0.265)
+button_mask = 2

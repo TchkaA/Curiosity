@@ -1,7 +1,7 @@
 [gd_resource type="Resource" format=3 uid="uid://bp1a7eb75hl1v"]
 
 [ext_resource type="Texture2D" uid="uid://clh0v8xnip57m" path="res://assets/Origin/objects/Resources/HealthPoitions/HealthPotion.png" id="1_l8ac1"]
-[ext_resource type="Script" uid="uid://i7pamj0uub7s" path="res://scripts/Objects/Item/UseItems/HealingPotion.cs" id="2_dl53h"]
+[ext_resource type="Script" uid="uid://i7pamj0uub7s" path="res://Game/Item/UseItems/HealingPotion.cs" id="2_dl53h"]
 
 [resource]
 script = ExtResource("2_dl53h")
