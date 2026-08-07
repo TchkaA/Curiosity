@@ -32,6 +32,7 @@ offset_bottom = 31.0
 [node name="TextureButton" type="TextureButton" parent="Slot/CenterContainer" unique_id=1757178842]
 custom_minimum_size = Vector2(24.355, 22.6)
 layout_mode = 2
+mouse_filter = 1
 stretch_mode = 5
 
 [node name="Count" type="Label" parent="Slot" unique_id=1026552363]
@@ -51,4 +52,5 @@ offset_top = 4.3333335
 offset_right = 96.4151
 offset_bottom = 93.64151
 scale = Vector2(0.265, 0.265)
+mouse_filter = 1
 button_mask = 2

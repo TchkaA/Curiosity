@@ -18,15 +18,13 @@ public partial class InventorySlot : Control, IContextMenuProvider
     {
         if (Icon != null)
         {
-            Icon.MouseFilter = MouseFilterEnum.Ignore;
+            // Icon.MouseFilter = MouseFilterEnum.Ignore;
         }
-        GuiInput += OnGuiInput;
         menuButton.Pressed += OnMenuButtonPressed;
-        
     }
 
     
-    private void OnGuiInput(InputEvent @event)
+    public override void _GuiInput(InputEvent @event)
     {
         if (@event is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.Pressed)
         {
@@ -156,18 +154,20 @@ public partial class InventorySlot : Control, IContextMenuProvider
 
     private void Interact(Node2D interactor)
     {
-        Owner.Inventory.Use(CurrentItem.Item);
-        // SetItem(CurrentItem);
+        if(CurrentItem == null) return;
+        _player.Inventory.Use(CurrentItem.Item);
     }
 
 
     private void Inspect()
     {
+        if(CurrentItem == null) return;
         GD.Print($"Название - {CurrentItem.Item.Name}\nОписание - {CurrentItem.Item.Description}");
     }
 
     private void Transfer()
     {
+        if(CurrentItem == null) return;
         BookMenu.Instance.Transfer(GetParent<InventoryGrid>(), CurrentItem.Item, CurrentItem.Count);
     }
 
