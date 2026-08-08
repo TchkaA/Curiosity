@@ -14,7 +14,7 @@ public partial class Chest : InteractableObject
     }
 
 
-    public override void Interact(Node2D interactor)
+    public override void Interact(BaseEntity interactor)
     {
         MainManager.Instance.PauseGame();
         BookMenu.Instance.ShowPage("inventory");

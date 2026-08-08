@@ -110,7 +110,7 @@ public partial class InventorySlot : Control, IContextMenuProvider
         }
     }
 
-    public IEnumerable<ContextAction> GetContextAction(Node2D interactor)
+    public IEnumerable<ContextAction> GetContextAction(BaseEntity interactor)
     {   
 		yield return new ContextAction(
 			"Использовать", () => Interact(interactor)
@@ -126,7 +126,7 @@ public partial class InventorySlot : Control, IContextMenuProvider
 		);
 	}
 
-    private void drop(Node2D interactor)
+    private void drop(BaseEntity interactor)
     {
         if (CurrentItem != null)
         {
@@ -152,7 +152,7 @@ public partial class InventorySlot : Control, IContextMenuProvider
     }
 
 
-    private void Interact(Node2D interactor)
+    private void Interact(BaseEntity interactor)
     {
         if(CurrentItem == null) return;
         _player.Inventory.Use(CurrentItem.Item);

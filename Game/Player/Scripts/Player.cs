@@ -15,6 +15,7 @@ public partial class Player : BaseEntity, IInventoryOwner
 	public InteractionComponent Interact;
 	public AnimatedSprite2D sprite;
 	public Inventory Inventory { get; private set; }
+	public FollowMenuComponent followMenu;
 
 	public Player()	//TODO: Перенести логику создания в конструктор.
 	{
@@ -39,6 +40,9 @@ public partial class Player : BaseEntity, IInventoryOwner
 		// Interact Component
 		Interact = new InteractionComponent(this);
 		Interact.InitialInteractionArea();
+
+		//Follow Menu
+		followMenu = new(this);
 	}
 
 	public override void _Process(double delta)
@@ -46,6 +50,18 @@ public partial class Player : BaseEntity, IInventoryOwner
 		base._Process(delta);
 		inputComponent.Update();
 		stateMachine?.Update(delta);
+		followMenu.Update(delta);
 	}
 
+    internal void OpenMenu()
+    {
+        if(followMenu.IsMenuOpen == false)
+		{
+			followMenu.OpenMenu();
+		}
+		else
+		{
+			followMenu.CloseMenu();
+		}
+    }
 }

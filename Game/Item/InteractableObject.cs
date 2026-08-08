@@ -12,7 +12,7 @@ public partial class InteractableObject : Node2D, IInteractable
 		InitShader();
 	}
 
-	public virtual void Interact(Node2D interactor)
+	public virtual void Interact(BaseEntity interactor)
 	{
 		GD.Print("sosi hyi");
 	}

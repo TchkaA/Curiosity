@@ -3,7 +3,7 @@ using System.Drawing;
 using Godot;
 using NPC.StateMachine;
 
-public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider
+public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, ISpeekable
 {
     public StateMachine stateMachine = new StateMachine();
     public string NpcName;
@@ -65,15 +65,9 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider
         
     }
 
-    public void Interact(Node2D interactor)
+    public void Interact(BaseEntity interactor)
     {
-        Dialogue.Talk();
-        
-        // Указываем навигации двигаться к текущей позиции игрока
-        navigation.GoTo(MainManager.Instance.Player.GlobalPosition);
-        
-        // Переводим NPC в состояние следования
-        stateMachine.ChangeState(FollowState);
+        Dialogue.Talk(interactor);
     }
 
     public virtual void InteractEnter()
@@ -105,7 +99,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider
 	}
 
 
-    public IEnumerable<ContextAction> GetContextAction(Node2D interactor)
+    public IEnumerable<ContextAction> GetContextAction(BaseEntity interactor)
 	{
 		yield return new ContextAction("Взаимодействовать", () => Interact(interactor));
 		yield return new ContextAction("Осмотреть", () => GD.Print("Ne bratan"));
@@ -130,6 +124,11 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider
 			contextMenu.CloseContextMenu();
 		}
 	}
-	
-    
+
+    public IEnumerable<ContextAnswer> GetAnswers(Node2D interactor)
+    {
+        yield return new ContextAnswer("Сказать правду", () => GD.Print("slabak"));
+		yield return new ContextAnswer("Солгать", () => GD.Print("Horosh bratan"));
+    }
+
 }

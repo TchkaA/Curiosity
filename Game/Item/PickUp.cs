@@ -122,7 +122,7 @@ public partial class PickUp : Area2D, IContextMenuProvider, IInteractable
 		}
 	}
 
-	public void Interact(Node2D interactor)
+	public void Interact(BaseEntity interactor)
 	{
 		if (interactor is IInventoryOwner owner)
 		{
@@ -141,7 +141,7 @@ public partial class PickUp : Area2D, IContextMenuProvider, IInteractable
 		GD.Print($"Название - {Item.Name}\nОписание - {Item.Description}");
 	}
 
-	public IEnumerable<ContextAction> GetContextAction(Node2D interactor)
+	public IEnumerable<ContextAction> GetContextAction(BaseEntity interactor)
 	{
 		yield return new ContextAction("Подобрать", () => Interact(interactor));
 		yield return new ContextAction("Осмотреть", Inspect);

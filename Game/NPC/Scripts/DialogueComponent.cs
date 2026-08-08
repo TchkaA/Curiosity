@@ -6,16 +6,17 @@ public partial class DialogueComponent
     private string _speaker;
 
     public string DialogueText;
-    private Node2D _owner;
+    private BaseEntity _owner;
 
-    public DialogueComponent(Node2D owner)
+    public DialogueComponent(BaseEntity owner)
     {
         _owner = owner;
     }
 
-    public void Talk()
+    public void Talk(BaseEntity interactor)
     {
         MakeSound("Че надо?", 0);
+        _owner.directionComponent.TurnTo(interactor.GlobalPosition);
     }
 
 

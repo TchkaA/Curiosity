@@ -3,5 +3,5 @@ using Godot;
 
 public interface IContextMenuProvider
 {
-    IEnumerable<ContextAction> GetContextAction(Node2D interactor);
+    IEnumerable<ContextAction> GetContextAction(BaseEntity interactor);
 }

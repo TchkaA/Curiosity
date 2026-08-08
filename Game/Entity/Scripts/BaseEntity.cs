@@ -3,7 +3,9 @@ using Godot;
 public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
 {
     public StatsComponent Stats { get; set; }
-    public DirectionComponent directionComponent;
+
+
+    public DirectionComponent directionComponent { get; set; }
     public AnimationComponent animationComponent;
     public AnimatedSprite2D Visual;
     

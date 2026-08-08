@@ -4,9 +4,9 @@ public partial class InteractionComponent
 {
     private Area2D _interactionArea;
 
-    private Node2D _owner;
+    private BaseEntity _owner;
 
-    public InteractionComponent(Node2D owner)
+    public InteractionComponent(BaseEntity owner)
     {
         _owner = owner;
     }

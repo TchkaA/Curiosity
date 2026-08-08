@@ -118,4 +118,30 @@ public partial class DirectionComponent
                 break;
         }
     }
+
+    public void TurnTo(Vector2 direction)
+    {
+        var targetDirection = _owner.GlobalPosition.DirectionTo(direction);
+
+        if (targetDirection.X > 0)
+        {
+            CurrentDirection = FacingDirection.Right;
+            NotifyAnimation();
+        }
+        else if (targetDirection.X < 0)
+        {
+            CurrentDirection = FacingDirection.Left;
+            NotifyAnimation();
+        }
+        else if (targetDirection.Y > 0)
+        {
+            CurrentDirection = FacingDirection.Down;
+            NotifyAnimation();
+        }
+        else if (targetDirection.Y < 0)
+        {
+            CurrentDirection = FacingDirection.Up;
+            NotifyAnimation();
+        }
+    }
 }
