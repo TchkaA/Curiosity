@@ -121,9 +121,10 @@ public partial class InventorySlot : Control, IContextMenuProvider
         yield return new ContextAction(
 			"Бросить", () => drop(interactor)
 		);
-        yield return new ContextAction(
-			"Переложить", Transfer
-		);
+        if (BookMenu.Instance != null && BookMenu.Instance.IsExtraInventoryAvailable())
+        {
+            yield return new ContextAction("Переложить", Transfer);
+        }
 	}
 
     private void drop(BaseEntity interactor)

@@ -26,6 +26,7 @@ public class FollowMenuComponent
 
         var menu = new FollowMenu();
         _owner.GetTree().CurrentScene.AddChild(menu);
+        menu.GlobalPosition = _owner.GlobalPosition;
         IsMenuOpen = true;
         _followMenu = menu;
     }

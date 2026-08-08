@@ -7,7 +7,7 @@ public class ContextMenuComponent
     private Node2D _owner;
     private List<ContextAction> _contextActions = new();
 
-	private static readonly Vector2 _defaultSize = new(1, 1);
+	private static readonly Vector2 _defaultSize = new(1.5f, 1.5f);
 	public ContextMenuComponent(Node2D owner, IEnumerable<ContextAction> contextActions)
     {
         _owner = owner;

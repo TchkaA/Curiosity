@@ -115,5 +115,9 @@ public partial class BookMenu : CanvasLayer
         }
     }
 
+    public bool IsExtraInventoryAvailable()
+    {
+        return _extraInventory != null && _extraInventory.Inventory != null;
+    }
 
 }

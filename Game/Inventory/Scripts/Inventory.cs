@@ -31,7 +31,7 @@ public class Inventory
     {
         if (item is null)
         {
-            throw new ArgumentNullException(nameof(item));
+            GD.Print("Ошибочка инвентарь");
         }
 
         if (count <= 0)

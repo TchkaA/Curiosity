@@ -75,7 +75,3 @@ shape = SubResource("RectangleShape2D_4iymr")
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1377667174]
 visible = false
 navigation_polygon = SubResource("NavigationPolygon_vmwgv")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=991939552]
-offset_right = 40.0
-offset_bottom = 40.0
