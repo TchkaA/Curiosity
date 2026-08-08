@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class DirectionComponent
@@ -123,25 +124,24 @@ public partial class DirectionComponent
     {
         var targetDirection = _owner.GlobalPosition.DirectionTo(direction);
 
-        if (targetDirection.X > 0)
+        // Сравниваем модули, чтобы понять, какая ось важнее
+        if (Math.Abs(targetDirection.X) > Math.Abs(targetDirection.Y))
         {
-            CurrentDirection = FacingDirection.Right;
-            NotifyAnimation();
+            // Горизонтальное преобладает
+            if (targetDirection.X > 0)
+                CurrentDirection = FacingDirection.Right;
+            else if (targetDirection.X < 0)
+                CurrentDirection = FacingDirection.Left;
         }
-        else if (targetDirection.X < 0)
+        else
         {
-            CurrentDirection = FacingDirection.Left;
-            NotifyAnimation();
+            // Вертикальное преобладает (или равны – тогда вертикаль)
+            if (targetDirection.Y > 0)
+                CurrentDirection = FacingDirection.Down;
+            else if (targetDirection.Y < 0)
+                CurrentDirection = FacingDirection.Up;
         }
-        else if (targetDirection.Y > 0)
-        {
-            CurrentDirection = FacingDirection.Down;
-            NotifyAnimation();
-        }
-        else if (targetDirection.Y < 0)
-        {
-            CurrentDirection = FacingDirection.Up;
-            NotifyAnimation();
-        }
+
+        NotifyAnimation();
     }
 }
