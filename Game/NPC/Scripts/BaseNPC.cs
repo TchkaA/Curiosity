@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+using System.Drawing;
 using Godot;
 using NPC.StateMachine;
 
-public partial class BaseNPC : BaseEntity, IInteractable
+public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider
 {
     public StateMachine stateMachine = new StateMachine();
     public string NpcName;
@@ -20,6 +22,11 @@ public partial class BaseNPC : BaseEntity, IInteractable
     private NavigationComponent navigation;
     public NPCFollowState FollowState;
     public NPCIdleState IdleState;
+    private bool _isInRange = false;
+
+    public ContextMenuComponent contextMenu;
+
+    private Vector2 _bubbleSize = new Vector2(0.25f,0.25f);
 
     public NavigationComponent Navigation
     {
@@ -39,9 +46,14 @@ public partial class BaseNPC : BaseEntity, IInteractable
         FollowState = new(this);
         IdleState = new(this);
 
+        contextMenu = new(this, GetContextAction(MainManager.Instance.Player));
+
         InitShader();
 
         stateMachine.ChangeState(IdleState);
+
+        InputPickable = true;
+		InputEvent += OnInputEvent;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -66,6 +78,7 @@ public partial class BaseNPC : BaseEntity, IInteractable
 
     public virtual void InteractEnter()
     {
+        _isInRange = true;
         if (material == null)
             return;
 
@@ -74,10 +87,12 @@ public partial class BaseNPC : BaseEntity, IInteractable
 
     public virtual void InteractExit()
 	{
+        _isInRange = false;
 		if (material == null)
 			return;
 
 		material.SetShaderParameter("outline_size", 0f);
+        contextMenu.CloseContextMenu();
 	}
 
 
@@ -89,5 +104,32 @@ public partial class BaseNPC : BaseEntity, IInteractable
         Visual.Material = material;
 	}
 
+
+    public IEnumerable<ContextAction> GetContextAction(Node2D interactor)
+	{
+		yield return new ContextAction("Взаимодействовать", () => Interact(interactor));
+		yield return new ContextAction("Осмотреть", () => GD.Print("Ne bratan"));
+	}
+
+    private void OnInputEvent(Node viewport, InputEvent @event, long shapeIdx)
+	{
+		if (_isInRange && @event is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Right })
+		{
+			contextMenu.ShowContextMenu(_bubbleSize);
+			// Важно: без этого тот же клик долетит до _UnhandledInput и сразу закроет
+			// меню, которое мы только что открыли.
+			GetViewport().SetInputAsHandled();
+		}
+	}
+
+
+    public override void _UnhandledInput(InputEvent @event)
+	{
+        if (IsInstanceValid(ContextMenuComponent.activeContextMenu) && @event is InputEventMouseButton { Pressed: true })
+		{
+			contextMenu.CloseContextMenu();
+		}
+	}
+	
     
 }

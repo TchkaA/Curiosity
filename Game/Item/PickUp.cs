@@ -20,6 +20,8 @@ public partial class PickUp : Area2D, IContextMenuProvider, IInteractable
 	private ShaderMaterial _material;
 	private bool _isInRange;
 
+	private ContextMenuComponent contextMenu;
+
 	// Общее для всех PickUp — открыто только одно меню за раз.
 	private static ContextMenu _activeContextMenu;
 
@@ -44,6 +46,8 @@ public partial class PickUp : Area2D, IContextMenuProvider, IInteractable
 		SetupVisual();
 		SetupOutline();
 		SetupCollision();
+
+		contextMenu = new(this,  GetContextAction(MainManager.Instance.Player));
 
 		InputPickable = true;
 		InputEvent += OnInputEvent;
@@ -80,29 +84,29 @@ public partial class PickUp : Area2D, IContextMenuProvider, IInteractable
 	{
 		if (_isInRange && @event is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Right })
 		{
-			ShowContextMenu();
+			contextMenu.ShowContextMenu();
 			// Важно: без этого тот же клик долетит до _UnhandledInput и сразу закроет
 			// меню, которое мы только что открыли.
 			GetViewport().SetInputAsHandled();
 		}
 	}
 
-	private void ShowContextMenu()
-	{
-		CloseContextMenu();
+	// private void ShowContextMenu()
+	// {
+	// 	CloseContextMenu();
 
-		var menu = new ContextMenu { Name = "ContextMenu" };
-		AddChild(menu);
-		menu.Initialize(GetContextAction(MainManager.Instance.Player));
-		_activeContextMenu = menu;
-	}
+	// 	var menu = new ContextMenu { Name = "ContextMenu" };
+	// 	AddChild(menu);
+	// 	menu.Initialize(GetContextAction(MainManager.Instance.Player));
+	// 	_activeContextMenu = menu;
+	// }
 
-	public void CloseContextMenu()
-	{
-		if (IsInstanceValid(_activeContextMenu))
-			_activeContextMenu.QueueFree();
-		_activeContextMenu = null;
-	}
+	// public void CloseContextMenu()
+	// {
+	// 	if (IsInstanceValid(_activeContextMenu))
+	// 		_activeContextMenu.QueueFree();
+	// 	_activeContextMenu = null;
+	// }
 
 	/// <summary>
 	/// Любой клик, который не был "съеден" GUI-элементом меню (например, клик по пустому
@@ -114,7 +118,7 @@ public partial class PickUp : Area2D, IContextMenuProvider, IInteractable
 	{
 		if (IsInstanceValid(_activeContextMenu) && @event is InputEventMouseButton { Pressed: true })
 		{
-			CloseContextMenu();
+			contextMenu.CloseContextMenu();
 		}
 	}
 
@@ -153,6 +157,6 @@ public partial class PickUp : Area2D, IContextMenuProvider, IInteractable
 	{
 		_isInRange = false;
 		_material?.SetShaderParameter("outline_size", 0f);
-		CloseContextMenu();
+		contextMenu.CloseContextMenu();
 	}
 }
