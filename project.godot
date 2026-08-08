@@ -33,6 +33,10 @@ Player="Main character"
 ContextMenu=""
 PlayerInventory=""
 
+[gui]
+
+theme/custom_font="uid://3vru0mfjdxnw"
+
 [input]
 
 move_left={

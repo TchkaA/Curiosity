@@ -2,17 +2,23 @@ using Godot;
 
 public class MovementComponent
 {
-    private Player player;
+    private BaseEntity _owner;
 
-    public MovementComponent(Player player)
+    public MovementComponent(BaseEntity owner)
     {
-        this.player = player;
+        _owner = owner;
     }
 
     public void Move(Vector2 direction)
     {
-        Vector2 velocity = direction * player.Stats.Speed;
-        player.Velocity = velocity;
-        player.MoveAndSlide();
+        Vector2 velocity = direction * _owner.Stats.Speed;
+        _owner.Velocity = velocity;
+        _owner.MoveAndSlide();
+    }
+
+    public void MoveNPC(Vector2 velocity)
+    {
+        _owner.Velocity = velocity;
+        _owner.MoveAndSlide();
     }
 }

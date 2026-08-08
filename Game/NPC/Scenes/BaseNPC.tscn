@@ -1,20 +1,25 @@
 [gd_scene format=3 uid="uid://dii1a1nwpw8fv"]
 
 [ext_resource type="Script" uid="uid://brc872uqhveqw" path="res://Game/NPC/Scripts/BaseNPC.cs" id="1_5ct1e"]
-[ext_resource type="Texture2D" uid="uid://b1gojduaui0ic" path="res://assets/Pixel Crawler - Free Pack/Entities/Npc's/Citizen_F/Peasant_A/Idle/Idle-Sheet.png" id="2_o2wd0"]
+[ext_resource type="SpriteFrames" uid="uid://de7qn4xrwa7p" path="res://Game/NPC/Assets/NPC_sprite_frames.tres" id="2_1fdf2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5ct1e"]
+radius = 5.25
+height = 17.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4iymr"]
-atlas = ExtResource("2_o2wd0")
-region = Rect2(0, 0, 64.83586, 64.30222)
-
-[node name="BaseNPC" type="CharacterBody2D" unique_id=226350266]
-scale = Vector2(3, 3)
+[node name="BaseNPC" type="CharacterBody2D" unique_id=226350266 node_paths=PackedStringArray("agent")]
+scale = Vector2(4, 4)
 script = ExtResource("1_5ct1e")
+agent = NodePath("NavigationAgent2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=436049907]
+sprite_frames = ExtResource("2_1fdf2")
+animation = &"idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1938529248]
+position = Vector2(0, 1.25)
 shape = SubResource("CapsuleShape2D_5ct1e")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1286817259]
-texture = SubResource("AtlasTexture_4iymr")
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1414143738]
+avoidance_enabled = true
+debug_enabled = true

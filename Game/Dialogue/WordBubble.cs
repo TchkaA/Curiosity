@@ -19,7 +19,7 @@ public partial class WordBubble : Node2D
         tween.TweenProperty(
             this,
             "position:y",
-            Position.Y - 20,
+            Position.Y - 15,
             1.0f
         );
 
@@ -42,7 +42,7 @@ public partial class WordBubble : Node2D
         tween.TweenProperty(
             this,
             "position:y",
-            Position.Y - 20,
+            Position.Y - 15,
             1.0f
         );
 
@@ -72,7 +72,7 @@ public partial class WordBubble : Node2D
             _label.Text += c;
 
             await ToSignal(
-                GetTree().CreateTimer(0.08f),
+                GetTree().CreateTimer(0.11f),
                 "timeout"
             );
         }

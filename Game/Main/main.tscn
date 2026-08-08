@@ -17,10 +17,16 @@ region = Rect2(0, 0, 16.456524, 16.013126)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4iymr"]
 size = Vector2(13.395351, 10.666668)
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_vmwgv"]
+vertices = PackedVector2Array(284.45313, 590.9297, 58.898438, 617.3594, 149.11719, 496.5, 389.0703, 2.9296875, 221.11719, 242.39063, -174.99219, 0.0390625, 36.257813, 236.82031, -264.3125, 398.4922, -28.960938, 352.29688, -30.953125, 489.4297, -136.70313, 621.3906, -304.09375, 535.85156)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 0, 2, 4), PackedInt32Array(5, 3, 4, 6), PackedInt32Array(7, 5, 6, 8), PackedInt32Array(7, 8, 9, 10, 11)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(401, -7, -183, -10, -274, 396, -316, 541, -134, 634, -21, 493, -19, 355, 42, 247, 208, 252, 140, 492, 37, 630, 293, 600)])
+
 [node name="main" type="Node2D" unique_id=1142821517]
 
 [node name="Player" parent="." unique_id=1527947335 instance=ExtResource("1_vmwgv")]
 position = Vector2(162, 164)
+motion_mode = 1
 
 [node name="InteractableObject" parent="." unique_id=132856208 instance=ExtResource("2_oab63")]
 position = Vector2(555, 315)
@@ -35,8 +41,9 @@ tile_set = ExtResource("3_bhrp5")
 position = Vector2(577, 321)
 
 [node name="BaseNPC" parent="." unique_id=226350266 instance=ExtResource("5_vp847")]
-position = Vector2(-74, 322)
+position = Vector2(-96, 380)
 input_pickable = true
+motion_mode = 1
 
 [node name="Area2D" type="Area2D" parent="." unique_id=357046190]
 position = Vector2(216, 38)
@@ -64,3 +71,7 @@ texture = SubResource("AtlasTexture_5xbwf")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chest" unique_id=1213493998]
 position = Vector2(0, 1.666666)
 shape = SubResource("RectangleShape2D_4iymr")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1377667174]
+visible = false
+navigation_polygon = SubResource("NavigationPolygon_vmwgv")

@@ -24,13 +24,18 @@ public partial class DialogueComponent
     public void MakeSound(string text, int act = 0)
     {
         var bubble = GD.Load<PackedScene>("res://Game/Dialogue/word_bubble.tscn").Instantiate<WordBubble>();
-        _owner.GetTree().CurrentScene.AddChild(bubble);
-        bubble.GlobalPosition = _owner.GlobalPosition + new Vector2(-20, -90);
+        _owner.AddChild(bubble);
+        bubble.GlobalPosition = _owner.GlobalPosition + new Vector2(-50, -70);
+        bubble.Scale = new Vector2(0.3f,0.3f); 
         switch (act)
         {
-            case 0: bubble.ShowText(text); break;
-            case 1: bubble.ShowDialog(text); break;
-            case 2: bubble.ShowThought(text); break;
+            case 0: 
+                bubble.ShowText(text); break;
+            case 1: 
+                bubble.Scale = bubble.Scale - new Vector2(0.1f,0.1f); 
+                bubble.ShowDialog(text); break;
+            case 2:
+                bubble.ShowThought(text); break;
         }
     }
 }

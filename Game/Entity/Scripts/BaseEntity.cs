@@ -5,7 +5,7 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
     public StatsComponent Stats { get; set; }
     public DirectionComponent directionComponent;
     public AnimationComponent animationComponent;
-    public AnimatedSprite2D Sprite;
+    public AnimatedSprite2D Visual;
     
     public override void _Ready()
     {
@@ -14,11 +14,11 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
         // Initialize the direction component
         directionComponent = new DirectionComponent(this);
 
-        Sprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
+        Visual = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
 
-        if (Sprite != null)
+        if (Visual != null)
         {
-            animationComponent = new AnimationComponent(this, Sprite);
+            animationComponent = new AnimationComponent(this, Visual);
         }
 
         
