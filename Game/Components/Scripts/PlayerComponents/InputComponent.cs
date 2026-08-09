@@ -24,7 +24,18 @@ public class InputComponent
         ).Normalized();
         UpdateDirection(MovementInput);
         if(Input.IsActionJustPressed("interact")) _player.Interact.Interact();
-        if(Input.IsActionJustPressed("follow_menu")) _player.OpenMenu();
+        if(Input.IsActionJustPressed("follow_menu"))
+        {
+            switch (_player.stateMachine.CurrentHierarchy)
+            {
+                case "Exploring":
+                    _player.EnterCombat();
+                    break;
+                case "Combat":
+                    _player.ExitCombat();
+                    break;    
+            }
+        }
     }
     public void UpdateDirection(Vector2 direction)
     {

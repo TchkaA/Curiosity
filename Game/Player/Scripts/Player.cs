@@ -1,15 +1,18 @@
 using Godot;
 using System;
-using System.ComponentModel;
-using System.Security.Cryptography.X509Certificates;
-
+using PlayerHFSM;
 
 
 public partial class Player : BaseEntity, IInventoryOwner
 {
-	public StateMachine stateMachine = new StateMachine();
+	public StateMachine stateMachine;
+	public ExploringState ExploringState;
+	public CombatState CombatState;
 	public PlayerMoveState moveState;
 	public PlayerIdleState idleState;
+	public InteractionState interactionState;
+	public PunchingState punchingState;
+
 	public InputComponent inputComponent;
 	public MovementComponent movementComponent;
 	public InteractionComponent Interact;
@@ -26,9 +29,28 @@ public partial class Player : BaseEntity, IInventoryOwner
 	{
 		base._Ready();
 
-		moveState = new PlayerMoveState(this);
-		idleState = new PlayerIdleState(this);
-		stateMachine.ChangeState(idleState);
+		stateMachine = new(this);
+		moveState = new(this);
+		idleState = new(this);
+		interactionState = new(this);
+		punchingState = new(this);
+
+		ExploringState = new ExploringState(
+            stateMachine,
+            idleState,
+            moveState,
+            interactionState
+        );
+
+		CombatState = new CombatState(
+			stateMachine,
+            idleState,
+            moveState,
+			punchingState
+			);
+
+		
+
 		Inventory.AddItem(GD.Load<Item>("res://assets/Origin/objects/Resources/HealthPoitions/health_poition.tres"));
 
 		// movement component
@@ -43,6 +65,8 @@ public partial class Player : BaseEntity, IInventoryOwner
 
 		//Follow Menu
 		followMenu = new(this);
+
+		stateMachine.ChangeState(ExploringState);
 	}
 
 	public override void _Process(double delta)
@@ -63,5 +87,15 @@ public partial class Player : BaseEntity, IInventoryOwner
 		{
 			followMenu.CloseMenu();
 		}
+    }
+	public void EnterCombat()
+    {
+        stateMachine.ChangeState(CombatState);
+    }
+    
+    // Возврат к исследованию
+    public void ExitCombat()
+    {
+        stateMachine.ChangeState(ExploringState);
     }
 }
