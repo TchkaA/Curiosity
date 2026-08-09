@@ -3,6 +3,10 @@
 [ext_resource type="Script" uid="uid://dolqp4nx4lr0j" path="res://Game/Inventory/Scripts/InventorySlot.cs" id="1_ammow"]
 [ext_resource type="Texture2D" uid="uid://0f36marntkx8" path="res://assets/UI/SquareIcon.tres" id="2_od77r"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_j4gau"]
+font_size = 18
+font_color = Color(0, 0, 0, 1)
+
 [node name="InventorySlot" type="Control" unique_id=811983990 node_paths=PackedStringArray("Icon", "LabelCount", "menuButton")]
 z_index = 2
 layout_mode = 3
@@ -39,11 +43,13 @@ stretch_mode = 5
 layout_mode = 0
 offset_left = 13.333334
 offset_top = 18.666666
-offset_right = 27.333334
-offset_bottom = 30.666666
+offset_right = 28.333336
+offset_bottom = 29.666666
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 8
+label_settings = SubResource("LabelSettings_j4gau")
 horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="MenuButton" type="MenuButton" parent="." unique_id=1542009028]
 layout_mode = 0

@@ -29,12 +29,16 @@ public class FollowMenuComponent
         menu.GlobalPosition = _owner.GlobalPosition;
         IsMenuOpen = true;
         _followMenu = menu;
+
+        // Подписка на удаление меню
+        _followMenu.TreeExited += OnFollowMenuTreeExited;
     }
 
     public void CloseMenu()
     {
         if (_followMenu != null)
         {
+            _followMenu.TreeExited -= OnFollowMenuTreeExited;
             _followMenu.QueueFree();
             _followMenu = null;
         }
@@ -89,6 +93,19 @@ public class FollowMenuComponent
             case DirectionComponent.FacingDirection.Right: return _previousDirection = new Vector2(-OFFSET_DISTANCE, 0);
             default: return _previousDirection;
         }
+    }
+
+    public void Initialize(IEnumerable<ContextAnswer> actions)
+    {
+        _followMenu.Initialize(actions);
+    }
+
+    private void OnFollowMenuTreeExited()
+    {
+        // Меню было удалено (например, через QueueFree)
+        _followMenu = null;
+        IsMenuOpen = false;
+        
     }
 
 }

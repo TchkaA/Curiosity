@@ -84,7 +84,6 @@ navigation_polygon = SubResource("NavigationPolygon_vmwgv")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=256372578]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1486030821]
-visible = false
 material = SubResource("ShaderMaterial_bhrp5")
 anchors_preset = 15
 anchor_right = 1.0

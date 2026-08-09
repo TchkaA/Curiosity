@@ -10,6 +10,9 @@ region = Rect2(144.69887, 160.2733, 46.01172, 46.75203)
 atlas = ExtResource("1_6rbba")
 region = Rect2(305.91357, 66.94801, 12.8526, 12.099785)
 
+[sub_resource type="LabelSettings" id="LabelSettings_5k6k6"]
+font_size = 30
+
 [node name="Profile_page" type="CanvasLayer" unique_id=733364337]
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1822735104]
@@ -32,3 +35,5 @@ offset_left = 380.0
 offset_top = 129.0
 offset_right = 482.0
 offset_bottom = 159.0
+text = "Игрок"
+label_settings = SubResource("LabelSettings_5k6k6")

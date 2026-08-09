@@ -23,6 +23,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     public NPCFollowState FollowState;
     public NPCIdleState IdleState;
     private bool _isInRange = false;
+    public bool InInteraction = false;
 
     public ContextMenuComponent contextMenu;
 
@@ -68,7 +69,10 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     public void Interact(BaseEntity interactor)
     {
         Dialogue.Talk(interactor);
-    }
+        Camera.Instance.AddTarget(this);
+        Camera.Instance.AddZoom(new Vector2(1.5f,1.5f));
+        InInteraction= true;
+    }   
 
     public virtual void InteractEnter()
     {
@@ -87,6 +91,9 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
 
 		material.SetShaderParameter("outline_size", 0f);
         contextMenu.CloseContextMenu();
+        Camera.Instance.RemoveTarget(this);
+        Camera.Instance.RemoveZoom();
+        InInteraction= false;
 	}
 
 
@@ -129,6 +136,15 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     {
         yield return new ContextAnswer("Сказать правду", () => GD.Print("slabak"));
 		yield return new ContextAnswer("Солгать", () => GD.Print("Horosh bratan"));
+    }
+
+
+    public override void _ExitTree()
+    {
+        Camera.Instance.RemoveTarget(this);
+        Camera.Instance.RemoveZoom();
+
+        base._ExitTree();
     }
 
 }

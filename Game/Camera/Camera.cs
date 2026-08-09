@@ -7,12 +7,18 @@ public partial class Camera : Camera2D
     private List<Node2D> _targets = new();
 
     private Player _player;
+    public static Camera Instance;
 
     [Export]
     private float _followSpeed = 5.0f;
 
+    [Export]
+    private Vector2 _zoom = Vector2.One;
+    private Tween _tween;
+
     public override void _Ready()
     {
+        Instance = this;
         _player = GetTree().GetFirstNodeInGroup("Player") as Player;
 
         if (_player != null)
@@ -73,5 +79,17 @@ public partial class Camera : Camera2D
     public void RemoveTarget(Node2D target)
     {
         _targets.Remove(target);
+    }
+
+    public void AddZoom(Vector2 zoomVect)
+    {
+        _tween = CreateTween();
+        _tween.TweenProperty(this, "zoom", zoomVect, 0.3f).SetTrans(Tween.TransitionType.Linear);
+    }
+
+    public void RemoveZoom()
+    {
+        _tween = CreateTween();
+        _tween.TweenProperty(this, "zoom", _zoom, 0.3f).SetTrans(Tween.TransitionType.Linear);
     }
 }

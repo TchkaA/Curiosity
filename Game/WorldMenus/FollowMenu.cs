@@ -11,8 +11,6 @@ public partial class FollowMenu : VBoxContainer
     {
 
         AddChild(new Button(){Text = "ыфафыа"});
-        AddChild(new Button(){Text = "ыфафыа"});
-        AddChild(new Button(){Text = "ыфафыа"});
 
         // Начальный масштаб – ноль (невидимо)
         Scale = Vector2.Zero;

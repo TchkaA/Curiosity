@@ -19,19 +19,25 @@ public partial class InteractionComponent
 			if (body is IInteractable obj)
 			{
 				obj.Interact(_owner);
-                return;
 			}
+            if (body is ISpeekable speekable)
+            {
+                GD.Print("sdasd");
+                var owner = _owner as Player;
+                owner.OpenMenu();
+                owner.followMenu.Initialize(speekable.GetAnswers(_owner));
+            }
 		}
         // Проверяем области
-        var areas = _interactionArea.GetOverlappingAreas();
-        foreach (var area in areas)
-        {
-            if (area is IInteractable obj)
-            {
-                obj.Interact(_owner);
-                return;
-            }
-        }
+        // var areas = _interactionArea.GetOverlappingAreas();
+        // foreach (var area in areas)
+        // {
+        //     if (area is IInteractable obj)
+        //     {
+        //         obj.Interact(_owner);
+        //         return;
+        //     }
+        // }
     }
     public void InteractEnter(Node2D body)
     {
