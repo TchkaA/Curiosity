@@ -5,7 +5,7 @@ using NPC.StateMachine;
 
 public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, ISpeekable
 {
-    public StateMachine stateMachine = new StateMachine();
+    public StateMachine stateMachine;
     public string NpcName;
 
     public DialogueComponent Dialogue;
@@ -38,6 +38,9 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     {
         base._Ready();
         GD.Print("BaseNPC is ready");
+
+        stateMachine = new StateMachine(this);
+
 
         Dialogue = new(this);
         Sound = new(this);
