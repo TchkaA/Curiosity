@@ -61,13 +61,12 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     }
 
     public override void _PhysicsProcess(double delta)
-    {
-
-        base._Process(delta);
-        stateMachine.Update(delta);
-        navigation.Update();
-        
-    }
+{
+    base._PhysicsProcess(delta);
+    
+    stateMachine.Update(delta);
+    navigation.Update();
+}
 
     public void Interact(BaseEntity interactor)
     {

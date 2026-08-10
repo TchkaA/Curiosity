@@ -1,56 +1,77 @@
-using System.Runtime.InteropServices;
-using System.Security;
 using Godot;
 
 public class AnimationComponent
 {
-    public bool isChanged;
-    private AnimatedSprite2D _sprite;
+    private readonly AnimatedSprite2D _sprite;
 
-    public string Direction = "down";
-    public string Animation = "idle";
-    public AnimationComponent(BaseEntity owner, AnimatedSprite2D sprite)
+    private string _prefix = string.Empty;
+    private string _animation = "idle";
+    private string _direction = "down";
+
+    private bool _dirty = true;
+
+    public AnimationComponent(AnimatedSprite2D sprite)
     {
         _sprite = sprite;
     }
 
-    public void UpdateAnimation()
+    public void SetPrefix(string prefix)
     {
-        if (isChanged == true)
-        {
-            _sprite.Play(AnimationRequest());
-            isChanged = false;
-        }
+        prefix ??= string.Empty;
+
+        if (_prefix == prefix)
+            return;
+
+        _prefix = prefix;
+        _dirty = true;
     }
 
-    public string AnimationRequest()
+    public void SetAnimation(string animation)
     {
-        switch (Direction)
-        {
-            case "left":
-                _sprite.FlipH = true;
-                return $"{Animation}_forward".ToLower();
-            case "right":
-                _sprite.FlipH = false;
-                return $"{Animation}_forward".ToLower();
-            default:
-                return $"{Animation}_{Direction}".ToLower();
-        }
-        
+        if (_animation == animation)
+            return;
+
+        _animation = animation;
+        _dirty = true;
     }
 
-    public void SetDirection(string dir)
+    public void SetDirection(string direction)
     {
-        Direction = dir;
-        isChanged = true;
+        direction ??= "down";
+
+        if (_direction == direction)
+            return;
+
+        _direction = direction;
+        _dirty = true;
     }
 
-    public void SetAnimation(string anim)
+    public void Update()
     {
-        Animation = anim;
-        isChanged = true;
+        if (!_dirty)
+            return;
+
+        _dirty = false;
+
+        UpdateFlip();
+        _sprite.Play(BuildAnimationName());
     }
 
+    private string BuildAnimationName()
+    {
+        string direction = _direction;
 
+        if (direction == "left" || direction == "right")
+            direction = "forward";
 
+        if (string.IsNullOrEmpty(_prefix))
+            return $"{_animation}_{direction}".ToLower();
+
+        return $"{_prefix}_{_animation}_{direction}".ToLower();
+    }
+
+    private void UpdateFlip()
+    {
+        _sprite.FlipH = _direction == "left";
+    }
 }

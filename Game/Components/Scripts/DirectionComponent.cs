@@ -10,138 +10,95 @@ public partial class DirectionComponent
         Left,
         Right
     }
-    private BaseEntity _owner;
+
+    private readonly Node2D _owner;
+
     public FacingDirection CurrentDirection { get; private set; } = FacingDirection.Down;
-    public DirectionComponent(BaseEntity owner)
+
+    public event Action<string> DirectionChanged;
+
+    public DirectionComponent(Node2D owner = null)
     {
         _owner = owner;
     }
-    // public void UpdateDirection()
-    // {
-    //     if (_owner.inputComponent?.MovementInput != Vector2.Zero)
-    //     {
-    //         UpdateCurrentDirection();
-    //     }
-    // }
-
-    // private void UpdateCurrentDirection()
-    // {
-    //     var _playerDirection = _owner.inputComponent.MovementInput;
-    //     if (_playerDirection.X > 0)
-    //     {
-    //         CurrentDirection = FacingDirection.Right;
-    //     }
-    //     else if (_playerDirection.X < 0)
-    //     {
-    //         CurrentDirection = FacingDirection.Left;
-    //     }
-    //     else if (_playerDirection.Y > 0)
-    //     {
-    //         CurrentDirection = FacingDirection.Down;
-    //     }
-    //     else if (_playerDirection.Y < 0)
-    //     {
-    //         CurrentDirection = FacingDirection.Up;
-    //     }
-    // }
-
-    public void SetDirection(FacingDirection direction)
-    {
-        CurrentDirection = direction;
-    }
-
 
     public void SetDirection(Vector2 direction)
     {
-        if (direction.X > 0)
-        {
-            CurrentDirection = FacingDirection.Right;
-            NotifyAnimation();
-        }
-        else if (direction.X < 0)
-        {
-            CurrentDirection = FacingDirection.Left;
-            NotifyAnimation();
-        }
-        else if (direction.Y > 0)
-        {
-            CurrentDirection = FacingDirection.Down;
-            NotifyAnimation();
-        }
-        else if (direction.Y < 0)
-        {
-            CurrentDirection = FacingDirection.Up;
-            NotifyAnimation();
-        }
+        if (direction == Vector2.Zero)
+            return;
+
+        SetDirection(FromVector(direction));
+    }
+
+    public void SetDirection(FacingDirection direction)
+    {
+        if (CurrentDirection == direction)
+            return;
+
+        CurrentDirection = direction;
+        DirectionChanged?.Invoke(ToAnimationString(CurrentDirection));
     }
 
     public void SetDirection(string direction)
     {
-        switch (direction.ToLower())
+        if (Enum.TryParse(direction, true, out FacingDirection parsed))
         {
-            case "up":
-                CurrentDirection = FacingDirection.Up;
-                break;
-            case "down":
-                CurrentDirection = FacingDirection.Down;
-                break;
-            case "left":
-                CurrentDirection = FacingDirection.Left;
-                break;
-            case "right":
-                CurrentDirection = FacingDirection.Right;
-                break;
-            default:
-                GD.PrintErr("Invalid direction string: " + direction);
-                break;
-        }
-    }
-
-    public void NotifyAnimation()
-    {
-        switch (CurrentDirection)
-        {
-            case FacingDirection.Up:
-                _owner.animationComponent.SetDirection("up");
-                break;
-            case FacingDirection.Down:
-                _owner.animationComponent.SetDirection("down");
-                break;
-            case FacingDirection.Left:
-                _owner.animationComponent.SetDirection("left");
-                break;
-            case FacingDirection.Right:
-                _owner.animationComponent.SetDirection("right");
-                break;
-            default:
-                GD.PrintErr("Invalid direction string");
-                _owner.animationComponent.SetDirection("down");
-                break;
-        }
-    }
-
-    public void TurnTo(Vector2 direction)
-    {
-        var targetDirection = _owner.GlobalPosition.DirectionTo(direction);
-
-        // Сравниваем модули, чтобы понять, какая ось важнее
-        if (Math.Abs(targetDirection.X) > Math.Abs(targetDirection.Y))
-        {
-            // Горизонтальное преобладает
-            if (targetDirection.X > 0)
-                CurrentDirection = FacingDirection.Right;
-            else if (targetDirection.X < 0)
-                CurrentDirection = FacingDirection.Left;
+            SetDirection(parsed);
         }
         else
         {
-            // Вертикальное преобладает (или равны – тогда вертикаль)
-            if (targetDirection.Y > 0)
-                CurrentDirection = FacingDirection.Down;
-            else if (targetDirection.Y < 0)
-                CurrentDirection = FacingDirection.Up;
+            GD.PrintErr($"Invalid direction string: {direction}");
+        }
+    }
+
+    /// <summary>
+    /// Повернуться к мировой позиции цели.
+    /// Использует owner, если он был передан в конструкторе.
+    /// </summary>
+    public void TurnTo(Vector2 targetPosition)
+    {
+        if (_owner == null)
+        {
+            GD.PrintErr("DirectionComponent.TurnTo called without owner.");
+            return;
         }
 
-        NotifyAnimation();
+        Vector2 direction = _owner.GlobalPosition.DirectionTo(targetPosition);
+        SetDirection(direction);
+    }
+
+    /// <summary>
+    /// Повернуться к цели без зависимости от owner.
+    /// </summary>
+    public void TurnTo(Vector2 targetPosition, Vector2 ownerPosition)
+    {
+        Vector2 direction = ownerPosition.DirectionTo(targetPosition);
+        SetDirection(direction);
+    }
+
+    private static FacingDirection FromVector(Vector2 direction)
+    {
+        if (Mathf.Abs(direction.X) > Mathf.Abs(direction.Y))
+        {
+            return direction.X > 0f
+                ? FacingDirection.Right
+                : FacingDirection.Left;
+        }
+
+        return direction.Y > 0f
+            ? FacingDirection.Down
+            : FacingDirection.Up;
+    }
+
+    public static string ToAnimationString(FacingDirection direction)
+    {
+        return direction switch
+        {
+            FacingDirection.Up => "up",
+            FacingDirection.Down => "down",
+            FacingDirection.Left => "left",
+            FacingDirection.Right => "right",
+            _ => "down"
+        };
     }
 }

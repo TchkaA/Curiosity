@@ -1,62 +1,51 @@
 using Godot;
 using System;
-public partial class PlayerIdleState : IState
+public partial class PlayerIdleState : IState, ISubState
 {
     private Player _player;
-    Vector2 input;
+    public System.Action<IState> Switch { get; set; }
+
+    public PlayerIdleState(Player player) => _player = player;
+
     public void Enter()
     {
-        _player.animationComponent.SetAnimation("idle");
+        _player.Animation.SetAnimation("idle");
     }
 
-    public void Exit()
-    {
-    }
-
-    public PlayerIdleState(Player _player)
-    {
-        this._player = _player;
-    }
+    public void Exit() { }
 
     public void Update(double delta)
     {
-        input = _player.inputComponent.MovementInput;
+        var input = _player.inputComponent.MovementInput;
         if (input != Vector2.Zero)
         {
-            _player.stateMachine.ChangeState(_player.moveState);
+            Switch?.Invoke(_player.moveState);   // ← внутри иерархии, не корень
             return;
         }
     }
 }
-public partial class PlayerMoveState : IState
+
+public partial class PlayerMoveState : IState, ISubState
 {
-    public Player Player;
-    Vector2 input;
-    Vector2 velocity;
-    public void Enter()
-    {
-    }
+    private Player _player;
+    public System.Action<IState> Switch { get; set; }
 
-    public void Exit()
-    {
-    }
+    public PlayerMoveState(Player player) => _player = player;
 
-    public PlayerMoveState(Player _player)
-    {
-        Player = _player;
-    }
+    public void Enter() { }
+    public void Exit() { }
 
     public void Update(double delta)
     {
-        Vector2 input = Player.inputComponent.MovementInput;
+        var input = _player.inputComponent.MovementInput;
         if (input != Vector2.Zero)
         {
-            Player.movementComponent.Move(input);
-            Player.animationComponent.SetAnimation("move");
+            _player.movementComponent.Move(input);
+            _player.Animation.SetAnimation("move");
         }
         else
         {
-            Player.stateMachine.ChangeState(Player.idleState);
+            Switch?.Invoke(_player.idleState);
         }
     }
 }

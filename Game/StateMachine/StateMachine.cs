@@ -6,7 +6,7 @@ public partial class StateMachine: IState
 	public IState CurrentState { get; private set; }
 	public IState PreviousState { get; private set; }
 	public BaseEntity player {get; private set;}
-	public string CurrentHierarchy = "Exploring";
+	
 	public StateMachine(BaseEntity Player)
 	{
 		player = Player;

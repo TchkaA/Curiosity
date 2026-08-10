@@ -2,18 +2,17 @@ using Godot;
 
 public class InputComponent
 {
-
     public Vector2 MovementInput { get; private set; }
+
     public bool AttackPressed { get; private set; }
     public bool RollPressed { get; private set; }
     public bool InteractPressed { get; private set; }
-    private Player _player;
 
+    private Player _player;
 
     public InputComponent(Player player)
     {
         _player = player;
-
     }
 
     public void Update()
@@ -22,21 +21,20 @@ public class InputComponent
             Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left"),
             Input.GetActionStrength("move_down") - Input.GetActionStrength("move_up")
         ).Normalized();
+
         UpdateDirection(MovementInput);
-        if(Input.IsActionJustPressed("interact")) _player.Interact.Interact();
-        if(Input.IsActionJustPressed("follow_menu"))
+
+        if (Input.IsActionJustPressed("interact"))
         {
-            switch (_player.stateMachine.CurrentHierarchy)
-            {
-                case "Exploring":
-                    _player.EnterCombat();
-                    break;
-                case "Combat":
-                    _player.ExitCombat();
-                    break;    
-            }
+            _player.Interact.Interact();
+        }
+
+        if (Input.IsActionJustPressed("change_state"))
+        {
+            _player.ToggleCombat();
         }
     }
+
     public void UpdateDirection(Vector2 direction)
     {
         if (direction != Vector2.Zero)

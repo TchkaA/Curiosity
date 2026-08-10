@@ -3,59 +3,60 @@ using System;
 
 namespace NPC.StateMachine;
 
-
 public partial class NPCIdleState : IState
 {
     private BaseNPC _owner;
-
-    public void Enter()
-    {
-        // Останавливаем любое движение – цель навигации становится равна текущей позиции
-        _owner.Navigation.Stop();
-        _owner.animationComponent.SetAnimation("idle"); // можно раскомментировать при наличии
-    }
-
-    public void Exit()
-    {
-    }
 
     public NPCIdleState(BaseNPC owner)
     {
         _owner = owner;
     }
 
-    public void Update(double delta)
-    {
-
-    }
-}
-
-public partial class NPCFollowState : IState
-{
-    private BaseNPC _owner;
-    public Vector2 _targetPosition;
     public void Enter()
     {
-        
+        _owner.Navigation.Stop();
+        _owner.Animation?.SetAnimation("idle");
     }
 
     public void Exit()
     {
     }
 
+    public void Update(double delta)
+    {
+    }
+}
+
+public partial class NPCFollowState : IState
+{
+    private BaseNPC _owner;
+
     public NPCFollowState(BaseNPC owner)
     {
         _owner = owner;
     }
 
+    public void Enter()
+    {
+        _owner.Animation?.SetAnimation("move");
+    }
+
+    public void Exit()
+    {
+    }
+
     public void Update(double delta)
     {
-        _owner.animationComponent.SetAnimation("move");
-
-        // Если навигация сообщает, что цель достигнута, переходим обратно в состояние покоя
         if (_owner.Navigation.IsFinished)
         {
             _owner.stateMachine.ChangeState(_owner.IdleState);
+            return;
+        }
+
+        // Если хочешь, чтобы NPC поворачивался во время движения:
+        if (_owner.agent != null)
+        {
+            _owner.directionComponent.TurnTo(_owner.agent.GetNextPathPosition());
         }
     }
 }
