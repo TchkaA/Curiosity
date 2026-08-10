@@ -49,7 +49,7 @@ public partial class Player : BaseEntity, IInventoryOwner
 			punchingState
 			);
 
-		
+		stateMachine.ChangeState(idleState);
 
 		Inventory.AddItem(GD.Load<Item>("res://assets/Origin/objects/Resources/HealthPoitions/health_poition.tres"));
 
