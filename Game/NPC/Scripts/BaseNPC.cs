@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using System.Drawing;
 using Godot;
 using NPC.StateMachine;
 
-public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, ISpeekable
+public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, ISpeakable
 {
     public StateMachine stateMachine;
     public string NpcName;
@@ -37,9 +36,8 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     public override void _Ready()
     {
         base._Ready();
-        GD.Print("BaseNPC is ready");
 
-        stateMachine = new StateMachine(this);
+        stateMachine = new StateMachine();
 
 
         Dialogue = new(this);
@@ -111,7 +109,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     public IEnumerable<ContextAction> GetContextAction(BaseEntity interactor)
 	{
 		yield return new ContextAction("Взаимодействовать", () => Interact(interactor));
-		yield return new ContextAction("Осмотреть", () => GD.Print("Ne bratan"));
+		yield return new ContextAction("Осмотреть", () => GD.Print($"Осмотр: {NpcName}"));
 	}
 
     private void OnInputEvent(Node viewport, InputEvent @event, long shapeIdx)
@@ -136,8 +134,9 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
 
     public IEnumerable<ContextAnswer> GetAnswers(Node2D interactor)
     {
-        yield return new ContextAnswer("Сказать правду", () => GD.Print("slabak"));
-		yield return new ContextAnswer("Солгать", () => GD.Print("Horosh bratan"));
+        // Заглушки — диалоговая система будет переделана отдельным MR.
+        yield return new ContextAnswer("Сказать правду", () => GD.Print("Игрок: правда"));
+		yield return new ContextAnswer("Солгать", () => GD.Print("Игрок: ложь"));
     }
 
 

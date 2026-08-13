@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 /// <summary>
@@ -21,9 +20,6 @@ public partial class PickUp : Area2D, IContextMenuProvider, IInteractable
 	private bool _isInRange;
 
 	private ContextMenuComponent contextMenu;
-
-	// Общее для всех PickUp — открыто только одно меню за раз.
-	private static ContextMenu _activeContextMenu;
 
 	/// <summary>
 	/// Задать предмет до того, как нода попадёт в дерево сцены (например, при спавне из кода).
@@ -91,23 +87,6 @@ public partial class PickUp : Area2D, IContextMenuProvider, IInteractable
 		}
 	}
 
-	// private void ShowContextMenu()
-	// {
-	// 	CloseContextMenu();
-
-	// 	var menu = new ContextMenu { Name = "ContextMenu" };
-	// 	AddChild(menu);
-	// 	menu.Initialize(GetContextAction(MainManager.Instance.Player));
-	// 	_activeContextMenu = menu;
-	// }
-
-	// public void CloseContextMenu()
-	// {
-	// 	if (IsInstanceValid(_activeContextMenu))
-	// 		_activeContextMenu.QueueFree();
-	// 	_activeContextMenu = null;
-	// }
-
 	/// <summary>
 	/// Любой клик, который не был "съеден" GUI-элементом меню (например, клик по пустому
 	/// пространству или по другому предмету), долетает сюда — закрываем открытое меню.
@@ -116,7 +95,8 @@ public partial class PickUp : Area2D, IContextMenuProvider, IInteractable
 	/// </summary>
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (IsInstanceValid(_activeContextMenu) && @event is InputEventMouseButton { Pressed: true })
+		var menu = ContextMenuComponent.activeContextMenu;
+		if (IsInstanceValid(menu) && @event is InputEventMouseButton { Pressed: true })
 		{
 			contextMenu.CloseContextMenu();
 		}

@@ -14,21 +14,30 @@ public partial class InteractionComponent
     public void Interact()
     {
         var bodies = _interactionArea.GetOverlappingBodies();
-		foreach (var body in bodies)
-		{
-			if (body is IInteractable obj)
-			{
-				obj.Interact(_owner);
-			}
-            if (body is ISpeekable speekable)
+        foreach (var body in bodies)
+        {
+            var handled = false;
+
+            if (body is IInteractable obj)
             {
-                GD.Print("sdasd");
-                var owner = _owner as Player;
-                owner.OpenMenu();
-                owner.followMenu.Initialize(speekable.GetAnswers(_owner));
+                obj.Interact(_owner);
+                handled = true;
             }
-		}
-        // Проверяем области
+
+            if (body is ISpeakable speakable)
+            {
+                var owner = _owner as Player;
+                owner?.OpenMenu();
+                owner?.followMenu.Initialize(speakable.GetAnswers(_owner));
+                handled = true;
+            }
+
+            // Обрабатываем только один объект за нажатие.
+            if (handled)
+                return;
+        }
+
+        // Проверяем области (например, пикапы).
         var areas = _interactionArea.GetOverlappingAreas();
         foreach (var area in areas)
         {
@@ -68,8 +77,6 @@ public partial class InteractionComponent
             Radius = 18.0f // Радиус зоны взаимодействия
         };
         shape.Shape = circleShape;
-        // _interactionArea.CollisionLayer = 0; // Не участвует в коллизиях физики
-        // _interactionArea.CollisionMask = 1 << 2;
         _interactionArea.InputPickable = true;
         
         // Добавляем Area2D в текущую ноду

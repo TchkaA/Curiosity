@@ -31,7 +31,8 @@ public class Inventory
     {
         if (item is null)
         {
-            GD.Print("Ошибочка инвентарь");
+            GD.PushWarning("Inventory.AddItem: item is null");
+            return;
         }
 
         if (count <= 0)

@@ -1,9 +1,12 @@
 using Godot;
-using System;
-public partial class PlayerIdleState : IState, ISubState
+
+/// <summary>
+/// Плоский FSM игрока: состояния сами решают, куда перейти
+/// и вызывают _player.stateMachine.ChangeState(...).
+/// </summary>
+public partial class PlayerIdleState : IState
 {
-    private Player _player;
-    public System.Action<IState> Switch { get; set; }
+    private readonly Player _player;
 
     public PlayerIdleState(Player player) => _player = player;
 
@@ -19,16 +22,14 @@ public partial class PlayerIdleState : IState, ISubState
         var input = _player.inputComponent.MovementInput;
         if (input != Vector2.Zero)
         {
-            Switch?.Invoke(_player.moveState);   // ← внутри иерархии, не корень
-            return;
+            _player.stateMachine.ChangeState(_player.moveState);
         }
     }
 }
 
-public partial class PlayerMoveState : IState, ISubState
+public partial class PlayerMoveState : IState
 {
-    private Player _player;
-    public System.Action<IState> Switch { get; set; }
+    private readonly Player _player;
 
     public PlayerMoveState(Player player) => _player = player;
 
@@ -45,53 +46,28 @@ public partial class PlayerMoveState : IState, ISubState
         }
         else
         {
-            Switch?.Invoke(_player.idleState);
+            _player.stateMachine.ChangeState(_player.idleState);
         }
     }
 }
 
+/// <summary>
+/// Игрок в диалоге: движение заблокировано, выход по Esc (pause).
+/// </summary>
 public partial class InteractionState : IState
 {
-    public Player Player;
+    private readonly Player _player;
 
-    public void Enter()
-    {
-    }
+    public InteractionState(Player player) => _player = player;
 
-    public void Exit()
-    {
-    }
-
-    public InteractionState(Player _player)
-    {
-        Player = _player;
-    }
+    public void Enter() { }
+    public void Exit() { }
 
     public void Update(double delta)
     {
-        
-    }
-}
-
-public partial class PunchingState : IState
-{
-    public Player Player;
-
-    public void Enter()
-    {
-    }
-
-    public void Exit()
-    {
-    }
-
-    public PunchingState(Player _player)
-    {
-        Player = _player;
-    }
-
-    public void Update(double delta)
-    {
-        
+        if (Input.IsActionJustPressed("pause"))
+        {
+            _player.ExitDialogue();
+        }
     }
 }

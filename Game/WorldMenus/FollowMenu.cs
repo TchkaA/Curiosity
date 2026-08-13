@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Reflection.Metadata;
 using Godot;
 
 public partial class FollowMenu : VBoxContainer
@@ -7,11 +6,8 @@ public partial class FollowMenu : VBoxContainer
     private readonly List<ContextAnswer> _actions = new();
     private Tween _tween;
 
-    public override void _Ready()
+            public override void _Ready()
     {
-
-        AddChild(new Button(){Text = "ыфафыа"});
-
         // Начальный масштаб – ноль (невидимо)
         Scale = Vector2.Zero;
         AddThemeConstantOverride("separation", 10);

@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
+public partial class BaseEntity : CharacterBody2D, IDamageable, IDirectable
 {
     public StatsComponent Stats { get; set; }
 
@@ -13,8 +13,6 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
 
     public override void _Ready()
     {
-        GD.Print("BaseEntity is ready");
-
         Stats = new StatsComponent();
 
         if (Visual == null)

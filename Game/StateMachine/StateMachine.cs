@@ -1,50 +1,28 @@
 using Godot;
-using System;
 
-public partial class StateMachine: IState
+/// <summary>
+/// Простая машина состояний. Не знает об игроке — состояния сами решают,
+/// куда переходить, вызывая stateMachine.ChangeState(...).
+/// </summary>
+public partial class StateMachine : IState
 {
-	public IState CurrentState { get; private set; }
-	public IState PreviousState { get; private set; }
-	public BaseEntity player {get; private set;}
-	
-	public StateMachine(BaseEntity Player)
-	{
-		player = Player;
-	}
+    public IState CurrentState { get; private set; }
 
+    public void ChangeState(IState newState)
+    {
+        if (newState == CurrentState)
+            return;
 
-	public void ChangeState(IState newState)
-	{
-		if (CurrentState != null)
-		{
-			CurrentState.Exit();
-		}
+        CurrentState?.Exit();
+        CurrentState = newState;
+        CurrentState?.Enter();
+    }
 
-		CurrentState = newState;
+    public void Enter() { }
+    public void Exit() { }
 
-		if (CurrentState != null)
-		{
-			CurrentState.Enter();
-		}
-	}
-
-	
-	public void Enter()
-	{
-		
-	}
-
-	public void Exit()
-	{
-	}
-
-	public void Update(double delta)
-	{
-		if (CurrentState != null)
-		{
-			CurrentState.Update(delta);
-		}
-	}
-
-	
+    public void Update(double delta)
+    {
+        CurrentState?.Update(delta);
+    }
 }

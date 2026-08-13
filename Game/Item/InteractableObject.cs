@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class InteractableObject : Node2D, IInteractable
 {
@@ -14,7 +13,7 @@ public partial class InteractableObject : Node2D, IInteractable
 
 	public virtual void Interact(BaseEntity interactor)
 	{
-		GD.Print("sosi hyi");
+		// Поведение задают наследники (например, Chest).
 	}
 
     public virtual void InteractEnter()

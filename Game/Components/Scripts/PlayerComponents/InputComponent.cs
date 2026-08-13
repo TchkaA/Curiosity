@@ -4,10 +4,6 @@ public class InputComponent
 {
     public Vector2 MovementInput { get; private set; }
 
-    public bool AttackPressed { get; private set; }
-    public bool RollPressed { get; private set; }
-    public bool InteractPressed { get; private set; }
-
     private Player _player;
 
     public InputComponent(Player player)
@@ -23,6 +19,10 @@ public class InputComponent
         ).Normalized();
 
         UpdateDirection(MovementInput);
+
+        // В диалоге действия недоступны (Esc закрывает диалог).
+        if (_player.IsInDialogue)
+            return;
 
         if (Input.IsActionJustPressed("interact"))
         {

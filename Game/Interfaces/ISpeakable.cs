@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 
-public interface ISpeekable
+public interface ISpeakable
 {
     IEnumerable<ContextAnswer> GetAnswers(Node2D interactor);
 }

@@ -1,18 +1,12 @@
 using Godot;
-using System;
-using PlayerHFSM;
 
 public partial class Player : BaseEntity, IInventoryOwner
 {
     public StateMachine stateMachine;
 
-    public ExploringState ExploringState;
-    public CombatState CombatState;
-
-    public PlayerMoveState moveState;
     public PlayerIdleState idleState;
+    public PlayerMoveState moveState;
     public InteractionState interactionState;
-    public PunchingState punchingState;
 
     public InputComponent inputComponent;
     public MovementComponent movementComponent;
@@ -20,6 +14,12 @@ public partial class Player : BaseEntity, IInventoryOwner
     public FollowMenuComponent followMenu;
 
     public Inventory Inventory { get; private set; }
+
+    /// <summary>Игрок в диалоге: движение и действия заблокированы, выход по Esc.</summary>
+    public bool IsInDialogue { get; private set; }
+
+    /// <summary>Режим боя. Пока влияет только на префикс анимаций — заготовка.</summary>
+    private bool _isInCombat;
 
     public Player()
     {
@@ -30,28 +30,11 @@ public partial class Player : BaseEntity, IInventoryOwner
     {
         base._Ready();
 
-        stateMachine = new(this);
+        stateMachine = new StateMachine();
 
-        moveState = new(this);
         idleState = new(this);
+        moveState = new(this);
         interactionState = new(this);
-        punchingState = new(this);
-
-        ExploringState = new ExploringState(
-            Animation,
-            stateMachine,
-            idleState,
-            moveState,
-            interactionState
-        );
-
-        CombatState = new CombatState(
-            Animation,
-            stateMachine,
-            idleState,
-            moveState,
-            punchingState
-        );
 
         movementComponent = new MovementComponent(this);
         inputComponent = new InputComponent(this);
@@ -61,11 +44,7 @@ public partial class Player : BaseEntity, IInventoryOwner
 
         followMenu = new(this);
 
-        // Inventory.AddItem(
-        //     GD.Load<Item>("res://assets/Origin/objects/Resources/HealthPoitions/health_poition.tres")
-        // );
-
-        stateMachine.ChangeState(ExploringState);
+        stateMachine.ChangeState(idleState);
     }
 
     public override void _Process(double delta)
@@ -85,33 +64,44 @@ public partial class Player : BaseEntity, IInventoryOwner
             followMenu.CloseMenu();
     }
 
+    /// <summary>Войти в боевой режим (префикс анимаций combat_*).</summary>
     public void EnterCombat()
     {
-        stateMachine.ChangeState(CombatState);
+        if (_isInCombat) return;
+        _isInCombat = true;
+        Animation.SetPrefix("combat");
+        stateMachine.ChangeState(idleState);
     }
 
+    /// <summary>Выйти из боевого режима (префикс exploring_*).</summary>
     public void ExitCombat()
     {
-        stateMachine.ChangeState(ExploringState);
+        if (!_isInCombat) return;
+        _isInCombat = false;
+        Animation.SetPrefix("exploring");
+        stateMachine.ChangeState(idleState);
     }
 
     public void ToggleCombat()
-	{
-		GD.Print($"CurrentState = {stateMachine.CurrentState?.GetType().Name ?? "NULL"}");
+    {
+        if (_isInCombat)
+            ExitCombat();
+        else
+            EnterCombat();
+    }
 
-		if (stateMachine.CurrentState is CombatState)
-		{
-			GD.Print("-> ExitCombat");
-			ExitCombat();
-		}
-		else if (stateMachine.CurrentState is ExploringState)
-		{
-			GD.Print("-> EnterCombat");
-			EnterCombat();
-		}
-		else
-		{
-			GD.Print("-> НЕ CombatState и НЕ ExploringState!");
-		}
-	}
+    /// <summary>Начать диалог с NPC: блокирует движение, выход по Esc.</summary>
+    public void EnterToTalk(BaseNPC body)
+    {
+        IsInDialogue = true;
+        stateMachine.ChangeState(interactionState);
+    }
+
+    /// <summary>Выйти из диалога: закрыть меню и вернуться в idle.</summary>
+    public void ExitDialogue()
+    {
+        IsInDialogue = false;
+        followMenu.CloseMenu();
+        stateMachine.ChangeState(idleState);
+    }
 }
