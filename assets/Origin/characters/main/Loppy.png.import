@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c0lspwphp00ew"
-path="res://.godot/imported/Brother.png-14a40060ad0a1f1ca7a4afde58e913a1.ctex"
+path="res://.godot/imported/Loppy.png-2f9afd53c8b673580c8b8c42db5052b2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Origin/characters/main/Brother.png"
-dest_files=["res://.godot/imported/Brother.png-14a40060ad0a1f1ca7a4afde58e913a1.ctex"]
+source_file="res://assets/Origin/characters/main/Loppy.png"
+dest_files=["res://.godot/imported/Loppy.png-2f9afd53c8b673580c8b8c42db5052b2.ctex"]
 
 [params]
 

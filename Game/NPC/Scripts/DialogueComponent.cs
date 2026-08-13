@@ -17,6 +17,10 @@ public partial class DialogueComponent
     {
         MakeSound("Че надо?", 0);
         _owner.directionComponent.TurnTo(interactor.GlobalPosition);
+        if (interactor is Player player)
+        {
+            player.EnterToTalk((BaseNPC)_owner);
+        }
     }
 
 
