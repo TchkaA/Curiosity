@@ -44,6 +44,11 @@ public partial class Player : BaseEntity, IInventoryOwner
 
         followMenu = new(this);
 
+        // Анимации в сцене называются с префиксом (exploring_idle_*, exploring_move_*).
+        // После ухода от HFSM дефолтный префикс больше никто не ставил — задаём явно,
+        // иначе Play() ищет имена без префикса (idle_down, move_forward) и не находит их.
+        Animation?.SetPrefix("exploring");
+
         stateMachine.ChangeState(idleState);
     }
 
