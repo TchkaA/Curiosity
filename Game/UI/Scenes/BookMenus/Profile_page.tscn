@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cnosmb280cauf"]
 
 [ext_resource type="Texture2D" uid="uid://dtmrib06pyt5k" path="res://assets/UI/Book.png" id="1_6rbba"]
+[ext_resource type="Script" uid="uid://dvt04onmi71e1" path="res://Game/ProfilePageUI/scripts/ProfilePage.cs" id="1_go38p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4iymr"]
 atlas = ExtResource("1_6rbba")
@@ -13,7 +14,10 @@ region = Rect2(305.91357, 66.94801, 12.8526, 12.099785)
 [sub_resource type="LabelSettings" id="LabelSettings_5k6k6"]
 font_size = 30
 
-[node name="Profile_page" type="CanvasLayer" unique_id=733364337]
+[node name="Profile_page" type="CanvasLayer" unique_id=733364337 node_paths=PackedStringArray("NameLabel", "StatsLabel")]
+script = ExtResource("1_go38p")
+NameLabel = NodePath("Name")
+StatsLabel = NodePath("Stats")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1822735104]
 offset_left = 166.0
@@ -36,4 +40,12 @@ offset_top = 129.0
 offset_right = 482.0
 offset_bottom = 159.0
 text = "Игрок"
+label_settings = SubResource("LabelSettings_5k6k6")
+
+[node name="Stats" type="Label" parent="." unique_id=1053026431]
+offset_left = 176.0
+offset_top = 294.0
+offset_right = 355.0
+offset_bottom = 324.0
+text = "Info"
 label_settings = SubResource("LabelSettings_5k6k6")
