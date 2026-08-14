@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Godot;
 
 public partial class Player : BaseEntity, IInventoryOwner
@@ -108,5 +109,17 @@ public partial class Player : BaseEntity, IInventoryOwner
         IsInDialogue = false;
         followMenu.CloseMenu();
         stateMachine.ChangeState(idleState);
+    }
+
+    /// <summary>
+    /// Возвращает в самое дефолтное состояние, которое только возможно
+    /// </summary>
+    public void ReturnToBase()
+    {
+        IsInDialogue = false;
+        stateMachine?.ChangeState(idleState);
+        followMenu?.CloseMenu();
+        ExitCombat();
+        Camera.Instance.RemoveZoom();
     }
 }

@@ -13,6 +13,10 @@ public class InputComponent
 
     public void Update()
     {
+        // В диалоге действия недоступны (Esc закрывает диалог).
+        if (_player.IsInDialogue)
+            return;
+
         MovementInput = new Vector2(
             Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left"),
             Input.GetActionStrength("move_down") - Input.GetActionStrength("move_up")
@@ -20,9 +24,8 @@ public class InputComponent
 
         UpdateDirection(MovementInput);
 
-        // В диалоге действия недоступны (Esc закрывает диалог).
-        if (_player.IsInDialogue)
-            return;
+
+        
 
         if (Input.IsActionJustPressed("interact"))
         {

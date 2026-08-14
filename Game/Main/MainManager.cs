@@ -41,7 +41,10 @@ public partial class MainManager : Node
             // Во время диалога Esc закрывает диалог (обрабатывает InteractionState),
             // а не открывает книгу.
             if (Player != null && Player.IsInDialogue)
+            {
+                Player.ReturnToBase();
                 return;
+            }
 
             TogglePause();
         }
