@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dii1a1nwpw8fv"]
 
 [ext_resource type="Script" uid="uid://brc872uqhveqw" path="res://Game/NPC/Scripts/BaseNPC.cs" id="1_5ct1e"]
-[ext_resource type="SpriteFrames" uid="uid://de7qn4xrwa7p" path="res://Game/NPC/Assets/NPC_sprite_frames.tres" id="2_1fdf2"]
+[ext_resource type="SpriteFrames" uid="uid://opujgsgmrnso" path="res://Game/Player/Assets/player_exploring.tres" id="2_1fdf2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5ct1e"]
 radius = 5.25
@@ -13,6 +13,7 @@ script = ExtResource("1_5ct1e")
 agent = NodePath("NavigationAgent2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=436049907]
+scale = Vector2(0.6, 0.6)
 sprite_frames = ExtResource("2_1fdf2")
 animation = &"idle_down"
 
