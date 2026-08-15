@@ -68,11 +68,12 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
 
     public void Interact(BaseEntity interactor)
     {
-        Dialogue.Talk(interactor);
+        if(InDialogue) return;
+        
         Camera.Instance.AddTarget(this);
         Camera.Instance.AddZoom(new Vector2(1.5f,1.5f));
         InInteraction= true;
-
+        Dialogue.Talk(interactor);
         //TODO
         if(interactor is Player pl)
         {

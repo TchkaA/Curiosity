@@ -19,12 +19,7 @@ public partial class Player : BaseEntity, IInventoryOwner
 	public FollowMenuComponent followMenu;
 
 
-    /*
-        --------------------------------
-        ----------- Флаги --------------
-        --------------------------------
-    */
-    public bool InDialogue { get; set; } 
+    
 
 
     //----------------------------------

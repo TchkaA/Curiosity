@@ -36,6 +36,12 @@ public partial class InteractionComponent
                 obj.Interact(_owner);
                 return;
             }
+            if (area is ISpeekable speekable)
+            {
+                var owner = _owner as Player;
+                owner.OpenMenu();
+                owner.followMenu.Initialize(speekable.GetAnswers(_owner));
+            }
         }
     }
     public void InteractEnter(Node2D body)

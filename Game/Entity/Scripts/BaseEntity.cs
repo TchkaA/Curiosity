@@ -9,6 +9,13 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
     public AnimationComponent animationComponent;
     public AnimatedSprite2D Visual;
     
+    /*
+        --------------------------------
+        ----------- Флаги --------------
+        --------------------------------
+    */
+    public bool InDialogue { get; set; } 
+    
     public override void _Ready()
     {
         GD.Print("BaseEntity is ready");
