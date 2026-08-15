@@ -9,9 +9,6 @@ public partial class FollowMenu : VBoxContainer
 
     public override void _Ready()
     {
-
-        AddChild(new Button(){Text = "ыфафыа"});
-
         // Начальный масштаб – ноль (невидимо)
         Scale = Vector2.Zero;
         AddThemeConstantOverride("separation", 10);
@@ -44,5 +41,7 @@ public partial class FollowMenu : VBoxContainer
     {
         action.Callback?.Invoke();
         QueueFree(); // меню закрывается после выбора
+
+        //TODO перевести все в логику выборов Actions
     }
 }

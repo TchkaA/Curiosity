@@ -14,7 +14,6 @@ public partial class InteractableObject : Node2D, IInteractable
 
 	public virtual void Interact(BaseEntity interactor)
 	{
-		GD.Print("sosi hyi");
 	}
 
     public virtual void InteractEnter()

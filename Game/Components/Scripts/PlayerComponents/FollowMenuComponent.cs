@@ -9,9 +9,9 @@ public class FollowMenuComponent
 
     [ExportGroup("Константы")]
     [Export]
-    public const float FOLLOW_SPEED = 5.0f;      // скорость интерполяции (чем больше, тем быстрее)
+    public const float FOLLOW_SPEED = 6.0f;      // скорость интерполяции (чем больше, тем быстрее)
     [Export]
-    public const float OFFSET_DISTANCE = 80.0f;  // расстояние от игрока до меню
+    public const float OFFSET_DISTANCE = 120.0f;  // расстояние от игрока до меню
 
     private Vector2 _previousDirection = new Vector2(OFFSET_DISTANCE, 0);
 

@@ -28,7 +28,7 @@ public class InputComponent
         ).Normalized();
         UpdateDirection(MovementInput);
         if(Input.IsActionJustPressed("interact")) _player.Interact.Interact();
-        if(Input.IsActionJustPressed("follow_menu")) _player.OpenMenu();
+        // if(Input.IsActionJustPressed("follow_menu")) _player.OpenMenu();
     }
     public void UpdateDirection(Vector2 direction)
     {

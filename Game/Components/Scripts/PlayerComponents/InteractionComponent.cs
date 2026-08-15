@@ -22,7 +22,6 @@ public partial class InteractionComponent
 			}
             if (body is ISpeekable speekable)
             {
-                GD.Print("sdasd");
                 var owner = _owner as Player;
                 owner.OpenMenu();
                 owner.followMenu.Initialize(speekable.GetAnswers(_owner));
