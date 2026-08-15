@@ -7,13 +7,27 @@ public partial class Player : BaseEntity, IInventoryOwner
 	public StateMachine stateMachine = new StateMachine();
 	public PlayerMoveState moveState;
 	public PlayerIdleState idleState;
+    public PlayerInteractionState interactionState;
+
 	public InputComponent inputComponent;
 	public MovementComponent movementComponent;
 	public InteractionComponent Interact;
+
+
 	public AnimatedSprite2D sprite;
 	public Inventory Inventory { get; private set; }
 	public FollowMenuComponent followMenu;
 
+
+    /*
+        --------------------------------
+        ----------- Флаги --------------
+        --------------------------------
+    */
+    public bool InDialogue { get; set; } 
+
+
+    //----------------------------------
 	public Player()	//TODO: Перенести логику создания в конструктор.
 	{
 		Inventory = new Inventory(this);
@@ -23,19 +37,20 @@ public partial class Player : BaseEntity, IInventoryOwner
 	{
 		base._Ready();
 
-		moveState = new PlayerMoveState(this);
-		idleState = new PlayerIdleState(this);
+		moveState = new(this);
+		idleState = new(this);
+        interactionState = new(this);
 		stateMachine.ChangeState(idleState);
 		Inventory.AddItem(GD.Load<Item>("res://assets/Origin/objects/Resources/HealthPoitions/health_poition.tres"));
 
 		// movement component
-		movementComponent = new MovementComponent(this);
+		movementComponent = new(this);
 
 		// Initialize the input component
-		inputComponent = new InputComponent(this);
+		inputComponent = new(this);
 
 		// Interact Component
-		Interact = new InteractionComponent(this);
+		Interact = new(this);
 		Interact.InitialInteractionArea();
 
 		//Follow Menu
@@ -60,5 +75,29 @@ public partial class Player : BaseEntity, IInventoryOwner
 		{
 			followMenu.CloseMenu();
 		}
+    }
+
+    /// <summary>Начать диалог с NPC: блокирует движение, выход по Esc.</summary>
+    public void EnterToTalk(BaseNPC body)
+    {
+        InDialogue = true;
+        stateMachine.ChangeState(interactionState);
+    }
+
+    public void ReturnToBase()
+    {
+        InDialogue = false;
+        stateMachine?.ChangeState(idleState);
+        followMenu?.CloseMenu();
+        Camera.Instance.RemoveZoom();
+    }
+
+
+    /// <summary>Выйти из диалога: закрыть меню и вернуться в idle.</summary>
+    public void ExitDialogue()
+    {
+        InDialogue = false;
+        followMenu.CloseMenu();
+        stateMachine.ChangeState(idleState);
     }
 }

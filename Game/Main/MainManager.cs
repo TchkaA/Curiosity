@@ -38,6 +38,14 @@ public partial class MainManager : Node
     {
         if (@event.IsActionPressed("pause"))
         {
+            // Во время диалога Esc закрывает диалог (обрабатывает InteractionState),
+            // а не открывает книгу.
+            if (Player != null && Player.InDialogue)
+            {
+                Player.ReturnToBase();
+                return;
+            }
+
             TogglePause();
         }
         if (@event.IsActionPressed("context_menu"))
@@ -49,8 +57,7 @@ public partial class MainManager : Node
     private void TogglePause()
     {
         if (_isPaused)
-        {
-                      
+        {      
             ResumeGame();
         }
         else

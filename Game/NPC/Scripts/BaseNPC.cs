@@ -72,6 +72,12 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
         Camera.Instance.AddTarget(this);
         Camera.Instance.AddZoom(new Vector2(1.5f,1.5f));
         InInteraction= true;
+
+        //TODO
+        if(interactor is Player pl)
+        {
+            pl.stateMachine.ChangeState(pl.interactionState);
+        }
     }   
 
     public virtual void InteractEnter()

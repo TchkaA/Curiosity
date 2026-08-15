@@ -66,3 +66,30 @@ public partial class PlayerIdleState : IState
         }
     }
 }
+
+/// <summary>
+/// Состояние взаимодействия игрока.
+/// </summary>
+public partial class PlayerInteractionState : IState
+{
+    private Player _player;
+    public void Enter()
+    {
+        _player.animationComponent.SetAnimation("idle");
+        _player.InDialogue = true;
+    }
+
+    public void Exit()
+    {
+        _player.InDialogue = false;
+    }
+
+    public PlayerInteractionState(Player _player)
+    {
+        this._player = _player;
+    }
+
+    public void Update(double delta)
+    {
+    }
+}
