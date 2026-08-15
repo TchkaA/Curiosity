@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 
 public class StatsComponent
@@ -79,4 +80,10 @@ public class StatsComponent
         }
     }
 
+    public string ReturnStats()
+    {
+        return $"Health - {Health}\n" +
+                $"Stamina - {Stamina}\n" +
+                $"Strenght - {Strength}";
+    }
 }

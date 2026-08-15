@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cnosmb280cauf"]
 
 [ext_resource type="Texture2D" uid="uid://dtmrib06pyt5k" path="res://assets/UI/Book.png" id="1_6rbba"]
+[ext_resource type="Script" uid="uid://dc6qq7l87y0m5" path="res://Game/UI/Scripts/ProfilePage/ProfilePage.cs" id="1_go38p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4iymr"]
 atlas = ExtResource("1_6rbba")
@@ -11,9 +12,16 @@ atlas = ExtResource("1_6rbba")
 region = Rect2(305.91357, 66.94801, 12.8526, 12.099785)
 
 [sub_resource type="LabelSettings" id="LabelSettings_5k6k6"]
-font_size = 30
+font_size = 60
+font_color = Color(0.64705884, 0.47058824, 0.33333334, 1)
 
-[node name="Profile_page" type="CanvasLayer" unique_id=733364337]
+[sub_resource type="LabelSettings" id="LabelSettings_go38p"]
+font_size = 40
+font_color = Color(0.64705884, 0.47058824, 0.33333334, 1)
+
+[node name="Profile_page" type="CanvasLayer" unique_id=733364337 node_paths=PackedStringArray("Stats")]
+script = ExtResource("1_go38p")
+Stats = NodePath("Stats")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1822735104]
 offset_left = 166.0
@@ -37,3 +45,11 @@ offset_right = 482.0
 offset_bottom = 159.0
 text = "Игрок"
 label_settings = SubResource("LabelSettings_5k6k6")
+
+[node name="Stats" type="Label" parent="." unique_id=81635414]
+offset_left = 178.0
+offset_top = 292.0
+offset_right = 280.0
+offset_bottom = 322.0
+text = "dsds"
+label_settings = SubResource("LabelSettings_go38p")
