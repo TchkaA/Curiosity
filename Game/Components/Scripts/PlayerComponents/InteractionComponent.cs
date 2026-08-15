@@ -29,15 +29,15 @@ public partial class InteractionComponent
             }
 		}
         // Проверяем области
-        // var areas = _interactionArea.GetOverlappingAreas();
-        // foreach (var area in areas)
-        // {
-        //     if (area is IInteractable obj)
-        //     {
-        //         obj.Interact(_owner);
-        //         return;
-        //     }
-        // }
+        var areas = _interactionArea.GetOverlappingAreas();
+        foreach (var area in areas)
+        {
+            if (area is IInteractable obj)
+            {
+                obj.Interact(_owner);
+                return;
+            }
+        }
     }
     public void InteractEnter(Node2D body)
     {

@@ -1,8 +1,5 @@
 using Godot;
 using System;
-using System.ComponentModel;
-using System.Security.Cryptography.X509Certificates;
-
 
 
 public partial class Player : BaseEntity, IInventoryOwner
