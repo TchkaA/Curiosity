@@ -93,3 +93,45 @@ public partial class PlayerInteractionState : IState
     {
     }
 }
+
+/// <summary>
+/// Состояние удара игрока.
+/// </summary>
+public partial class PlayerPunchState : IState
+{
+    private Player _player;
+    
+    public void Enter()
+    {
+        _player.IsAttacking = true;
+        _enter();
+    }
+
+    private async void _enter()
+    {
+        await _player.animationComponent.PlayAndWaitAsync("punch");
+        _player.stateMachine.ChangeState(_player.idleState);
+    }
+
+    public void Exit()
+    {
+        _player.IsAttacking = false;
+    }
+
+    private void OnAnimationFinished(string animName)
+    {
+        if (animName == "punch")
+        {
+            _player.stateMachine.ChangeState(_player.idleState);
+        }
+    }
+
+    public PlayerPunchState(Player _player)
+    {
+        this._player = _player;
+    }
+
+    public void Update(double delta)
+    {
+    }
+}

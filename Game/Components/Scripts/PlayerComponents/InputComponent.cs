@@ -19,7 +19,7 @@ public class InputComponent
     public void Update()
     {
         // В диалоге действия недоступны (Esc закрывает диалог).
-        if (_player.InDialogue)
+        if (_player.InDialogue || _player.IsAttacking)
             return;
 
         MovementInput = new Vector2(
@@ -28,6 +28,7 @@ public class InputComponent
         ).Normalized();
         UpdateDirection(MovementInput);
         if(Input.IsActionJustPressed("interact")) _player.Interact.Interact();
+        if(Input.IsActionJustPressed("attack")) _player.attack();
         // if(Input.IsActionJustPressed("follow_menu")) _player.OpenMenu();
     }
     public void UpdateDirection(Vector2 direction)

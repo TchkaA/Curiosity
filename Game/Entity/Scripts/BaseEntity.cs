@@ -15,11 +15,12 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
         --------------------------------
     */
     public bool InDialogue { get; set; } 
-    
+    public bool IsAttacking { get; set; }
+
     public override void _Ready()
     {
         GD.Print("BaseEntity is ready");
-        Stats = new StatsComponent();
+        Stats = new StatsComponent(this);
         // Initialize the direction component
         directionComponent = new DirectionComponent(this);
 
@@ -43,6 +44,7 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
     public virtual void TakeDamage(int damage)
     {
         Stats.TakeDamage(damage);
+        GD.Print(this + " - took damage");
     }
 
 

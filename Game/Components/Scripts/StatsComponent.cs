@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 public class StatsComponent
 {
+    private BaseEntity _owner;
     //-------- Basic Stats ---------
     public int Health { get; private set; }
     public int MaxHealth { get; private set; }
@@ -18,8 +19,9 @@ public class StatsComponent
     public float TickInterval { get; private set; } = 2.0f; // How often the stats are updated, in seconds
 
     // ------- Constructor ---------
-    public StatsComponent(int health = 100, int stamina = 100, int speed = 120, int strength = 10)
+    public StatsComponent(BaseEntity owner, int health = 100, int stamina = 100, int speed = 120, int strength = 10)
     {
+        _owner = owner;
         MaxHealth = health;
         Health = MaxHealth;
         MaxStamina = stamina;
@@ -32,10 +34,11 @@ public class StatsComponent
     // ------- Methods ---------
     public void TakeDamage(int damage)
     {
-        Health -= damage;
+        Health -= damage; //TODO
         if (Health < 0)
         {
             Health = 0;
+            _owner.QueueFree();
         }
     }
 

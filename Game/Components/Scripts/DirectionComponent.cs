@@ -16,34 +16,6 @@ public partial class DirectionComponent
     {
         _owner = owner;
     }
-    // public void UpdateDirection()
-    // {
-    //     if (_owner.inputComponent?.MovementInput != Vector2.Zero)
-    //     {
-    //         UpdateCurrentDirection();
-    //     }
-    // }
-
-    // private void UpdateCurrentDirection()
-    // {
-    //     var _playerDirection = _owner.inputComponent.MovementInput;
-    //     if (_playerDirection.X > 0)
-    //     {
-    //         CurrentDirection = FacingDirection.Right;
-    //     }
-    //     else if (_playerDirection.X < 0)
-    //     {
-    //         CurrentDirection = FacingDirection.Left;
-    //     }
-    //     else if (_playerDirection.Y > 0)
-    //     {
-    //         CurrentDirection = FacingDirection.Down;
-    //     }
-    //     else if (_playerDirection.Y < 0)
-    //     {
-    //         CurrentDirection = FacingDirection.Up;
-    //     }
-    // }
 
     public void SetDirection(FacingDirection direction)
     {

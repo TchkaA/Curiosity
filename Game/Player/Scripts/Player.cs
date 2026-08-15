@@ -8,10 +8,12 @@ public partial class Player : BaseEntity, IInventoryOwner
 	public PlayerMoveState moveState;
 	public PlayerIdleState idleState;
     public PlayerInteractionState interactionState;
+	public PlayerPunchState punchState;
 
 	public InputComponent inputComponent;
 	public MovementComponent movementComponent;
 	public InteractionComponent Interact;
+	public CombatComponent combatC;
 
 
 	public AnimatedSprite2D sprite;
@@ -35,6 +37,7 @@ public partial class Player : BaseEntity, IInventoryOwner
 		moveState = new(this);
 		idleState = new(this);
         interactionState = new(this);
+		punchState = new(this);
 		stateMachine.ChangeState(idleState);
 		Inventory.AddItem(GD.Load<Item>("res://assets/Origin/objects/Resources/HealthPoitions/health_poition.tres"));
 
@@ -50,6 +53,8 @@ public partial class Player : BaseEntity, IInventoryOwner
 
 		//Follow Menu
 		followMenu = new(this);
+		
+		combatC = new(this);
 	}
 
 	public override void _Process(double delta)
@@ -95,4 +100,12 @@ public partial class Player : BaseEntity, IInventoryOwner
         followMenu.CloseMenu();
         stateMachine.ChangeState(idleState);
     }
+
+    internal void attack()
+    {
+		combatC.PerformAttack();
+        stateMachine.ChangeState(punchState);
+		
+    }
+
 }
