@@ -5,8 +5,8 @@ using Godot;
 
 public class CombatComponent
 {
-    private const float ATTACK_SIZE = 12f;
-    private const float ATTACK_OFFSET = 20f;
+    private const float ATTACK_SIZE = 10f;
+    private const float ATTACK_OFFSET = 15f;
     private const int BASE_DAMAGE = 20;
     private const float ATTACK_DURATION = 0.3f; // Длительность активной зоны атаки
     

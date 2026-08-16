@@ -1,7 +1,6 @@
 [gd_scene format=4 uid="uid://d364xt2wtg34v"]
 
 [ext_resource type="PackedScene" uid="uid://c247ye40s3ld5" path="res://Game/Player/Scenes/player.tscn" id="1_vmwgv"]
-[ext_resource type="PackedScene" uid="uid://cov2lhu0cikqf" path="res://Game/Item/InteractableObject.tscn" id="2_oab63"]
 [ext_resource type="TileSet" uid="uid://bfj0r130s47kl" path="res://assets/Pixel Crawler - Free Pack/Environment/FirstTileSet.tres" id="3_bhrp5"]
 [ext_resource type="PackedScene" uid="uid://tw5l1fpcixv" path="res://Game/Camera/camera.tscn" id="4_1r4f6"]
 [ext_resource type="PackedScene" uid="uid://dii1a1nwpw8fv" path="res://Game/NPC/Scenes/BaseNPC.tscn" id="5_vp847"]
@@ -33,9 +32,6 @@ shader_parameter/exposure = 0.800000038
 position = Vector2(162, 164)
 motion_mode = 1
 
-[node name="InteractableObject" parent="." unique_id=132856208 instance=ExtResource("2_oab63")]
-position = Vector2(555, 315)
-
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1069316622]
 z_index = -2
 scale = Vector2(3, 3)
@@ -49,16 +45,6 @@ position = Vector2(577, 321)
 position = Vector2(-96, 380)
 input_pickable = true
 motion_mode = 1
-
-[node name="Area2D" type="Area2D" parent="." unique_id=357046190]
-position = Vector2(216, 38)
-script = ExtResource("6_xpbyc")
-Item = ExtResource("7_w0u7a")
-
-[node name="Area2D2" type="Area2D" parent="." unique_id=559577971]
-position = Vector2(264, 113)
-script = ExtResource("6_xpbyc")
-Item = ExtResource("7_w0u7a")
 
 [node name="Area2D3" type="Area2D" parent="." unique_id=50835840]
 position = Vector2(122, 104)
@@ -82,6 +68,7 @@ visible = false
 navigation_polygon = SubResource("NavigationPolygon_vmwgv")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=256372578]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1486030821]
 material = SubResource("ShaderMaterial_bhrp5")

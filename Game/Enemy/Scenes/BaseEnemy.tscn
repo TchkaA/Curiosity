@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bfiykhaxgaoij"]
+
+[ext_resource type="SpriteFrames" uid="uid://opujgsgmrnso" path="res://Game/Player/Assets/player_exploring.tres" id="1_xkbvx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4iymr"]
+radius = 6.0
+height = 18.0
+
+[node name="BaseEnemy" type="CharacterBody2D" unique_id=782276582]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1244571698]
+scale = Vector2(0.6, 0.6)
+sprite_frames = ExtResource("1_xkbvx")
+animation = &"idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=852437400]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_4iymr")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1700901396]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1744833015]

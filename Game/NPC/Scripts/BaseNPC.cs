@@ -20,6 +20,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     public MovementComponent movement;
 
     private NavigationComponent navigation;
+    private VisionComponent vision;
     public NPCFollowState FollowState;
     public NPCIdleState IdleState;
     private bool _isInRange = false;
@@ -43,6 +44,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
         Sound = new(this);
         navigation = new(this,agent);
         movement = new(this);
+        vision = new(this);
 
         FollowState = new(this);
         IdleState = new(this);
@@ -63,7 +65,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
         base._Process(delta);
         stateMachine.Update(delta);
         navigation.Update();
-        
+        vision.Update();
     }
 
     public void Interact(BaseEntity interactor)
