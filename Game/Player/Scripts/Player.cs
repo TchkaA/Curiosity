@@ -108,4 +108,9 @@ public partial class Player : BaseEntity, IInventoryOwner
 		
     }
 
+	public void AddItem(Item item)
+	{
+		Inventory.AddItem(item);
+	}
+
 }

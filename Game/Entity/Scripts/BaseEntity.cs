@@ -3,7 +3,7 @@ using Godot;
 public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
 {
     public StatsComponent Stats { get; set; }
-
+    public Relation CurrentRelation;
 
     public DirectionComponent directionComponent { get; set; }
     public AnimationComponent animationComponent;
@@ -16,10 +16,17 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
     */
     public bool InDialogue { get; set; } 
     public bool IsAttacking { get; set; }
+    // ---------------------------------
+    
+    public BaseEntity(Relation relation = Relation.Neutral)
+    {
+        CurrentRelation = relation;
+    }
+
+
 
     public override void _Ready()
     {
-        GD.Print("BaseEntity is ready");
         Stats = new StatsComponent(this);
         // Initialize the direction component
         directionComponent = new DirectionComponent(this);
@@ -54,8 +61,11 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
         // TODO
     }
 
+}
 
-
-
-
+public enum Relation
+{
+    Hostile,
+    Peaceful,
+    Neutral 
 }
