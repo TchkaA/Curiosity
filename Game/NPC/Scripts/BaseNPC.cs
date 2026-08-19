@@ -8,48 +8,42 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     public StateMachine stateMachine = new StateMachine();
     public string NpcName;
 
+    //---------------------
+    //      Компоненты
+    //---------------------
     public DialogueComponent Dialogue;
     public SoundComponent Sound;
-
+    public MovementComponent movement;
+    public NavigationComponent Navigation;
+    private VisionComponent vision;
+    public ContextMenuComponent contextMenu;
+    //----------------------
+    
     public Shader shader => MainManager.Instance.OutlineShader;
     public ShaderMaterial material;
 
     [Export]
     public NavigationAgent2D agent;
 
-    public MovementComponent movement;
-
-    private NavigationComponent navigation;
-    private VisionComponent vision;
+    
+    
     public NPCFollowState FollowState;
     public NPCIdleState IdleState;
     private bool _isInRange = false;
     public bool InInteraction = false;
 
-    public ContextMenuComponent contextMenu;
+    
 
     private Vector2 _bubbleSize = new Vector2(0.25f,0.25f);
-
-    public NavigationComponent Navigation
-    {
-        get { return navigation; }
-    }
 
     public override void _Ready()
     {
         base._Ready();
-        GD.Print("BaseNPC is ready");
 
-        Dialogue = new(this);
-        Sound = new(this);
-        navigation = new(this,agent);
-        movement = new(this);
-        vision = new(this);
+        InitComponents();
 
         FollowState = new(this);
         IdleState = new(this);
-
-        contextMenu = new(this, GetContextAction(MainManager.Instance.Player));
 
         InitShader();
 
@@ -64,7 +58,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
 
         base._Process(delta);
         stateMachine.Update(delta);
-        navigation.Update();
+        Navigation.Update();
         vision.Update();
     }
 
@@ -154,6 +148,17 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
         Camera.Instance.RemoveZoom();
 
         base._ExitTree();
+    }
+
+    public virtual void InitComponents()
+    {
+        Dialogue = new(this);
+        Sound = new(this);
+        Navigation = new(this,agent);
+        movement = new(this);
+        vision = new(this);
+
+        contextMenu = new(this, GetContextAction(MainManager.Instance.Player));
     }
 
 }
