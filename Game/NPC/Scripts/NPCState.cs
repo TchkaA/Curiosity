@@ -59,3 +59,27 @@ public partial class NPCFollowState : IState
         }
     }
 }
+
+public partial class NPCDied : IState
+{
+    private BaseNPC _owner;
+    public void Enter()
+    {
+        _owner.Navigation.Stop();
+        _owner.animationComponent.SetAnimation("die");
+    }
+
+    public void Exit()
+    {
+    }
+
+    public NPCDied(BaseNPC owner)
+    {
+        _owner = owner;
+    }
+
+    public void Update(double delta)
+    {
+        
+    }
+}

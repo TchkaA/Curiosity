@@ -18,7 +18,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     private VisionComponent vision;
     public ContextMenuComponent contextMenu;
     //----------------------
-    
+
     public Shader shader => MainManager.Instance.OutlineShader;
     public ShaderMaterial material;
 
@@ -26,9 +26,14 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     public NavigationAgent2D agent;
 
     
-    
+    //------------------------
+    //      States
+    //------------------------
     public NPCFollowState FollowState;
     public NPCIdleState IdleState;
+    public NPCDied DiedState;
+    //------------------------
+    
     private bool _isInRange = false;
     public bool InInteraction = false;
 
@@ -42,8 +47,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
 
         InitComponents();
 
-        FollowState = new(this);
-        IdleState = new(this);
+        InitStates();
 
         InitShader();
 
@@ -107,6 +111,13 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
 		material.SetShaderParameter("outline_size", 0f);
         Visual.Material = material;
 	}
+
+    public void InitStates()
+    {
+        FollowState = new(this);
+        IdleState = new(this);
+        DiedState = new(this);
+    }
 
 
     public IEnumerable<ContextAction> GetContextAction(BaseEntity interactor)
