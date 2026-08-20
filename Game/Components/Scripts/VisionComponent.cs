@@ -12,7 +12,7 @@ public class VisionComponent
     private const float OFFSET = 45f;
     private const float Radius = 50f;
 
-    private bool IsFolloving {get;set;} = true;
+    private bool IsFolloving {get;set;} = false;
 
     public VisionComponent(BaseEntity owner)
     {
@@ -107,5 +107,11 @@ public class VisionComponent
         {
             _owner.SetDirection(obj.GlobalPosition);
         }
+    }
+
+    public void Cleanup()
+    {
+        rayCast?.QueueFree();
+        area?.QueueFree();
     }
 }

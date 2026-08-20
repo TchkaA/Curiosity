@@ -6,17 +6,19 @@ public class NavigationComponent
     NavigationAgent2D _navigationAgent;
     private BaseNPC _owner;
 
+    private float _stopDistance = 30f;
+
     // Getters
     public Vector2 TargetPosition => _navigationAgent.TargetPosition;
     public bool HasPath => !_navigationAgent.IsNavigationFinished();
-
-
-
     public bool IsFinished =>
         _navigationAgent.IsNavigationFinished();
 
     public float DistanceToTarget =>
         _owner.GlobalPosition.DistanceTo(_navigationAgent.TargetPosition);
+
+
+
 
 
     public NavigationComponent(BaseNPC owner, NavigationAgent2D agent2D)
@@ -28,8 +30,10 @@ public class NavigationComponent
 
     private void AvoidanceDone() { }
 
-    public void GoTo(Vector2 target)
+    public void GoTo(Vector2 target, float stopDistance = 0)
     {
+        _stopDistance = stopDistance;
+        
         if (_navigationAgent.TargetPosition == target)
             return;
         if (_navigationAgent.TargetPosition.IsEqualApprox(target))
@@ -42,6 +46,14 @@ public class NavigationComponent
     {
         if (NavigationServer2D.MapGetIterationId(_navigationAgent.GetNavigationMap()) == 0)
         {
+            return;
+        }
+
+        // Проверяем, достигли ли нужной дистанции
+        if (DistanceToTarget <= _stopDistance)
+        {
+            // Если достигли - останавливаемся
+            _owner.movement.MoveNPC(Vector2.Zero);
             return;
         }
 

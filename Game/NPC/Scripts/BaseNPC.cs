@@ -178,7 +178,9 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     /// </summary>
     public void FollowEntity(Node2D interactor)
     {
-        
+        FollowState.SelectTarget(interactor);
+        stateMachine.ChangeState(FollowState);
+
     }
 
 }

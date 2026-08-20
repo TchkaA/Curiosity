@@ -33,10 +33,13 @@ public partial class NPCIdleState : IState
 public partial class NPCFollowState : IState
 {
     private BaseNPC _owner;
-    public Vector2 _targetPosition;
+    public Node2D _targetPosition;
+
+    public float FOLLOW_DISTANCE { get; private set; } = 70f;  
+
+
     public void Enter()
     {
-        
     }
 
     public void Exit()
@@ -50,14 +53,31 @@ public partial class NPCFollowState : IState
 
     public void Update(double delta)
     {
-        _owner.animationComponent.SetAnimation("move");
-
-        // Если навигация сообщает, что цель достигнута, переходим обратно в состояние покоя
-        if (_owner.Navigation.IsFinished)
+        if (_targetPosition != null)
         {
-            _owner.stateMachine.ChangeState(_owner.IdleState);
+            // Вычисляем точку на расстоянии от цели
+            Vector2 directionToTarget = (_owner.GlobalPosition - _targetPosition.GlobalPosition).Normalized();
+            Vector2 targetPoint = _targetPosition.GlobalPosition + directionToTarget * FOLLOW_DISTANCE;
+            
+            float distance = _owner.GlobalPosition.DistanceTo(_targetPosition.GlobalPosition);
+            
+            if (distance > FOLLOW_DISTANCE)
+            {
+                _owner.animationComponent.SetAnimation("move");
+                _owner.Navigation.GoTo(targetPoint);
+            }
+            if (_owner.Navigation.IsFinished)
+            {
+                _owner.animationComponent.SetAnimation("idle");
+            }
         }
     }
+
+    internal void SelectTarget(Node2D interactor)
+    {
+        _targetPosition = interactor;
+    }
+
 }
 
 public partial class NPCDied : IState
