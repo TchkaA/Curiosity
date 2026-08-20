@@ -7,12 +7,12 @@ public class VisionComponent
     private BaseEntity _owner { get; set; }
     private Area2D area {get; set;}
     private RayCast2D rayCast {get;set;}
-    public bool InVision {get;private set;} = false;
+    public bool InVision {get; private set;} = false;
 
     private const float OFFSET = 45f;
     private const float Radius = 50f;
 
-    private bool IsFolloving {get;set;} = false;
+    public bool IsFolloving {get;set;} = false;
 
     public VisionComponent(BaseEntity owner)
     {
@@ -105,7 +105,10 @@ public class VisionComponent
     {
         if(IsFolloving)
         {
-            _owner.SetDirection(obj.GlobalPosition);
+            if (obj is Player player)
+            {
+                _owner.SetDirection(player.GlobalPosition);
+            }
         }
     }
 

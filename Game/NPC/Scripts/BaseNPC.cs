@@ -15,7 +15,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     public SoundComponent Sound;
     public MovementComponent movement;
     public NavigationComponent Navigation;
-    private VisionComponent vision;
+    public VisionComponent vision;
     public ContextMenuComponent contextMenu;
     //----------------------
 

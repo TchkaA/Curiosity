@@ -18,9 +18,9 @@ region = Rect2(0, 0, 16.456524, 16.013126)
 size = Vector2(13.395351, 10.666668)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_vmwgv"]
-vertices = PackedVector2Array(284.45313, 590.9297, 58.898438, 617.3594, 149.11719, 496.5, 389.0703, 2.9296875, 221.11719, 242.39063, -174.99219, 0.0390625, 36.257813, 236.82031, -264.3125, 398.4922, -28.960938, 352.29688, -30.953125, 489.4297, -136.70313, 621.3906, -304.09375, 535.85156)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 0, 2, 4), PackedInt32Array(5, 3, 4, 6), PackedInt32Array(7, 5, 6, 8), PackedInt32Array(7, 8, 9, 10, 11)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(401, -7, -183, -10, -274, 396, -316, 541, -134, 634, -21, 493, -19, 355, 42, 247, 208, 252, 140, 492, 37, 630, 293, 600)])
+vertices = PackedVector2Array(-264.3125, 398.4922, -174.42188, -2.5390625, 428.59375, -228.92188, 690.28125, -217.36719, 822.9219, 695.35156, 523.9375, 803.1094, 276.02344, 818.90625, 36.273438, 661.9922, -131.36719, 624.1094, -304.09375, 535.85156, -28.382813, 629.1172, 67.88281, 761.78906)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 7), PackedInt32Array(8, 9, 0, 10), PackedInt32Array(6, 11, 7), PackedInt32Array(0, 7, 10)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(427, -239, -183, -10, -274, 396, -316, 541, -134, 634, -31, 639, 28, 669, 60, 770, 275, 829, 526, 813, 834, 702, 699, -227)])
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bhrp5"]
 shader = ExtResource("10_oab63")
@@ -78,6 +78,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="RayCast2D" type="RayCast2D" parent="." unique_id=2109780031]
-target_position = Vector2(19.055, 8.51)

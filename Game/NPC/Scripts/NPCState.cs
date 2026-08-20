@@ -40,10 +40,12 @@ public partial class NPCFollowState : IState
 
     public void Enter()
     {
+        _owner.vision.IsFolloving = true;
     }
 
     public void Exit()
     {
+        _owner.vision.IsFolloving = false;
     }
 
     public NPCFollowState(BaseNPC owner)
@@ -61,7 +63,7 @@ public partial class NPCFollowState : IState
             
             float distance = _owner.GlobalPosition.DistanceTo(_targetPosition.GlobalPosition);
             
-            if (distance > FOLLOW_DISTANCE)
+            if (distance > (FOLLOW_DISTANCE * 2.2))
             {
                 _owner.animationComponent.SetAnimation("move");
                 _owner.Navigation.GoTo(targetPoint);
