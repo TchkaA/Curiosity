@@ -55,12 +55,10 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
     }
 
 
-
-    public virtual void SetDirection()
+    public void SetDirection(Vector2 direction)
     {
-        // TODO
+        directionComponent.TurnTo(direction);
     }
-
 }
 
 public enum Relation
