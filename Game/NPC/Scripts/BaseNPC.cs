@@ -150,6 +150,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     {
         yield return new ContextAnswer("Сказать правду", () => GD.Print("slabak"));
 		yield return new ContextAnswer("Солгать", () => GD.Print("Horosh bratan"));
+        yield return new ContextAnswer("Идем за мной", () => FollowEntity(interactor));
     }
 
 
@@ -170,6 +171,14 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
         vision = new(this);
 
         contextMenu = new(this, GetContextAction(MainManager.Instance.Player));
+    }
+
+    /// <summary>
+    /// Метод, который меняет состояние и застваляет непрерывно следовать за игроком.
+    /// </summary>
+    public void FollowEntity(Node2D interactor)
+    {
+        
     }
 
 }
