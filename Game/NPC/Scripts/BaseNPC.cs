@@ -180,7 +180,10 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     {
         FollowState.SelectTarget(interactor);
         stateMachine.ChangeState(FollowState);
-
+        if(interactor is Player player)
+        {
+            player.ExitDialogue();
+        }
     }
 
 }

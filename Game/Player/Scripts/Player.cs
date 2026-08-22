@@ -84,6 +84,9 @@ public partial class Player : BaseEntity, IInventoryOwner
         stateMachine.ChangeState(interactionState);
     }
 
+	/// <summary>
+	/// Убрать бесполезный метод, перейти на ExitDialogue
+	/// </summary>
     public void ReturnToBase()
     {
         InDialogue = false;
@@ -99,6 +102,7 @@ public partial class Player : BaseEntity, IInventoryOwner
         InDialogue = false;
         followMenu.CloseMenu();
         stateMachine.ChangeState(idleState);
+		Camera.Instance.RemoveZoom();
     }
 
     internal void attack()
