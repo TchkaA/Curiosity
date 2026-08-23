@@ -15,7 +15,7 @@ agent = NodePath("NavigationAgent2D")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=436049907]
 scale = Vector2(0.6, 0.6)
 sprite_frames = ExtResource("2_1fdf2")
-animation = &"idle_down"
+animation = &"die_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1938529248]
 position = Vector2(0, 1.25)

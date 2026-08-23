@@ -59,6 +59,10 @@ public partial class BaseEntity : CharacterBody2D, IDamagable, IDirectable
     {
         directionComponent.TurnTo(direction);
     }
+    public virtual void Die()
+    {
+        // QueueFree();
+    }
 }
 
 public enum Relation

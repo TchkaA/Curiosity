@@ -186,4 +186,13 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
         }
     }
 
+    public override void Die()
+    {
+        var collision = GetChild<CollisionShape2D>(1);
+        collision.QueueFree();
+        stateMachine.ChangeState(DiedState);
+        ZIndex = -2;
+        vision.Cleanup();
+    }
+
 }

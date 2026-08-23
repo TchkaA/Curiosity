@@ -80,8 +80,7 @@ public class VisionComponent
             }
         }
 
-        if (_owner?.directionComponent == null) return;
-
+        if (_owner.directionComponent == null || !GodotObject.IsInstanceValid(area)) return;
         Vector2 offset = GetDirectionOffset(_owner.directionComponent.CurrentDirection);
         area.Position = offset;
     }
@@ -114,6 +113,8 @@ public class VisionComponent
 
     public void Cleanup()
     {
+        InVision = false;
+
         rayCast?.QueueFree();
         area?.QueueFree();
     }

@@ -38,7 +38,7 @@ public class StatsComponent
         if (Health < 0)
         {
             Health = 0;
-            _owner.QueueFree();
+            _owner.Die();
         }
     }
 
