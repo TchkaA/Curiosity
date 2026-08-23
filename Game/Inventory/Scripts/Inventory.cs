@@ -146,9 +146,10 @@ public class Inventory
         return total;
     }
 
-    public void Use(Item item)
+    public void Use(Item item, Node2D iterator = null)
     {
-        item.Use(_owner);
+        iterator ??= _owner;
+        item.Use(iterator);
         RemoveItem(item);
         OnChanged?.Invoke();
     }

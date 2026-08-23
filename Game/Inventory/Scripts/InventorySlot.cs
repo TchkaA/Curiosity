@@ -4,6 +4,10 @@ using Godot;
 
 public partial class InventorySlot : Control, IContextMenuProvider
 {
+    /// <summary>
+    /// Текуший инвентарь для слота.
+    /// </summary>
+    public Inventory currentInventory;
     public InventorySlotData CurrentItem { get; set; }
     public int Count { get; set; }
     [Export]
@@ -31,7 +35,7 @@ public partial class InventorySlot : Control, IContextMenuProvider
             switch (mouseButtonEvent.ButtonIndex)
             {
                 case MouseButton.Left:
-                    Interact(_player);
+                    Clicked();
                     break;
             }
         }
@@ -69,7 +73,7 @@ public partial class InventorySlot : Control, IContextMenuProvider
     public void UseItem()
     {
         if(CurrentItem == null) return; // Maybe later add notification
-        _player.Inventory.Use(CurrentItem.Item);
+        currentInventory.Use(CurrentItem.Item);
         SetItem(CurrentItem);
     }
 
@@ -142,8 +146,9 @@ public partial class InventorySlot : Control, IContextMenuProvider
                 pickUp.GlobalPosition = interactor.GlobalPosition;
                 
                 // Очищаем слот
-                CurrentItem = null;
-                Clear(); // Обновляем UI
+                currentInventory.RemoveItem(CurrentItem.Item);
+                // CurrentItem = null;
+                // Clear(); // Обновляем UI
             }
             else
             {
@@ -156,9 +161,18 @@ public partial class InventorySlot : Control, IContextMenuProvider
     private void Interact(BaseEntity interactor)
     {
         if(CurrentItem == null) return;
-        _player.Inventory.Use(CurrentItem.Item);
+        currentInventory.Use(CurrentItem.Item, _player);
     }
 
+    public void Clicked()
+    {
+        if (currentInventory != _player.Inventory)
+        {
+            Transfer();
+            return;
+        }
+        currentInventory.Use(CurrentItem.Item, _player);
+    }
 
     private void Inspect()
     {

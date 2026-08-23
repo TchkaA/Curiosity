@@ -40,6 +40,7 @@ public partial class InventoryGrid : GridContainer
             if (child is InventorySlot slot)
             {
                 _slots.Add(slot);
+                slot.currentInventory = Inventory;
             }
         }
 
@@ -50,8 +51,8 @@ public partial class InventoryGrid : GridContainer
     /// <summary>
     /// Позваляет забиндить текущий инвентарь своим
     /// </summary>
-    /// <param name="inventory"></param>
-    /// <param name="inv"></param>
+    /// <param name="inventory">Чей инвентарь биндить</param>
+    /// <param name="inv">Куда биндить, как дополнительный или основной</param>
     public void Bind(Inventory inventory, string inv = InventoryIds.Extra)
     {
         Unbind();
