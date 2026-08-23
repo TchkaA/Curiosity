@@ -17,6 +17,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     public NavigationComponent Navigation;
     public VisionComponent vision;
     public ContextMenuComponent contextMenu;
+    public CombatComponent combat;
     //----------------------
 
     public Shader shader => MainManager.Instance.OutlineShader;
@@ -32,6 +33,8 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     public NPCFollowState FollowState;
     public NPCIdleState IdleState;
     public NPCDied DiedState;
+    public NPCFightState fightState;
+    public NPCAttackState attackState;
     //------------------------
     
     private bool _isInRange = false;
@@ -117,6 +120,8 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
         FollowState = new(this);
         IdleState = new(this);
         DiedState = new(this);
+        fightState = new(this);
+        attackState = new(this);
     }
 
 
@@ -151,6 +156,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
         yield return new ContextAnswer("Сказать правду", () => GD.Print("slabak"));
 		yield return new ContextAnswer("Солгать", () => GD.Print("Horosh bratan"));
         yield return new ContextAnswer("Идем за мной", () => FollowEntity(interactor));
+        yield return new ContextAnswer("Ты лох", () => FightEntity(interactor));
     }
 
 
@@ -169,6 +175,7 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
         Navigation = new(this,agent);
         movement = new(this);
         vision = new(this);
+        combat = new(this);
 
         contextMenu = new(this, GetContextAction(MainManager.Instance.Player));
     }
@@ -180,6 +187,16 @@ public partial class BaseNPC : BaseEntity, IInteractable, IContextMenuProvider, 
     {
         FollowState.SelectTarget(interactor);
         stateMachine.ChangeState(FollowState);
+        if(interactor is Player player)
+        {
+            player.ExitDialogue();
+        }
+    }
+
+    public void FightEntity(Node2D interactor)
+    {
+        fightState.SelectTarget(interactor);
+        stateMachine.ChangeState(fightState);
         if(interactor is Player player)
         {
             player.ExitDialogue();

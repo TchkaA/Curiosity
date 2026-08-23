@@ -386,7 +386,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_icucy")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"die_up",
 "speed": 5.0
 }, {
@@ -575,7 +575,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_baauv")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"punch_up",
 "speed": 5.0
 }]
