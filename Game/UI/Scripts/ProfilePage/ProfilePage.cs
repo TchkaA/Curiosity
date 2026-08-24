@@ -25,6 +25,9 @@ public partial class ProfilePage : CanvasLayer
         Stats.Text = _player.Stats.ReturnStats();
     }
 
-
+    public void RefreshStats()
+    {
+        Stats.Text = _player.Stats.ReturnStats();
+    }
 
 }
