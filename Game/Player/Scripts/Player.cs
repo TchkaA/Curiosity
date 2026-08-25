@@ -13,7 +13,7 @@ public partial class Player : BaseEntity, IInventoryOwner
 	public InputComponent inputComponent;
 	public MovementComponent movementComponent;
 	public InteractionComponent Interact;
-	public CombatComponent combatC;
+	public CombatComponent combatComponent;
 
 
 	public AnimatedSprite2D sprite;
@@ -54,7 +54,7 @@ public partial class Player : BaseEntity, IInventoryOwner
 		//Follow Menu
 		followMenu = new(this);
 		
-		combatC = new(this);
+		combatComponent = new(this);
 	}
 
 	public override void _Process(double delta)
@@ -107,9 +107,8 @@ public partial class Player : BaseEntity, IInventoryOwner
 
     internal void attack()
     {
-		combatC.PerformAttack();
+		combatComponent.PerformAttack();
         stateMachine.ChangeState(punchState);
-		
     }
 
 	public void AddItem(Item item)

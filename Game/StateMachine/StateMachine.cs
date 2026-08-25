@@ -12,6 +12,7 @@ public partial class StateMachine: IState
 			CurrentState.Exit();
 		}
 
+		PreviousState = CurrentState;
 		CurrentState = newState;
 
 		if (CurrentState != null)

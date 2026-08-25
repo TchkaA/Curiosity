@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 namespace NPC.StateMachine;
 
@@ -106,26 +107,88 @@ public partial class NPCDied : IState
     }
 }
 
-public partial class NPCFight : IState
+public partial class NPCFightState : IState
 {
     private BaseNPC _owner;
+    public Node2D _targetPosition;
+
+    public float FOLLOW_DISTANCE { get; private set; } = 50f;  
+
+
     public void Enter()
     {
-        _owner.Navigation.Stop();
-        _owner.animationComponent.SetAnimation("die");
+        _owner.vision.IsFolloving = true;
     }
 
     public void Exit()
     {
+        _owner.vision.IsFolloving = false;
     }
 
-    public NPCFight(BaseNPC owner)
+    public NPCFightState(BaseNPC owner)
     {
         _owner = owner;
     }
 
     public void Update(double delta)
     {
+        if (_targetPosition != null)
+        {
+            // Вычисляем точку на расстоянии от цели
+            Vector2 directionToTarget = (_owner.GlobalPosition - _targetPosition.GlobalPosition).Normalized();
+            Vector2 targetPoint = _targetPosition.GlobalPosition + directionToTarget * FOLLOW_DISTANCE;
+            
+            float distance = _owner.GlobalPosition.DistanceTo(_targetPosition.GlobalPosition);
+            
+            if (distance > FOLLOW_DISTANCE * 1.2f)
+            {
+                _owner.animationComponent.SetAnimation("move");
+                _owner.Navigation.GoTo(targetPoint);
+            }
+            if (_owner.Navigation.IsFinished)
+            {
+                _owner.stateMachine.ChangeState(_owner.attackState);
+            }
+        }
+    }
+
+    internal void SelectTarget(Node2D interactor)
+    {
+        _targetPosition = interactor;
+    }
+}
+
+public partial class NPCAttackState(BaseNPC owner) : IState
+{
+    private readonly BaseNPC _owner = owner;
+
+    public async void Enter()
+    {
+        _owner.IsAttacking = true;
+        await EnterAttackAsync();
+    }
+
+    private async Task EnterAttackAsync()
+    {
+        _owner.combat.PerformAttack();
+        await _owner.animationComponent.PlayAndWaitAsync("punch");
+        if (_owner.stateMachine.PreviousState != null)
+        {
+            _owner.stateMachine.ChangeState(_owner.stateMachine.PreviousState);
+        }
+        else
+        {
+            _owner.stateMachine.ChangeState(_owner.IdleState);
+        }
         
+    }
+
+    public void Exit()
+    {
+        _owner.IsAttacking = false;
+    }
+
+    public void Update(double delta)
+    {
     }
 }

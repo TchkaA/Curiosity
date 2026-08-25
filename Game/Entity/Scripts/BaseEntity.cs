@@ -71,3 +71,10 @@ public enum Relation
     Peaceful,
     Neutral 
 }
+
+public enum States
+{
+    Busy,
+    Free,
+    InDialogue
+}

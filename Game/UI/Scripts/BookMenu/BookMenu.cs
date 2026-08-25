@@ -13,7 +13,7 @@ public partial class BookMenu : CanvasLayer
     [Export]
     private Control InventoryPage;
     [Export]
-    private CanvasLayer ProfilePage;
+    private ProfilePage ProfilePage;
 
     [ExportGroup("Кнопки")]
     [Export]
@@ -75,7 +75,7 @@ public partial class BookMenu : CanvasLayer
         ShowPage("profile");
         ProfileButton.ButtonPressed = true;
         InventoryButton.ButtonPressed = false;
-
+        ProfilePage.RefreshStats();
     }
 
 
