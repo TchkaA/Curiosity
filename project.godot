@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Build and mine"
-config/features=PackedStringArray("4.7", "GL Compatibility")
+config/name="Curiosity"
+config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
@@ -21,7 +21,7 @@ window/stretch/aspect="expand"
 
 [dotnet]
 
-project/assembly_name="Build and mine"
+project/assembly_name="Curiosity"
 
 [physics]
 
