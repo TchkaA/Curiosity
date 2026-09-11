@@ -3,17 +3,23 @@ using System;
 public struct StatsComponent
 {
     // BaseStats
-    public int Health;
+    public int CurrentHealth; 
     public int MaxHealth;
-    public int FloatingHealth;
+    /// <summary>
+    /// Плавающее максимальное хп, которое игрок может восстановить. 
+    /// </summary>
+    public int MaxFloatingHealth;
     
     public int Speed;
-    public int Stranght;
-    public StatsComponent()
+    public int Strangth;
+
+
+    public StatsComponent(int maxHealth = 32,int health = 32, int speed = 80, int strangth = 2)
     {
-        
+        MaxHealth = maxHealth;
+        CurrentHealth = health;
+        Speed = speed;
+        Strangth = strangth;
     }
-
-
 
 }
