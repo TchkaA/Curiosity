@@ -11,15 +11,15 @@ public struct StatsComponent
     public int MaxFloatingHealth;
     
     public int Speed;
-    public int Strangth;
+    public int Strength;
 
 
-    public StatsComponent(int maxHealth = 32,int health = 32, int speed = 80, int strangth = 2)
+    public StatsComponent(int maxHealth = 32,int health = 32, int speed = 80, int strength = 2)
     {
         MaxHealth = maxHealth;
         CurrentHealth = health;
         Speed = speed;
-        Strangth = strangth;
+        Strength = strength;
     }
 
 }
