@@ -11,6 +11,21 @@ public abstract partial class BaseEntity : CharacterBody2D
 	/// </summary>
 	public StatsComponent Stats = new();
 
+    /// <summary>
+    /// Компонент Анимации
+    /// </summary>
+    public AnimationComponent animation;
+
+    public MovementComponent movement;
+
+    /// <summary>
+    /// Машина состояний сущесвта
+    /// </summary>
+    public StateMachine stateMachine = new();
+
+    //визуальный спрайт анимации
+    public AnimatedSprite2D sprite;
+
 	// Events
 	public event Action<BaseEntity> Died;
 
@@ -20,8 +35,9 @@ public abstract partial class BaseEntity : CharacterBody2D
 	}
 
 	public override void _Ready()
-	{
-	}
+    {
+        InitComponents();
+    }
 
 	public override void _Process(double delta)
 	{
@@ -107,4 +123,13 @@ public abstract partial class BaseEntity : CharacterBody2D
     }
 
 	#endregion
+
+    #region Components
+    public virtual void InitComponents()
+    {
+        animation = new(this, sprite);
+        movement = new(this);
+    }
+
+    #endregion
 }
