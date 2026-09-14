@@ -39,9 +39,10 @@ public abstract partial class BaseEntity : CharacterBody2D
         InitComponents();
     }
 
-	public override void _Process(double delta)
-	{
-	}
+	public override void _PhysicsProcess(double delta)
+    {
+        stateMachine.Update(delta);
+    }
 
 
 	#region Stats Methods
@@ -127,6 +128,7 @@ public abstract partial class BaseEntity : CharacterBody2D
     #region Components
     public virtual void InitComponents()
     {
+        Stats = new();
         animation = new(this, sprite);
         movement = new(this);
     }

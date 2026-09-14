@@ -15,10 +15,4 @@ public class MovementComponent
         _owner.Velocity = velocity;
         _owner.MoveAndSlide();
     }
-
-    public void MoveNPC(Vector2 velocity)
-    {
-        _owner.Velocity = velocity;
-        _owner.MoveAndSlide();
-    }
 }

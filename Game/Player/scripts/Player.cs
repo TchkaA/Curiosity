@@ -24,13 +24,18 @@ public partial class Player : BaseEntity
 
 	public override void _Ready()
 	{
-		
+		base._Ready();
+		GD.Print("-- PLAYER READY");
+		InitStates();
+		stateMachine.ChangeState(idleState);
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+		inputComponent.Update();
+    }
+
 
 	/// <summary>
 	/// Билдер Компонентов.
@@ -40,6 +45,7 @@ public partial class Player : BaseEntity
 		base.InitComponents();
 		inputComponent = new(this);
 	}
+
 	/// <summary>
 	/// Билдер состояний.
 	/// </summary>

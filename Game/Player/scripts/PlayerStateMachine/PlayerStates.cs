@@ -25,7 +25,7 @@ public partial class PlayerMoveState : IState
         if (input != Vector2.Zero)
         {
             Player.movement.Move(input);
-            Player.animation.SetAnimation("move");
+            // Player.animation.SetAnimation("move");
         }
         else
         {
@@ -44,7 +44,7 @@ public partial class PlayerIdleState : IState
     Vector2 input;
     public void Enter()
     {
-        _player.animation.SetAnimation("idle");
+        // _player.animation.SetAnimation("idle");
     }
 
     public void Exit()

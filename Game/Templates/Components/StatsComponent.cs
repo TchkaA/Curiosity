@@ -1,6 +1,6 @@
 using System;
 
-public struct StatsComponent
+public class StatsComponent
 {
     // BaseStats
     public int CurrentHealth; 
