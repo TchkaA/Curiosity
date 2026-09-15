@@ -6,4 +6,3 @@
 
 [node name="Player" parent="." unique_id=2106905218 instance=ExtResource("1_omwuo")]
 position = Vector2(188, 238)
-motion_mode = 1
