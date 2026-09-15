@@ -24,6 +24,10 @@ window/stretch/aspect="expand"
 
 project/assembly_name="Curiosity"
 
+[global_group]
+
+Player=""
+
 [input]
 
 move_right={
