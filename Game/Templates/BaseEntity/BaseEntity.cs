@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// Базовый шаблон, от которого наследуются все существа
 /// </summary>
-public abstract partial class BaseEntity : CharacterBody2D
+public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 {
 	/// <summary>
 	/// Статы персонажа
