@@ -52,7 +52,7 @@ public abstract partial class BaseEntity : CharacterBody2D
     /// Есть событие Died.
     /// </summary>
     /// <param name="damage">Урон</param>
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         Stats.CurrentHealth -= damage;
         if(Stats.CurrentHealth <= 0)
@@ -67,7 +67,7 @@ public abstract partial class BaseEntity : CharacterBody2D
     /// Есть событие OnHealth Changed, которое возвращает текущее хп.
     /// </summary>
     /// <param name="health"></param>
-    public void Heal(int health)
+    public void Heal(float health)
     {
         Stats.CurrentHealth += health;
         if (Stats.CurrentHealth > Stats.MaxFloatingHealth) Stats.CurrentHealth = Stats.MaxFloatingHealth;
@@ -79,7 +79,7 @@ public abstract partial class BaseEntity : CharacterBody2D
     /// С событием игрока
     /// </summary>
     /// <param name="health"></param>
-    public void ReduceMaxHealth(int health)
+    public void ReduceMaxHealth(float health)
     {
         Stats.MaxHealth -= health;
         if (Stats.CurrentHealth > Stats.MaxHealth)
@@ -101,7 +101,7 @@ public abstract partial class BaseEntity : CharacterBody2D
     /// Есть событие MaxCurrentHealth, если плавающее здоровье равно максимальному здоровью.
     /// </summary>
     /// <param name="num">Число для увелечения плавающего здоровья</param>
-    public void AddFloatingHealth(int num)
+    public void AddFloatingHealth(float num)
     {
         if(Stats.MaxFloatingHealth == Stats.MaxHealth)
         {
@@ -118,7 +118,7 @@ public abstract partial class BaseEntity : CharacterBody2D
 	/// Метод увеличения максимального здоровья игрока
 	/// </summary>
 	/// <param name="health">Кол-во увеличиваемого макимального здоровья</param>
-    public void IncreaseMaxHealth(int health)
+    public void IncreaseMaxHealth(float health)
     {
         Stats.MaxHealth += health;
     }

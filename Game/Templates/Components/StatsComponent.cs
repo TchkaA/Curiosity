@@ -3,18 +3,18 @@ using System;
 public class StatsComponent
 {
     // BaseStats
-    public int CurrentHealth; 
-    public int MaxHealth;
+    public float CurrentHealth; 
+    public float MaxHealth;
     /// <summary>
     /// Плавающее максимальное хп, которое игрок может восстановить. 
     /// </summary>
-    public int MaxFloatingHealth;
+    public float MaxFloatingHealth;
     
-    public int Speed;
-    public int Strength;
+    public float Speed;
+    public float Strength;
 
 
-    public StatsComponent(int maxHealth = 32,int health = 32, int speed = 80, int strength = 2)
+    public StatsComponent(float maxHealth = 32,float health = 32, float speed = 90, float strength = 2)
     {
         MaxHealth = maxHealth;
         CurrentHealth = health;
