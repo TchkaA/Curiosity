@@ -76,4 +76,27 @@ public class AnimationComponent
         await tcs.Task;
     }
 
+    public void NotifyAnimation(DirectionComponent.FacingDirection direction)
+    {
+        switch (direction)
+        {
+            case DirectionComponent.FacingDirection.Up:
+                SetDirection("up");
+                break;
+            case DirectionComponent.FacingDirection.Down:
+                SetDirection("down");
+                break;
+            case DirectionComponent.FacingDirection.Left:
+                SetDirection("left");
+                break;
+            case DirectionComponent.FacingDirection.Right:
+                SetDirection("right");
+                break;
+            default:
+                GD.PrintErr("Invalid direction string");
+                SetDirection("down");
+                break;
+        }
+    }
+
 }

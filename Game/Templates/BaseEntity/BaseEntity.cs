@@ -16,7 +16,15 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     /// </summary>
     public AnimationComponent animation;
 
+    /// <summary>
+    /// Компонент движения
+    /// </summary>
     public MovementComponent movement;
+
+    /// <summary>
+    /// Компонент направления
+    /// </summary>
+    public DirectionComponent direction;
 
     /// <summary>
     /// Машина состояний сущесвта
@@ -131,6 +139,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
         Stats = new();
         animation = new(this, sprite);
         movement = new(this);
+        direction = new(this);
     }
 
     #endregion

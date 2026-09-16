@@ -26,16 +26,21 @@ public class InputComponent
             Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left"),
             Input.GetActionStrength("move_down") - Input.GetActionStrength("move_up")
         ).Normalized();
-        // UpdateDirection(MovementInput);
+        UpdateDirection(MovementInput);
         // if(Input.IsActionJustPressed("interact")) _player.Interact.Interact();
         // if(Input.IsActionJustPressed("attack")) _player.attack();
         // if(Input.IsActionJustPressed("follow_menu")) _player.OpenMenu();
     }
-    // public void UpdateDirection(Vector2 direction)
-    // {
-    //     if (direction != Vector2.Zero)
-    //     {
-    //         _player.directionComponent.SetDirection(direction);
-    //     }
-    // }
+
+    /// <summary>
+    /// Метод для обнавления текущего направления
+    /// </summary>
+    /// <param name="direction">Нужное направление</param>
+    public void UpdateDirection(Vector2 direction)
+    {
+        if (direction != Vector2.Zero)
+        {
+            _player.direction.SetDirectionFromVector(direction);
+        }
+    }
 }
