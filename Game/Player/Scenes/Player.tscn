@@ -1,18 +1,20 @@
 [gd_scene format=3 uid="uid://bkbhf3xw2ajn6"]
 
 [ext_resource type="Script" uid="uid://cjv65a1k7k3u4" path="res://Game/Player/scripts/Player.cs" id="1_4x5jf"]
-[ext_resource type="Texture2D" uid="uid://duxirj8sh2uo6" path="res://icon.svg" id="1_g8vr1"]
+[ext_resource type="SpriteFrames" uid="uid://coq8a34pj2ytf" path="res://Game/Player/Resourses/Animations/Player_base.tres" id="2_4x5jf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4iymr"]
-radius = 65.0
-height = 132.0
+radius = 26.0
+height = 76.0
 
 [node name="Player" type="CharacterBody2D" unique_id=2106905218 groups=["Player"]]
 motion_mode = 1
 script = ExtResource("1_4x5jf")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2121933700]
-texture = ExtResource("1_g8vr1")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=420859484]
 shape = SubResource("CapsuleShape2D_4iymr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=774314259]
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("2_4x5jf")
+animation = &"walk_down"

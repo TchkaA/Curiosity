@@ -44,12 +44,15 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 
 	public override void _Ready()
     {
+        sprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
         InitComponents();
+        LinksActions();
     }
 
 	public override void _PhysicsProcess(double delta)
     {
         stateMachine.Update(delta);
+        animation.Update();
     }
 
 
@@ -140,6 +143,17 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
         animation = new(this, sprite);
         movement = new(this);
         direction = new(this);
+
+    }
+
+    /// <summary>
+    /// Событие, которое используется для связки несвязных событий.
+    /// Каждое событие должно поясняться 
+    /// </summary>
+    public void LinksActions()
+    {
+        // Уведомляем анимации, что они 
+        direction.DirectionChanged += animation.NotifyAnimation;
     }
 
     #endregion

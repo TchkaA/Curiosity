@@ -4,8 +4,6 @@ using System;
 public partial class PlayerMoveState : IState
 {
     public Player Player;
-    public Vector2 input;
-    public Vector2 velocity;
     public void Enter()
     {
     }
@@ -25,7 +23,7 @@ public partial class PlayerMoveState : IState
         if (input != Vector2.Zero)
         {
             Player.movement.Move(input);
-            // Player.animation.SetAnimation("move");
+            Player.animation.SetAnimation("walk");
         }
         else
         {
@@ -44,7 +42,7 @@ public partial class PlayerIdleState : IState
     Vector2 input;
     public void Enter()
     {
-        // _player.animation.SetAnimation("idle");
+        _player.animation.SetAnimation("idle");
     }
 
     public void Exit()

@@ -7,6 +7,8 @@ using Godot;
 public class AnimationComponent
 {
     public bool isChanged;
+
+    private BaseEntity _owner;
     private AnimatedSprite2D _sprite;
 
     public string Direction = "down";
@@ -16,10 +18,11 @@ public class AnimationComponent
     
     public AnimationComponent(BaseEntity owner, AnimatedSprite2D sprite)
     {
+        _owner = owner;
         _sprite = sprite;
     }
 
-    public void UpdateAnimation()
+    public void Update()
     {
         if (isChanged == true)
         {
