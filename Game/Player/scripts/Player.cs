@@ -8,6 +8,7 @@ public partial class Player : BaseEntity
 	// 		Components
 	//---------------------
 	public InputComponent inputComponent;
+	public InteractionComponent interaction;
 
 	//---------------------
 
@@ -53,5 +54,6 @@ public partial class Player : BaseEntity
 	{
 		idleState = new(this);
 		moveState = new(this);
+		interaction = new(this);
 	}
 }
