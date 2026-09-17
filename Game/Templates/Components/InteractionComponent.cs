@@ -12,8 +12,15 @@ public partial class InteractionComponent
     public InteractionComponent(BaseEntity owner)
     {
         _owner = owner;
+
+        InitialInteractionArea(); // Инициализируется Area сразу в конструкторе, тк в любом случае писали бы в Ready или метод иницииализации
     }
 
+
+    /// <summary>
+    /// метод взаимодействия, который проходит по всем элементам, что находятся в зоне действия.
+    /// TODO: сделать возможность выбора элементов
+    /// </summary>
     public void Interact()
     {
         var bodies = _interactionArea.GetOverlappingBodies();
@@ -35,6 +42,12 @@ public partial class InteractionComponent
             }
         }
     }
+
+    /// <summary>
+    /// Метод входа в зону действия.
+    /// Просто уведомляет
+    /// </summary>
+    /// <param name="body">Тело вошедшее в зону</param>
     public void InteractEnter(Node2D body)
     {
         if (body is IInteractable obj)
@@ -43,6 +56,11 @@ public partial class InteractionComponent
 		}
     }
 
+    /// <summary>
+    /// Метод выхода из зоны действия
+    /// Просто уведомляет
+    /// </summary>
+    /// <param name="body">Тело вышедшее из зоны</param>
     public void InteractExit(Node2D body)
     {
         if (body is IInteractable obj)
@@ -61,7 +79,7 @@ public partial class InteractionComponent
         var shape = new CollisionShape2D();
         var circleShape = new CircleShape2D
         {
-            Radius = 18.0f // Радиус зоны взаимодействия
+            Radius = 80.0f // Радиус зоны взаимодействия
         };
         shape.Shape = circleShape;
         // _interactionArea.CollisionLayer = 0; // Не участвует в коллизиях физики
