@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 
 /// <summary>
 /// Предмет на земле: можно осмотреть или подобрать.
@@ -44,7 +43,7 @@ public partial class PickUp : Area2D, IInteractable
 		Name = Item.Name;
 
 		SetupVisual();
-		// SetupOutline();
+		SetupOutline();
 		SetupCollision();
 
 		InputPickable = true;
@@ -60,13 +59,13 @@ public partial class PickUp : Area2D, IInteractable
 		AddChild(_visual);
 	}
 
-	// private void SetupOutline()
-	// {
-	// 	// var shader = MainManager.Instance.OutlineShader;
-	// 	_material = new ShaderMaterial { Shader = shader };
-	// 	_material.SetShaderParameter("outline_size", 0f);
-	// 	_visual.Material = _material;
-	// }
+	private void SetupOutline()
+	{
+		var shader = GD.Load<Shader>("res://Visual/Shaders/Outline/outline.gdshader");
+		_material = new ShaderMaterial { Shader = shader };
+		_material.SetShaderParameter("outline_size", 0f);
+		_visual.Material = _material;
+	}
 
 	private void SetupCollision()
 	{

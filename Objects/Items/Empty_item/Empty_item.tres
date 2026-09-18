@@ -6,8 +6,6 @@
 [resource]
 script = ExtResource("2_s3jub")
 Name = "Empty_item"
-ID = 1
-Name = "Empty_item"
 Icon = ExtResource("1_da7a3")
 MaxStack = 999
 ID = 1
