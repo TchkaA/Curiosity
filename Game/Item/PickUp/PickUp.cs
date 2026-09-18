@@ -36,7 +36,7 @@ public partial class PickUp : Area2D, IInteractable
 		if (Item == null)
 		{
 			GD.PushError($"{Name}: PickUp создан без Item, настройка отменена.");
-			return;
+			
 		}
 
 		ZIndex = -1;
@@ -110,6 +110,7 @@ public partial class PickUp : Area2D, IInteractable
 	{
         #if DEBUG
         GD.Print("Interact with item" + GetType);
+		QueueFree();
         #endif
 		// if (interactor is IInventoryOwner owner)
 		// {

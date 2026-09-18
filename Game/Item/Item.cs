@@ -3,13 +3,19 @@ using Godot;
 /// <summary>
 /// Абстрактный класс игрового объекта
 /// </summary>
-public abstract class Item
+public abstract partial class Item : Resource
 {
-	public string Name;
+	[Export]
+	public string Name {get; private set;}
 
-	public Texture2D Icon;
+	[Export]
+	public Texture2D Icon {get; private set;}
 
-	public string Description;
+	[Export]
+	public string Description {get; private set;}
 
-	public int MaxStack;
+	[Export]
+	public int MaxStack {get; private set;}
+
+	public abstract void Use(Node2D user);
 }
