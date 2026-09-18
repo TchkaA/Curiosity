@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using Godot;
 
 /// <summary>
@@ -16,6 +18,9 @@ public abstract partial class Item : Resource
 
 	[Export]
 	public int MaxStack {get; private set;}
+
+	[Export]
+	public int ID {get; private set;}
 
 	public abstract void Use(Node2D user);
 }

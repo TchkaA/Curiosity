@@ -11,8 +11,8 @@ public partial class PickUp : Area2D, IInteractable
 	public Item Item;
 
 	[ExportGroup("Настройки")]
-	[Export] public float VisualScale = 3f;
-	[Export] public float CollisionRadius = 8f;
+	[Export] public float VisualScale = 2f;
+	[Export] public float CollisionRadius = 14f;
 	[Export] public float OutlineActiveSize = 0.8f;
 
 	private Sprite2D _visual;
@@ -26,17 +26,17 @@ public partial class PickUp : Area2D, IInteractable
 	/// Задать предмет до того, как нода попадёт в дерево сцены (например, при спавне из кода).
 	/// Вся остальная настройка (визуал, коллизия, шейдер) происходит один раз в _Ready.
 	/// </summary>
-    public PickUp(Item item)
-    {
-        Item = item;
-    }
+    public void Init(Item item) => Item = item;
 
 	public override void _Ready()
 	{
 		if (Item == null)
 		{
-			GD.PushError($"{Name}: PickUp создан без Item, настройка отменена.");
-			
+			#if DEBUG
+			GD.PrintErr($"{Name}: PickUp создан без Item, настроен как Empty item.");
+			#endif 
+
+			Item = GD.Load<Item>("res://Objects/Items/Empty_item/Empty_item.tres"); //Empty item пустой Item
 		}
 
 		ZIndex = -1;
@@ -109,7 +109,7 @@ public partial class PickUp : Area2D, IInteractable
 	public void Interact(BaseEntity interactor)
 	{
         #if DEBUG
-        GD.Print("Interact with item" + GetType);
+        GD.Print("Interact with item" + Name);
 		QueueFree();
         #endif
 		// if (interactor is IInventoryOwner owner)

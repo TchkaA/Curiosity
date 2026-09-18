@@ -27,7 +27,7 @@ public class InputComponent
             Input.GetActionStrength("move_down") - Input.GetActionStrength("move_up")
         ).Normalized();
         UpdateDirection(MovementInput);
-        // if(Input.IsActionJustPressed("interact")) _player.Interact.Interact();
+        if(Input.IsActionJustPressed("interact")) _player.interaction.Interact();
         // if(Input.IsActionJustPressed("attack")) _player.attack();
         // if(Input.IsActionJustPressed("follow_menu")) _player.OpenMenu();
     }

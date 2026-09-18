@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bkbhf3xw2ajn6" path="res://Game/Player/Scenes/Player.tscn" id="1_omwuo"]
 [ext_resource type="PackedScene" uid="uid://cn2flbt5svpty" path="res://Game/Camera/scenes/Camera.tscn" id="2_divlm"]
+[ext_resource type="Script" uid="uid://4spcpn08s5n5" path="res://Game/Item/PickUp/PickUp.cs" id="3_600mi"]
 
 [node name="test" type="Node2D" unique_id=840178364]
 
@@ -10,3 +11,7 @@ position = Vector2(188, 238)
 
 [node name="Camera2D" parent="." unique_id=1979440141 instance=ExtResource("2_divlm")]
 position = Vector2(460, 109)
+
+[node name="PickUp" type="Area2D" parent="." unique_id=80728336]
+script = ExtResource("3_600mi")
+metadata/_custom_type_script = "uid://4spcpn08s5n5"
