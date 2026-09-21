@@ -9,9 +9,15 @@ public partial class Player : BaseEntity
 	//---------------------
 	public InputComponent inputComponent;
 	public InteractionComponent interaction;
+	public UIComponent UI;
 
 	//---------------------
 
+	//---------------------
+	//		Objects
+	//---------------------
+	[Export] 
+	public BookMenu GlobalBookMenu; 
 
 	//---------------------
 	// 		States
@@ -45,6 +51,8 @@ public partial class Player : BaseEntity
 	{
 		base.InitComponents();
 		inputComponent = new(this);
+		UI = new(this, GlobalBookMenu);
+		interaction = new(this);
 	}
 
 	/// <summary>
@@ -54,6 +62,12 @@ public partial class Player : BaseEntity
 	{
 		idleState = new(this);
 		moveState = new(this);
-		interaction = new(this);
 	}
+
+    public override void LinksActions()
+    {
+        base.LinksActions();
+		GlobalBookMenu.IsMenuOpen += UI.ToggleMenu;
+	}
+
 }

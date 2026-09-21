@@ -37,6 +37,8 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 	// Events
 	public event Action<BaseEntity> Died;
 
+    //Inventory
+    public Inventory Inventory {get; private set;}
 
 	public BaseEntity()
 	{
@@ -47,6 +49,9 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
         sprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
         InitComponents();
         LinksActions();
+
+        //Init Inventory TODO: create InventoryComponent
+        Inventory = new(this);
     }
 
 	public override void _PhysicsProcess(double delta)
@@ -150,7 +155,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     /// Событие, которое используется для связки несвязных событий.
     /// Каждое событие должно поясняться 
     /// </summary>
-    public void LinksActions()
+    public virtual void LinksActions()
     {
         // Уведомляем анимации, что они 
         direction.DirectionChanged += animation.NotifyAnimation;

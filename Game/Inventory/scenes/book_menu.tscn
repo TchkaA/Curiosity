@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://cvwc4itvt3kch"]
+
+[ext_resource type="Script" uid="uid://cvm1mbm11dvrx" path="res://Game/BookMenu/Scripts/BookMenu.cs" id="1_oh6x1"]
+[ext_resource type="Texture2D" uid="uid://c40fpx0ybdld3" path="res://Assets/UI/Book/BookUI.tres" id="1_p14fj"]
+[ext_resource type="Texture2D" uid="uid://cwi34tia86skv" path="res://Assets/UI/Book/BookMark2.tres" id="2_j41kw"]
+[ext_resource type="Texture2D" uid="uid://cgwdxcv8vq8ww" path="res://Assets/UI/Book/BookMark1.tres" id="3_oh6x1"]
+[ext_resource type="Script" uid="uid://cjjn6kfc1igv" path="res://Game/BookMenu/Scripts/InventoryPage.cs" id="5_7anev"]
+[ext_resource type="PackedScene" uid="uid://o30vjs13ky7r" path="res://Game/Inventory/scenes/inventory_page.tscn" id="6_25quv"]
+
+[node name="BookMenu" type="CanvasLayer" unique_id=595888724 node_paths=PackedStringArray("InventoryPage")]
+script = ExtResource("1_oh6x1")
+InventoryPage = NodePath("Screens/InventoryPage")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1042373934]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 101.0
+offset_top = 83.0
+offset_right = -99.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_p14fj")
+
+[node name="InventoryButton" type="TextureButton" parent="TextureRect" unique_id=461172051]
+layout_mode = 0
+offset_left = 539.0
+offset_top = -60.0
+offset_right = 601.0
+mouse_default_cursor_shape = 16
+toggle_mode = true
+texture_normal = ExtResource("2_j41kw")
+texture_pressed = ExtResource("3_oh6x1")
+stretch_mode = 5
+
+[node name="ProfileButton" type="TextureButton" parent="TextureRect" unique_id=71875406]
+layout_mode = 0
+offset_left = 615.0
+offset_top = -60.0
+offset_right = 677.0
+mouse_default_cursor_shape = 2
+toggle_mode = true
+action_mode = 0
+texture_normal = ExtResource("2_j41kw")
+texture_pressed = ExtResource("3_oh6x1")
+stretch_mode = 5
+
+[node name="Screens" type="Control" parent="." unique_id=1742834444]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InventoryPage" type="Control" parent="Screens" unique_id=251557428]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_7anev")
+
+[node name="PlayerInventory" parent="Screens/InventoryPage" unique_id=1042492033 instance=ExtResource("6_25quv")]
+layout_mode = 0
+offset_left = 172.0
+offset_top = 104.00001
+offset_right = 285.0
+offset_bottom = 256.0
+scale = Vector2(2.84, 2.84)
+
+[node name="ExtraInventory" parent="Screens/InventoryPage" unique_id=294969645 instance=ExtResource("6_25quv")]
+visible = false
+layout_mode = 0
+offset_left = 649.0
+offset_top = 104.0
+offset_right = 762.0
+offset_bottom = 256.0

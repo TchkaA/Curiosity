@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public class InputComponent
@@ -8,7 +9,8 @@ public class InputComponent
     // public bool RollPressed { get; private set; }
     // public bool InteractPressed { get; private set; }
     private Player _player;
-
+    
+    public Action UIOpen;
 
     public InputComponent(Player player)
     {
@@ -28,8 +30,8 @@ public class InputComponent
         ).Normalized();
         UpdateDirection(MovementInput);
         if(Input.IsActionJustPressed("interact")) _player.interaction.Interact();
-        // if(Input.IsActionJustPressed("attack")) _player.attack();
-        // if(Input.IsActionJustPressed("follow_menu")) _player.OpenMenu();
+
+        // if(Input.IsActionJustPressed("Tab")) UIOpen?.Invoke();
     }
 
     /// <summary>

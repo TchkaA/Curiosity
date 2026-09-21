@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://b14pej7wxh5pm"]
+
+[ext_resource type="Script" uid="uid://c7ui52ig5j12f" path="res://Game/Inventory/Scripts/InventorySlot.cs" id="1_gwwt5"]
+[ext_resource type="Texture2D" uid="uid://imhs8w3oxgq6" path="res://Objects/Icons/Slot.tres" id="2_tmoor"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4iymr"]
+font_size = 11
+
+[node name="InventorySlot" type="Control" unique_id=1688126859 node_paths=PackedStringArray("IconTexture", "CountLabel")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_gwwt5")
+IconTexture = NodePath("Item")
+CountLabel = NodePath("CountLabel")
+
+[node name="Item" type="TextureRect" parent="." unique_id=1722102561]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1566709263]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_tmoor")
+
+[node name="CountLabel" type="Label" parent="." unique_id=1283574290]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 18.0
+offset_right = 37.0
+offset_bottom = 41.0
+text = "11"
+label_settings = SubResource("LabelSettings_4iymr")
+horizontal_alignment = 2
+vertical_alignment = 2

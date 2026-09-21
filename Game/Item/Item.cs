@@ -1,26 +1,27 @@
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using Godot;
 
 /// <summary>
-/// Абстрактный класс игрового объекта
+/// Базовый класс для всех предметов в игре.
+/// Наследуется от Resource, что позволяет создавать предметы как ассеты в редакторе Godot.
 /// </summary>
 public abstract partial class Item : Resource
 {
-	[Export]
-	public string Name {get; private set;}
+    [Export] public string Name { get; private set; } = "Unnamed Item";
+    [Export] public Texture2D Icon { get; private set; }
+    [Export] public string Description { get; private set; } = "No description.";
+    
+    /// <summary>
+    /// Максимальное количество предметов в одном слоте. 1 = не стакается.
+    /// </summary>
+    [Export] public int MaxStack { get; private set; } = 1;
+    
+    [Export] public int ID { get; private set; }
 
-	[Export]
-	public Texture2D Icon {get; private set;}
-
-	[Export]
-	public string Description {get; private set;}
-
-	[Export]
-	public int MaxStack {get; private set;}
-
-	[Export]
-	public int ID {get; private set;}
-
-	public abstract void Use(Node2D user);
+    /// <summary>
+    /// Логика использования предмета. 
+    /// Переопределяется в наследниках (зелье, оружие, ключ).
+    /// </summary>
+    /// <param name="user">Сущность, использующая предмет</param>
+    /// <returns>True, если использование прошло успешно (например, зелье выпито), False иначе.</returns>
+    public abstract bool Use(Node2D user);
 }
