@@ -27,7 +27,7 @@ public partial class BookMenu : CanvasLayer
         Visible = true;
         GetTree().Paused = true; // Ставим на паузу при открытии
         CurrentState = OpenState.Opened;
-        InventoryPage?.Bind(playerInventory, extraInventory);
+        InventoryPage.Bind(playerInventory, extraInventory);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public partial class BookMenu : CanvasLayer
         GetTree().Paused = false; // Снимаем с паузы
 
         CurrentState = OpenState.Closed;
-        InventoryPage?.Unbind();
+        InventoryPage.Unbind();
     }
 
     public override void _Input(InputEvent @event)

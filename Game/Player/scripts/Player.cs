@@ -35,6 +35,11 @@ public partial class Player : BaseEntity
 		GD.Print("-- PLAYER READY");
 		InitStates();
 		stateMachine.ChangeState(idleState);
+
+		#if DEBUG
+		Inventory.AddItem(new HealingPotion(), 5);
+		Inventory.AddItem(new ChickenMeat(),10);
+		#endif
 	}
 
     public override void _Process(double delta)

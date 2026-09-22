@@ -52,25 +52,26 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="InventoryPage" type="Control" parent="Screens" unique_id=251557428]
-visible = false
+[node name="InventoryPage" type="Control" parent="Screens" unique_id=251557428 node_paths=PackedStringArray("PlayerInventoryGrid", "ExtraInventoryGrid")]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("5_7anev")
+PlayerInventoryGrid = NodePath("PlayerInventory")
+ExtraInventoryGrid = NodePath("ExtraInventory")
 
 [node name="PlayerInventory" parent="Screens/InventoryPage" unique_id=1042492033 instance=ExtResource("6_25quv")]
 layout_mode = 0
-offset_left = 172.0
-offset_top = 104.00001
-offset_right = 285.0
-offset_bottom = 256.0
-scale = Vector2(2.84, 2.84)
+offset_left = 168.485
+offset_top = 112.575
+offset_right = 320.48553
+offset_bottom = 303.575
+scale = Vector2(2.2, 2.2)
 
 [node name="ExtraInventory" parent="Screens/InventoryPage" unique_id=294969645 instance=ExtResource("6_25quv")]
-visible = false
 layout_mode = 0
-offset_left = 649.0
-offset_top = 104.0
-offset_right = 762.0
-offset_bottom = 256.0
+offset_left = 643.63
+offset_top = 112.575
+offset_right = 795.63
+offset_bottom = 303.575
+scale = Vector2(2.2, 2.2)

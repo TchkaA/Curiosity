@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://o30vjs13ky7r"]
 
 [ext_resource type="Script" uid="uid://byyu86muefw08" path="res://Game/Inventory/Scripts/InventoryGrid.cs" id="1_odsyb"]
-[ext_resource type="PackedScene" uid="uid://b14pej7wxh5pm" path="res://Game/Inventory/Scenes/inventory_slot.tscn" id="2_vfmxe"]
+[ext_resource type="PackedScene" uid="uid://b14pej7wxh5pm" path="res://Game/Inventory/scenes/inventory_slot.tscn" id="2_vfmxe"]
 
 [node name="InventoryPage" type="GridContainer" unique_id=284221530]
 offset_left = 91.0
@@ -9,7 +9,7 @@ offset_top = 67.0
 offset_right = 204.0
 offset_bottom = 219.0
 scale = Vector2(3, 3)
-columns = 3
+columns = 4
 script = ExtResource("1_odsyb")
 
 [node name="InventorySlot" parent="." unique_id=811983990 instance=ExtResource("2_vfmxe")]
@@ -57,5 +57,37 @@ custom_minimum_size = Vector2(35.59, 35.24)
 layout_mode = 2
 
 [node name="InventorySlot12" parent="." unique_id=1491581204 instance=ExtResource("2_vfmxe")]
+custom_minimum_size = Vector2(35.59, 35.24)
+layout_mode = 2
+
+[node name="InventorySlot13" parent="." unique_id=1688126859 instance=ExtResource("2_vfmxe")]
+custom_minimum_size = Vector2(35.59, 35.24)
+layout_mode = 2
+
+[node name="InventorySlot14" parent="." unique_id=1860314677 instance=ExtResource("2_vfmxe")]
+custom_minimum_size = Vector2(35.59, 35.24)
+layout_mode = 2
+
+[node name="InventorySlot15" parent="." unique_id=304288187 instance=ExtResource("2_vfmxe")]
+custom_minimum_size = Vector2(35.59, 35.24)
+layout_mode = 2
+
+[node name="InventorySlot16" parent="." unique_id=474378470 instance=ExtResource("2_vfmxe")]
+custom_minimum_size = Vector2(35.59, 35.24)
+layout_mode = 2
+
+[node name="InventorySlot17" parent="." unique_id=459984495 instance=ExtResource("2_vfmxe")]
+custom_minimum_size = Vector2(35.59, 35.24)
+layout_mode = 2
+
+[node name="InventorySlot18" parent="." unique_id=698633535 instance=ExtResource("2_vfmxe")]
+custom_minimum_size = Vector2(35.59, 35.24)
+layout_mode = 2
+
+[node name="InventorySlot19" parent="." unique_id=730553682 instance=ExtResource("2_vfmxe")]
+custom_minimum_size = Vector2(35.59, 35.24)
+layout_mode = 2
+
+[node name="InventorySlot20" parent="." unique_id=861267821 instance=ExtResource("2_vfmxe")]
 custom_minimum_size = Vector2(35.59, 35.24)
 layout_mode = 2

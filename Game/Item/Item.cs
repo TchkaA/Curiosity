@@ -6,16 +6,16 @@ using Godot;
 /// </summary>
 public abstract partial class Item : Resource
 {
-    [Export] public string Name { get; private set; } = "Unnamed Item";
-    [Export] public Texture2D Icon { get; private set; }
-    [Export] public string Description { get; private set; } = "No description.";
+    [Export] public string Name { get; set; } = "Unnamed Item";
+    [Export] public Texture2D Icon { get; set; }
+    [Export] public string Description { get; set; } = "No description.";
     
     /// <summary>
     /// Максимальное количество предметов в одном слоте. 1 = не стакается.
     /// </summary>
-    [Export] public int MaxStack { get; private set; } = 1;
+    [Export] public int MaxStack { get; set; } = 1;
     
-    [Export] public int ID { get; private set; }
+    [Export] public int ID { get; set; }
 
     /// <summary>
     /// Логика использования предмета. 

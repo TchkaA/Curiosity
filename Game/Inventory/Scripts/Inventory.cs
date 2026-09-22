@@ -1,115 +1,151 @@
 using System;
-using System.Collections.Generic;
 using Godot;
 
-/// <summary>
-/// Логическое хранилище предметов. Не знает ничего об UI.
-/// </summary>
 public class Inventory
 {
-    private readonly List<InventorySlotData> _slots = new();
+    private readonly InventorySlotData?[] _slots;
     private readonly Node2D _owner;
+    public int Capacity => _slots.Length;
 
-    /// <summary>
-    /// Событие, вызываемое при любом изменении содержимого инвентаря.
-    /// UI должен подписываться на это событие для обновления.
-    /// </summary2>
-    public event Action OnChanged;
+    // Событие для обновления конкретного слота
+    public event Action<int> OnSlotChanged;
 
-    public int SlotCount => _slots.Count;
-    public IReadOnlyList<InventorySlotData> Slots => _slots;
-
-    public Inventory(Node2D owner)
+    public Inventory(Node2D owner, int capacity = 20)
     {
         _owner = owner ?? throw new ArgumentNullException(nameof(owner));
+        _slots = new InventorySlotData?[capacity];
     }
 
-    public InventorySlotData GetSlot(int index)
+    public InventorySlotData? GetSlot(int index)
     {
-        if (index < 0 || index >= _slots.Count) return null;
+        if (index < 0 || index >= Capacity) return null;
         return _slots[index];
     }
 
-    /// <summary>
-    /// Добавляет предмет в инвентарь, учитывая стаки (MaxStack).
-    /// </summary>
     public void AddItem(Item item, int count = 1)
     {
         if (item == null || count <= 0) return;
 
         int remaining = count;
 
-        // 1. Пытаемся добавить в существующие стаки
-        for (int i = 0; i < _slots.Count && remaining > 0; i++)
+        // 1. Пытаемся добавить в существующие стаки с таким же ID
+        for (int i = 0; i < Capacity && remaining > 0; i++)
         {
-            var slot = _slots[i];
-            if (slot.Item == item && slot.Count < item.MaxStack)
+            if (_slots[i] != null && _slots[i].Item.ID == item.ID && _slots[i].Count < item.MaxStack)
             {
-                int freeSpace = item.MaxStack - slot.Count;
+                int freeSpace = item.MaxStack - _slots[i].Count;
                 int addCount = Math.Min(remaining, freeSpace);
 
-                slot.Count += addCount;
+                _slots[i].Count += addCount;
                 remaining -= addCount;
+                
+                OnSlotChanged?.Invoke(i); // Обновляем только этот слот в UI
             }
         }
 
-        // 2. Если осталось, создаем новые слоты
+        // 2. Если осталось, ищем первый пустой слот
         while (remaining > 0)
         {
+            int emptyIndex = Array.FindIndex(_slots, slot => slot == null);
+            if (emptyIndex == -1)
+            {
+                GD.PrintErr("[Inventory] Инвентарь полон!");
+                break; // Инвентарь заполнен
+            }
+
             int newStack = Math.Min(remaining, item.MaxStack > 0 ? item.MaxStack : remaining);
-            _slots.Add(new InventorySlotData(item, newStack));
+            _slots[emptyIndex] = new InventorySlotData(item, newStack);
             remaining -= newStack;
+            
+            OnSlotChanged?.Invoke(emptyIndex);
         }
-        
-        OnChanged?.Invoke();
     }
 
-    /// <summary>
-    /// Удаляет предмет из инвентаря. Возвращает true, если удалось удалить всё запрошенное количество.
-    /// </summary>
     public bool RemoveItem(Item item, int count = 1)
     {
         if (item == null || count <= 0) return true;
 
         int remaining = count;
 
-        // Идем с конца, чтобы безопасно удалять элементы из списка
-        for (int i = _slots.Count - 1; i >= 0 && remaining > 0; i--)
+        for (int i = 0; i < Capacity && remaining > 0; i++)
         {
-            var slot = _slots[i];
-            if (slot.Item != item) continue;
-
-            int removeCount = Math.Min(remaining, slot.Count);
-            slot.Count -= removeCount;
-            remaining -= removeCount;
-
-            if (slot.Count <= 0)
+            if (_slots[i] != null && _slots[i].Item.ID == item.ID)
             {
-                _slots.RemoveAt(i);
+                int removeCount = Math.Min(remaining, _slots[i].Count);
+                _slots[i].Count -= removeCount;
+                remaining -= removeCount;
+
+                int changedIndex = i;
+                if (_slots[i].Count <= 0)
+                {
+                    _slots[i] = null; // Очищаем слот полностью
+                }
+                
+                OnSlotChanged?.Invoke(changedIndex);
             }
         }
-        
-        OnChanged?.Invoke();
         return remaining == 0;
     }
 
-    /// <summary>
-    /// Использует предмет. 
-    /// TODO: В будущем здесь можно добавить проверку "можно ли использовать предмет в текущем состоянии".
-    /// </summary>
-    public bool UseItem(Item item, Node2D user = null)
+    public bool UseItem(int slotIndex, Node2D user = null)
     {
+        if (slotIndex < 0 || slotIndex >= Capacity || _slots[slotIndex] == null) return false;
+
         user ??= _owner;
-        
-        // Сначала пытаемся использовать. Если метод вернул false (например, мачту нельзя использовать вне боя), мы её не удаляем.
-        if (item.Use(user))
+        var data = _slots[slotIndex];
+
+        if (data.Item.Use(user))
         {
-            // Если предмет одноразовый или мы хотим снять 1 шт. при использовании:
-            // TODO: Обсудить логику удаления. Сейчас удаляется 1 шт. Если item.Use сам решает, сколько удалить, этот код нужно менять.
-            RemoveItem(item, 1); 
+            data.Count -= 1;
+            if (data.Count <= 0)
+            {
+                _slots[slotIndex] = null;
+            }
+            OnSlotChanged?.Invoke(slotIndex);
             return true;
         }
-        
         return false;
+    }
+    /// <summary>
+    /// Меняет местами содержимое двух слотов. Поддерживает частичное слияние стаков.
+    /// </summary>
+    public void SwapSlots(int sourceIndex, int targetIndex)
+    {
+        if (sourceIndex < 0 || sourceIndex >= Capacity) return;
+        if (targetIndex < 0 || targetIndex >= Capacity) return;
+        if (sourceIndex == targetIndex) return;
+
+        var sourceData = _slots[sourceIndex];
+        var targetData = _slots[targetIndex];
+
+        // Если целевой слот пустой, просто меняем местами
+        if (targetData == null)
+        {
+            _slots[targetIndex] = sourceData;
+            _slots[sourceIndex] = null;
+        }
+        // Если предметы одинаковые и в целевом есть место, пытаемся слить
+        else if (sourceData != null && sourceData.Item.ID == targetData.Item.ID && targetData.Count < targetData.Item.MaxStack)
+        {
+            int spaceInTarget = targetData.Item.MaxStack - targetData.Count;
+            int amountToMove = Math.Min(sourceData.Count, spaceInTarget);
+
+            targetData.Count += amountToMove;
+            sourceData.Count -= amountToMove;
+
+            if (sourceData.Count <= 0)
+            {
+                _slots[sourceIndex] = null;
+            }
+        }
+        // Если предметы разные или стак полный, просто меняем их местами
+        else
+        {
+            _slots[targetIndex] = sourceData;
+            _slots[sourceIndex] = targetData;
+        }
+
+        OnSlotChanged?.Invoke(sourceIndex);
+        OnSlotChanged?.Invoke(targetIndex);
     }
 }
