@@ -6,10 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://cgwdxcv8vq8ww" path="res://Assets/UI/Book/BookMark1.tres" id="3_oh6x1"]
 [ext_resource type="Script" uid="uid://cjjn6kfc1igv" path="res://Game/BookMenu/Scripts/InventoryPage.cs" id="5_7anev"]
 [ext_resource type="PackedScene" uid="uid://o30vjs13ky7r" path="res://Game/Inventory/scenes/inventory_page.tscn" id="6_25quv"]
+[ext_resource type="Script" uid="uid://7f00gj6p8o5f" path="res://Game/BookMenu/Scripts/ProfilePage.cs" id="7_7anev"]
 
-[node name="BookMenu" type="CanvasLayer" unique_id=595888724 node_paths=PackedStringArray("InventoryPage")]
+[node name="BookMenu" type="CanvasLayer" unique_id=595888724 node_paths=PackedStringArray("InventoryPage", "ProfilePage", "InventoryButton", "ProfileButton")]
 script = ExtResource("1_oh6x1")
 InventoryPage = NodePath("Screens/InventoryPage")
+ProfilePage = NodePath("Screens/ProfilePage")
+InventoryButton = NodePath("TextureRect/InventoryButton")
+ProfileButton = NodePath("TextureRect/ProfileButton")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1042373934]
 anchors_preset = -1
@@ -75,3 +79,9 @@ offset_top = 112.575
 offset_right = 795.63
 offset_bottom = 303.575
 scale = Vector2(2.2, 2.2)
+
+[node name="ProfilePage" type="Control" parent="Screens" unique_id=915351461]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("7_7anev")

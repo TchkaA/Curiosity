@@ -18,5 +18,6 @@ position = Vector2(460, 109)
 script = ExtResource("3_600mi")
 metadata/_custom_type_script = "uid://4spcpn08s5n5"
 
-[node name="BookMenu" parent="." unique_id=595888724 instance=ExtResource("4_7qmx5")]
+[node name="BookMenu" parent="." unique_id=595888724 node_paths=PackedStringArray("_player") instance=ExtResource("4_7qmx5")]
 visible = false
+_player = NodePath("../Player")

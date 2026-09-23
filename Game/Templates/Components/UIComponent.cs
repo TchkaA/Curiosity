@@ -23,8 +23,7 @@ public class UIComponent
         }
         else if(state == OpenState.Closed)
         {
-            // Передаем инвентарь игрока напрямую. Никаких поисков по группам!
-            _bookMenu.Open(_player.Inventory); 
+            _bookMenu.Open(); 
             OnPausedStateChanged?.Invoke(true);
         }
     }
