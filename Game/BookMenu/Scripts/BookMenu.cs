@@ -34,6 +34,7 @@ public partial class BookMenu : CanvasLayer
     {
         StateMachine = new();
         InitStates();
+        ButtonLinks();
 
         CurrentState = OpenState.Closed;
         // Меню изначально скрыто
@@ -110,7 +111,7 @@ public partial class BookMenu : CanvasLayer
     public void OpenProfile()
     {
         Page = Pages.Profile;
-        StateMachine.ChangeState(InventoryState);
+        StateMachine.ChangeState(ProfileState);
     }
 
     public void ButtonLinks()
@@ -118,7 +119,6 @@ public partial class BookMenu : CanvasLayer
         ProfileButton.Pressed += OpenProfile;
         InventoryButton.Pressed += OpenInventory;
     }
-
 
     public void InitStates()
     {

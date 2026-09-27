@@ -57,6 +57,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="InventoryPage" type="Control" parent="Screens" unique_id=251557428 node_paths=PackedStringArray("PlayerInventoryGrid", "ExtraInventoryGrid")]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -81,6 +82,7 @@ offset_bottom = 303.575
 scale = Vector2(2.2, 2.2)
 
 [node name="ProfilePage" type="Control" parent="Screens" unique_id=915351461]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
