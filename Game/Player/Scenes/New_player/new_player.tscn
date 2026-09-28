@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://bfugh0v1rsrc7"]
+
+[ext_resource type="Texture2D" uid="uid://bgdme0pq417es" path="res://Assets/Origin/characters/main/test_front.png" id="1_ogrn3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cesnu"]
+radius = 23.0
+height = 70.37
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rwmss"]
+atlas = ExtResource("1_ogrn3")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bf80"]
+atlas = ExtResource("1_ogrn3")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r88qa"]
+atlas = ExtResource("1_ogrn3")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xr6u"]
+atlas = ExtResource("1_ogrn3")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4bch"]
+atlas = ExtResource("1_ogrn3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7qmx5"]
+atlas = ExtResource("1_ogrn3")
+region = Rect2(0, 0, 16.158482, 16)
+
+[node name="New_Player" type="CharacterBody2D" unique_id=1360651468]
+motion_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1926496773]
+position = Vector2(0, -4.185)
+shape = SubResource("CapsuleShape2D_cesnu")
+
+[node name="visual" type="Node2D" parent="." unique_id=2089724811]
+scale = Vector2(4, 4)
+
+[node name="Left_hand" type="Sprite2D" parent="visual" unique_id=1310190836]
+position = Vector2(2.9899998, 0)
+scale = Vector2(0.99999976, 0.99999976)
+texture = SubResource("AtlasTexture_rwmss")
+
+[node name="Left_leg" type="Sprite2D" parent="visual" unique_id=1641117999]
+position = Vector2(1.975, 4.075)
+scale = Vector2(0.99999994, 0.99999994)
+texture = SubResource("AtlasTexture_1bf80")
+
+[node name="Right_leg" type="Sprite2D" parent="visual" unique_id=1504134188]
+position = Vector2(-0.01, 4.075)
+scale = Vector2(0.99999976, 0.99999976)
+texture = SubResource("AtlasTexture_r88qa")
+
+[node name="Head" type="Sprite2D" parent="visual" unique_id=1260438177]
+position = Vector2(0, -5.985)
+scale = Vector2(0.9999998, 0.9999998)
+texture = SubResource("AtlasTexture_4xr6u")
+
+[node name="Torso" type="Sprite2D" parent="visual" unique_id=1444686813]
+scale = Vector2(0.9999998, 0.9999998)
+texture = SubResource("AtlasTexture_t4bch")
+
+[node name="Right_hand" type="Sprite2D" parent="visual" unique_id=1686106685]
+position = Vector2(-3.025, 0)
+texture = SubResource("AtlasTexture_7qmx5")
