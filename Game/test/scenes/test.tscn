@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://dxlb8vrkimkaj"]
 
-[ext_resource type="PackedScene" uid="uid://bkbhf3xw2ajn6" path="res://Game/Player/Scenes/player.tscn" id="1_omwuo"]
+[ext_resource type="PackedScene" uid="uid://bkbhf3xw2ajn6" path="res://Game/Player/Scenes/Player.tscn" id="1_omwuo"]
 [ext_resource type="PackedScene" uid="uid://cn2flbt5svpty" path="res://Game/Camera/scenes/Camera.tscn" id="2_divlm"]
 [ext_resource type="Script" uid="uid://4spcpn08s5n5" path="res://Game/Item/PickUp/PickUp.cs" id="3_600mi"]
 [ext_resource type="PackedScene" uid="uid://cvwc4itvt3kch" path="res://Game/Inventory/scenes/book_menu.tscn" id="4_7qmx5"]
+[ext_resource type="Script" uid="uid://c6sggjxad4u0c" path="res://Game/test/scripts/DamageTests/DamageArea.cs" id="5_t4bch"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4iymr"]
+radius = 44.59
 
 [node name="test" type="Node2D" unique_id=840178364]
 
@@ -21,3 +25,10 @@ metadata/_custom_type_script = "uid://4spcpn08s5n5"
 [node name="BookMenu" parent="." unique_id=595888724 node_paths=PackedStringArray("_player") instance=ExtResource("4_7qmx5")]
 visible = false
 _player = NodePath("../Player")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=826591922]
+script = ExtResource("5_t4bch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2058635051]
+position = Vector2(119, -3)
+shape = SubResource("CircleShape2D_4iymr")

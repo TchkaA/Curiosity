@@ -48,6 +48,7 @@ public class ProfilePageState : IState
     public void Enter()
     {
         _profilePage.Visible = true;
+        _profilePage.ShowInfo(_player);
         _profleButton.ButtonPressed = true;
     }
 

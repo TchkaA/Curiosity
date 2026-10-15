@@ -13,7 +13,9 @@ public partial class BookMenu : CanvasLayer
     [ExportGroup("Кнопки-закладки")]
     [Export] public TextureButton InventoryButton;
     [Export] public TextureButton ProfileButton;
-    
+
+    [ExportGroup("Другое")]
+    [Export] public AudioStreamPlayer2D audio;
 
     public Pages Page;
 
@@ -101,17 +103,26 @@ public partial class BookMenu : CanvasLayer
                 OpenProfile();
                 break;
         }
+
+        //Перейти на много-звучность
+        audio.Play();
     }
 
     public void OpenInventory()
     {
         Page = Pages.Inventory;
         StateMachine.ChangeState(InventoryState);
+
+        //Перейти на много-звучность
+        audio.Play();
     }
     public void OpenProfile()
     {
         Page = Pages.Profile;
         StateMachine.ChangeState(ProfileState);
+        
+        //Перейти на много-звучность
+        audio.Play();
     }
 
     public void ButtonLinks()

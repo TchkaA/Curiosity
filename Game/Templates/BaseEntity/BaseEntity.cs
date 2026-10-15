@@ -36,6 +36,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 
 	// Events
 	public event Action<BaseEntity> Died;
+    public event Action<float> OnHealthChanged;
 
     //Inventory
     public Inventory Inventory {get; private set;}
@@ -52,9 +53,10 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 
         //Init Inventory TODO: create InventoryComponent
         Inventory = new(this);
+
     }
 
-	public override void _PhysicsProcess(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         stateMachine.Update(delta);
         animation.Update();
@@ -76,6 +78,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
             Stats.CurrentHealth = 0;
             Died?.Invoke(this);
         }
+        OnHealthChanged?.Invoke(Stats.CurrentHealth);
     }
 
 	/// <summary>
@@ -86,7 +89,12 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     public void Heal(float health)
     {
         Stats.CurrentHealth += health;
-        if (Stats.CurrentHealth > Stats.MaxFloatingHealth) Stats.CurrentHealth = Stats.MaxFloatingHealth;
+        if (Stats.CurrentHealth > Stats.MaxFloatingHealth) 
+        {
+            Stats.CurrentHealth = Stats.MaxFloatingHealth;
+            return;
+        }
+        OnHealthChanged?.Invoke(Stats.CurrentHealth);
     }
 
 
@@ -101,6 +109,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
         if (Stats.CurrentHealth > Stats.MaxHealth)
         {
             Stats.CurrentHealth = Stats.MaxHealth;
+            return;
         }
         if (Stats.CurrentHealth <= 0)
         {
@@ -108,6 +117,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
             Stats.MaxHealth = 0;
             Died?.Invoke(this);
         }
+        OnHealthChanged?.Invoke(Stats.CurrentHealth);
     }
 
 
