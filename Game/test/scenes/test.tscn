@@ -5,11 +5,36 @@
 [ext_resource type="Script" uid="uid://4spcpn08s5n5" path="res://Game/Item/PickUp/PickUp.cs" id="3_600mi"]
 [ext_resource type="PackedScene" uid="uid://cvwc4itvt3kch" path="res://Game/Inventory/scenes/book_menu.tscn" id="4_7qmx5"]
 [ext_resource type="Script" uid="uid://c6sggjxad4u0c" path="res://Game/test/scripts/DamageTests/DamageArea.cs" id="5_t4bch"]
+[ext_resource type="Shader" uid="uid://ctf74itvrik5u" path="res://Visual/Shaders/Dithering/dithering.gdshader" id="6_rwmss"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4xr6u"]
+shader = ExtResource("6_rwmss")
+shader_parameter/bayer_size = 2
+shader_parameter/dither_strength = 2.0
+shader_parameter/color_levels = 11
+shader_parameter/dither_pixel_size = 1.7470000354825
+shader_parameter/brightness_offset = -0.17599998461
+shader_parameter/contrast = 0.8030000143925
+shader_parameter/black_clip = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4iymr"]
 radius = 44.59
 
 [node name="test" type="Node2D" unique_id=840178364]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1208376020]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1996273556]
+material = SubResource("ShaderMaterial_4xr6u")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BookMenu" parent="." unique_id=595888724 node_paths=PackedStringArray("_player") instance=ExtResource("4_7qmx5")]
+visible = false
+_player = NodePath("../Player")
 
 [node name="Player" parent="." unique_id=2106905218 node_paths=PackedStringArray("GlobalBookMenu") instance=ExtResource("1_omwuo")]
 position = Vector2(188, 238)
@@ -21,10 +46,6 @@ position = Vector2(460, 109)
 [node name="PickUp" type="Area2D" parent="." unique_id=80728336]
 script = ExtResource("3_600mi")
 metadata/_custom_type_script = "uid://4spcpn08s5n5"
-
-[node name="BookMenu" parent="." unique_id=595888724 node_paths=PackedStringArray("_player") instance=ExtResource("4_7qmx5")]
-visible = false
-_player = NodePath("../Player")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=826591922]
 script = ExtResource("5_t4bch")

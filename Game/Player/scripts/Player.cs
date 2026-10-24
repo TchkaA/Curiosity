@@ -24,9 +24,9 @@ public partial class Player : BaseEntity
 	//---------------------
 	public PlayerIdleState idleState;
 	public PlayerMoveState moveState;
+	public PlayerRunState runState;
 
-	//---------------------
-
+	
 
 
 	public override void _Ready()
@@ -67,6 +67,7 @@ public partial class Player : BaseEntity
 	{
 		idleState = new(this);
 		moveState = new(this);
+		runState = new(this);
 	}
 
     public override void LinksActions()
@@ -74,5 +75,7 @@ public partial class Player : BaseEntity
         base.LinksActions();
 		GlobalBookMenu.IsMenuOpen += UI.ToggleMenu;
 	}
+
+	
 
 }

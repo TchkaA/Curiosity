@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bkbhf3xw2ajn6"]
 
 [ext_resource type="Script" uid="uid://6g8d6yu5ehcx" path="res://Game/Player/scripts/Player.cs" id="1_4x5jf"]
-[ext_resource type="SpriteFrames" uid="uid://coq8a34pj2ytf" path="res://Game/Player/Resourses/Animations/Player_base.tres" id="2_4x5jf"]
+[ext_resource type="SpriteFrames" uid="uid://b1oiajn21d5je" path="res://Game/Templates/BaseEntity/Resourses/BaseAnimations.tres" id="2_4x5jf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4iymr"]
 radius = 26.0
@@ -17,4 +17,4 @@ shape = SubResource("CapsuleShape2D_4iymr")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=774314259]
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("2_4x5jf")
-animation = &"walk_down"
+animation = &"run_forward"

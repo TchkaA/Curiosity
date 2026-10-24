@@ -14,7 +14,7 @@ public class StatsComponent
     public float Strength;
 
 
-    public StatsComponent(float maxHealth = 32,float health = 32, float speed = 90, float strength = 2)
+    public StatsComponent(float maxHealth = 32,float health = 32, float speed = 160, float strength = 2)
     {
         MaxHealth = maxHealth;
         CurrentHealth = health;

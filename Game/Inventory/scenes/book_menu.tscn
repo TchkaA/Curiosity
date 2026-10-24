@@ -48,7 +48,6 @@ offset_top = -60.0
 offset_right = 677.0
 mouse_default_cursor_shape = 2
 toggle_mode = true
-action_mode = 0
 texture_normal = ExtResource("2_j41kw")
 texture_pressed = ExtResource("3_oh6x1")
 stretch_mode = 5

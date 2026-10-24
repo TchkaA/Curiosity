@@ -110,19 +110,22 @@ public partial class BookMenu : CanvasLayer
 
     public void OpenInventory()
     {
-        Page = Pages.Inventory;
         StateMachine.ChangeState(InventoryState);
+        if (Page == Pages.Inventory) return;
 
+        Page = Pages.Inventory;
         //Перейти на много-звучность
         audio.Play();
     }
     public void OpenProfile()
     {
-        Page = Pages.Profile;
+        if (Page == Pages.Profile) return;
         StateMachine.ChangeState(ProfileState);
-        
-        //Перейти на много-звучность
+        Page = Pages.Profile;
         audio.Play();
+        
+
+        //Перейти на много-звучность
     }
 
     public void ButtonLinks()

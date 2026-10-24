@@ -38,6 +38,12 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 	public event Action<BaseEntity> Died;
     public event Action<float> OnHealthChanged;
 
+    //---------------------
+	// Flags
+	//---------------------
+	public bool isRunning = false;
+
+
     //Inventory
     public Inventory Inventory {get; private set;}
 
@@ -172,4 +178,20 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     }
 
     #endregion
+
+
+    public bool CanRun()
+	{
+		if(Stats.CurrentHealth > 12)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	public void ToggleRun()
+	{
+		if (isRunning) { isRunning = false; return; }
+		if (CanRun()) isRunning = true;
+	}
 }

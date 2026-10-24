@@ -20,6 +20,11 @@ public partial class PlayerMoveState : IState
     public void Update(double delta)
     {
         Vector2 input = Player.inputComponent.MovementInput;
+        if (Player.isRunning)
+        {
+            Player.stateMachine.ChangeState(Player.runState);
+            return;
+        }
         if (input != Vector2.Zero)
         {
             Player.movement.Move(input);
@@ -59,9 +64,51 @@ public partial class PlayerIdleState : IState
         input = _player.inputComponent.MovementInput;
         if (input != Vector2.Zero)
         {
+            if (_player.isRunning)
+            {
+                _player.stateMachine.ChangeState(_player.runState);
+                return;
+            }
             _player.stateMachine.ChangeState(_player.moveState);
             return;
         }
+    }
+}
+
+public partial class PlayerRunState : IState
+{
+    public Player Player;
+    public void Enter()
+    {
+    }
+
+    public void Exit()
+    {
+    }
+
+    public PlayerRunState(Player _player)
+    {
+        Player = _player;
+    }
+
+    public void Update(double delta)
+    {
+        if (!Player.isRunning)
+        {
+            Player.stateMachine.ChangeState(Player.moveState);
+            return;
+        }
+        Vector2 input = Player.inputComponent.MovementInput;
+        if (input != Vector2.Zero)
+        {
+            Player.movement.Run(input);
+            Player.animation.SetAnimation("run");
+        }
+        else
+        {
+            Player.stateMachine.ChangeState(Player.idleState);
+        }
+
     }
 }
 

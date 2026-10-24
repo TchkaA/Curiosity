@@ -30,7 +30,7 @@ public class InputComponent
         ).Normalized();
         UpdateDirection(MovementInput);
         if(Input.IsActionJustPressed("interact")) _player.interaction.Interact();
-
+        if(Input.IsActionJustPressed("ctrl")) _player.ToggleRun();
         // if(Input.IsActionJustPressed("Tab")) UIOpen?.Invoke();
     }
 
