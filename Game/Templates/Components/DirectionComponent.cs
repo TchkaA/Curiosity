@@ -46,6 +46,21 @@ public partial class DirectionComponent
 
 
     /// <summary>
+    /// Текущее направление в виде вектора.
+    /// </summary>
+    public Vector2 ToVector()
+    {
+        return CurrentDirection switch
+        {
+            FacingDirection.Up => Vector2.Up,
+            FacingDirection.Left => Vector2.Left,
+            FacingDirection.Right => Vector2.Right,
+            _ => Vector2.Down
+        };
+    }
+
+
+    /// <summary>
     /// Изменить направление с помощью вектора направления
     /// </summary>
     /// <param name="direction">Вектор направления</param>

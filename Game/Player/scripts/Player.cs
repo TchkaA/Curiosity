@@ -25,6 +25,12 @@ public partial class Player : BaseEntity
 	public PlayerIdleState idleState;
 	public PlayerMoveState moveState;
 	public PlayerRunState runState;
+	public PlayerDashState dashState;
+
+	/// <summary>
+	/// Остаток перезарядки рывка в секундах.
+	/// </summary>
+	private float _dashCooldown;
 
 	
 
@@ -48,6 +54,20 @@ public partial class Player : BaseEntity
 		inputComponent.Update();
     }
 
+    public override void _PhysicsProcess(double delta)
+    {
+        if (_dashCooldown > 0) _dashCooldown -= (float)delta;
+
+        // Рывок прерывает любое состояние, кроме самого рывка, и доступен после перезарядки.
+        if (inputComponent.DashPressed && _dashCooldown <= 0 && stateMachine.CurrentState != dashState)
+        {
+            _dashCooldown = Stats.DashCooldown;
+            stateMachine.ChangeState(dashState);
+        }
+
+        base._PhysicsProcess(delta);
+    }
+
 
 	/// <summary>
 	/// Билдер Компонентов.
@@ -68,6 +88,7 @@ public partial class Player : BaseEntity
 		idleState = new(this);
 		moveState = new(this);
 		runState = new(this);
+		dashState = new(this);
 	}
 
     public override void LinksActions()

@@ -2,6 +2,11 @@ using Godot;
 
 public class MovementComponent
 {
+    /// <summary>
+    /// Скорость ходьбы.
+    /// </summary>
+    private const float WalkSpeed = 90;
+
     private BaseEntity _owner;
 
     public MovementComponent(BaseEntity owner)
@@ -11,14 +16,27 @@ public class MovementComponent
 
     public void Move(Vector2 direction)
     {
-        Vector2 velocity = direction * 90; //Ну типа базовая ходьба, в будущем надо превратить в константу
-        _owner.Velocity = velocity;
-        _owner.MoveAndSlide();
+        MoveAt(direction, WalkSpeed);
     }
+
     public void Run(Vector2 direction)
     {
-        Vector2 velocity = direction * _owner.Stats.Speed;
-        _owner.Velocity = velocity;
+        MoveAt(direction, _owner.Stats.Speed);
+    }
+
+    /// <summary>
+    /// Движение рывком с заданной скоростью.
+    /// </summary>
+    /// <param name="direction">Нормализованное направление рывка</param>
+    /// <param name="speed">Скорость рывка</param>
+    public void Dash(Vector2 direction, float speed)
+    {
+        MoveAt(direction, speed);
+    }
+
+    private void MoveAt(Vector2 direction, float speed)
+    {
+        _owner.Velocity = direction * speed;
         _owner.MoveAndSlide();
     }
 }

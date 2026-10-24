@@ -33,18 +33,24 @@ public class AnimationComponent
 
     public string AnimationRequest()
     {
+        string request;
         switch (Direction)
         {
             case "left":
                 _sprite.FlipH = true;
-                return $"{Animation}_forward".ToLower();
+                request = $"{Animation}_forward".ToLower();
+                break;
             case "right":
                 _sprite.FlipH = false;
-                return $"{Animation}_forward".ToLower();
+                request = $"{Animation}_forward".ToLower();
+                break;
             default:
-                return $"{Animation}_{Direction}".ToLower();
+                request = $"{Animation}_{Direction}".ToLower();
+                break;
         }
-        
+
+        // Анимации без направлений (например, "dash") играются как есть.
+        return _sprite.SpriteFrames.HasAnimation(request) ? request : Animation.ToLower();
     }
 
     public void SetDirection(string dir)

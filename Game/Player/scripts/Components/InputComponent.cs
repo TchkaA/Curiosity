@@ -5,6 +5,11 @@ public class InputComponent
 {
 
     public Vector2 MovementInput { get; private set; }
+
+    /// <summary>
+    /// Запрос рывка (нажат в текущем кадре).
+    /// </summary>
+    public bool DashPressed { get; private set; }
     // public bool AttackPressed { get; private set; }
     // public bool RollPressed { get; private set; }
     // public bool InteractPressed { get; private set; }
@@ -29,6 +34,7 @@ public class InputComponent
             Input.GetActionStrength("move_down") - Input.GetActionStrength("move_up")
         ).Normalized();
         UpdateDirection(MovementInput);
+        DashPressed = Input.IsActionJustPressed("dash");
         if(Input.IsActionJustPressed("interact")) _player.interaction.Interact();
         if(Input.IsActionJustPressed("ctrl")) _player.ToggleRun();
         // if(Input.IsActionJustPressed("Tab")) UIOpen?.Invoke();

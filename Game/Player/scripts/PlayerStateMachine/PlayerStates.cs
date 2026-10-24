@@ -112,3 +112,67 @@ public partial class PlayerRunState : IState
     }
 }
 
+/// <summary>
+/// Состояние рывка игрока.
+/// Направление берётся из ввода (8 сторон), без ввода — рывок назад от текущего направления.
+/// </summary>
+public partial class PlayerDashState : IState
+{
+    /// <summary>
+    /// Длительность рывка в секундах.
+    /// </summary>
+    private const double Duration = 0.5;
+
+    public Player Player;
+
+    private double _elapsed;
+    private Vector2 _dashDirection;
+
+    public PlayerDashState(Player player)
+    {
+        Player = player;
+    }
+
+    public void Enter()
+    {
+        _elapsed = 0;
+        _dashDirection = GetDashDirection();
+        Player.animation.SetAnimation("dash");
+    }
+
+    public void Exit()
+    {
+        Player.Velocity = Vector2.Zero;
+    }
+
+    public void Update(double delta)
+    {
+        _elapsed += delta;
+        if (_elapsed >= Duration)
+        {
+            Player.stateMachine.ChangeState(NextState());
+            return;
+        }
+
+        Player.movement.Dash(_dashDirection, Player.Stats.DashSpeed);
+    }
+
+    /// <summary>
+    /// Ввод задаёт направление рывка (8 сторон).
+    /// Без ввода — рывок назад от текущего направления.
+    /// </summary>
+    private Vector2 GetDashDirection()
+    {
+        Vector2 input = Player.inputComponent.MovementInput;
+        return input != Vector2.Zero ? input : -Player.direction.ToVector();
+    }
+
+    /// <summary>
+    /// Состояние, в которое игрок переходит после рывка.
+    /// </summary>
+    private IState NextState()
+    {
+        if (Player.inputComponent.MovementInput == Vector2.Zero) return Player.idleState;
+        return Player.isRunning ? Player.runState : Player.moveState;
+    }
+}

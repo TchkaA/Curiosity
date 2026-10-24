@@ -17,4 +17,6 @@ shape = SubResource("CapsuleShape2D_4iymr")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=774314259]
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("2_4x5jf")
-animation = &"run_forward"
+animation = &"dash"
+frame = 3
+frame_progress = 1.0
