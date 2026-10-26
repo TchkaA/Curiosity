@@ -33,7 +33,7 @@ public partial class Player : BaseEntity
 	public override void _Ready()
 	{
 		base._Ready();
-		GD.Print("-- PLAYER READY");
+		GD.Print("-- PLAYER READY"); 
 		InitStates();
 		stateMachine.ChangeState(idleState);
 
@@ -90,8 +90,9 @@ public partial class Player : BaseEntity
 	/// </summary>
 	public void PerformDash()
 	{
-		if (CanDash)
+		if (CanDash && _dashCooldown >= Stats.DashCooldown)
 		{
+			_dashCooldown = 0f;
 			stateMachine.ChangeState(dashState);
 		}
 		//Тут позже добавить сообщение выводящееся.

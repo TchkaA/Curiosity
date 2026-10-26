@@ -45,6 +45,12 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     protected bool CanDash = true;
 
 
+    /// <summary>
+	/// Остаток перезарядки рывка в секундах.
+	/// </summary>
+	protected float _dashCooldown;
+
+
     //Inventory
     public Inventory Inventory {get; private set;}
 
@@ -67,6 +73,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     {
         stateMachine.Update(delta);
         animation.Update();
+        CountDashTime((float)delta);
     }
 
 
@@ -181,6 +188,8 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     #endregion
 
 
+
+    #region Moving
     public bool CanRun()
 	{
 		if(Stats.CurrentHealth > 12)
@@ -195,4 +204,20 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 		if (isRunning) { isRunning = false; return; }
 		if (CanRun()) isRunning = true;
 	}
+
+    #endregion
+
+    #region Other
+
+    public void CountDashTime(float time)
+    {
+        if (_dashCooldown < Stats.DashCooldown)
+        {
+            _dashCooldown += time;
+        }
+        // GD.Print(_dashCooldown);
+    }
+
+
+    #endregion
 }
