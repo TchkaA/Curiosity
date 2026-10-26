@@ -56,15 +56,6 @@ public partial class Player : BaseEntity
 
     public override void _PhysicsProcess(double delta)
     {
-        if (_dashCooldown > 0) _dashCooldown -= (float)delta;
-
-        // Рывок прерывает любое состояние, кроме самого рывка, и доступен после перезарядки.
-        if (inputComponent.DashPressed && _dashCooldown <= 0 && stateMachine.CurrentState != dashState)
-        {
-            _dashCooldown = Stats.DashCooldown;
-            stateMachine.ChangeState(dashState);
-        }
-
         base._PhysicsProcess(delta);
     }
 
@@ -97,6 +88,23 @@ public partial class Player : BaseEntity
 		GlobalBookMenu.IsMenuOpen += UI.ToggleMenu;
 	}
 
+
+	#region Dash
+	/// <summary>
+	/// Метод для проверки возможности произведения рывка
+	/// </summary>
+	public void PerformDash()
+	{
+		if (CanDash)
+		{
+			stateMachine.ChangeState(dashState);
+		}
+		//Тут позже добавить сообщение выводящееся.
+	}
+
+	public void ChangeDashFlag(bool flag) => CanDash = flag;
 	
+
+	#endregion
 
 }

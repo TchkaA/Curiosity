@@ -135,6 +135,7 @@ public partial class PlayerDashState : IState
 
     public void Enter()
     {
+        Player.ChangeDashFlag(false);
         _elapsed = 0;
         _dashDirection = GetDashDirection();
         Player.animation.SetAnimation("dash");
@@ -142,6 +143,7 @@ public partial class PlayerDashState : IState
 
     public void Exit()
     {
+        Player.ChangeDashFlag(true);
         Player.Velocity = Vector2.Zero;
     }
 

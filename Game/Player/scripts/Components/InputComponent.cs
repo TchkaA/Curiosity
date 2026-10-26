@@ -36,7 +36,7 @@ public class InputComponent
         UpdateDirection(MovementInput);
         DashPressed = Input.IsActionJustPressed("dash");
         if(Input.IsActionJustPressed("interact")) _player.interaction.Interact();
-        if(Input.IsActionJustPressed("ctrl")) _player.ToggleRun();
+        if(Input.IsActionJustPressed("ctrl")) _player.PerformDash();
         // if(Input.IsActionJustPressed("Tab")) UIOpen?.Invoke();
     }
 
