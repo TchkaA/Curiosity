@@ -41,7 +41,8 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     //---------------------
 	// Flags
 	//---------------------
-	public bool isRunning = false;
+	public bool isRunning = false; // TODO перенести логику в protected
+    protected bool CanDash = true;
 
 
     //Inventory
