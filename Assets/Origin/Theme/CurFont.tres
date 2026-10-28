@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://byv17l6p8n4vp"]
+
+[ext_resource type="FontFile" uid="uid://cd8p4r546xbcv" path="res://Assets/Origin/Fonts/Pixel/Classic-Console-Neue-Regular.ttf" id="1_0kpvp"]
+
+[resource]
+default_font = ExtResource("1_0kpvp")
+default_font_size = 18

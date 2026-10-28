@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://bk8xbm02csdrw"]
+
+[ext_resource type="FontFile" uid="uid://cd8p4r546xbcv" path="res://Assets/Origin/Fonts/Pixel/Classic-Console-Neue-Regular.ttf" id="1_63nxn"]
+
+[resource]
+font = ExtResource("1_63nxn")
+font_size = 24
+font_color = Color(0.36, 0.22272, 0.17280002, 1)
