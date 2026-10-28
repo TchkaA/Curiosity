@@ -24,7 +24,7 @@ public class StatsComponent
     public float DashCooldown;
 
 
-    public StatsComponent(float maxHealth = 32,float health = 32, float speed = 160, float strength = 2, float dashSpeed = 420, float dashCooldown = 5f)
+    public StatsComponent(float maxHealth = 32,float health = 32, float speed = 160, float strength = 2, float dashSpeed = 410, float dashCooldown = 4f)
     {
         MaxHealth = maxHealth;
         CurrentHealth = health;

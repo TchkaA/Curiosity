@@ -37,6 +37,9 @@ public partial class Player : BaseEntity
 		InitStates();
 		stateMachine.ChangeState(idleState);
 
+		// Старт всега с готовым рывком.
+		_dashCooldown = 4f;
+
 		#if DEBUG
 		Inventory.AddItem(new HealingPotion(), 5);
 		Inventory.AddItem(new ChickenMeat(),10);
@@ -47,6 +50,7 @@ public partial class Player : BaseEntity
     {
         base._Process(delta);
 		inputComponent.Update();
+		GD.Print("кулдаун рывка - " + _dashCooldown);
     }
 
     public override void _PhysicsProcess(double delta)

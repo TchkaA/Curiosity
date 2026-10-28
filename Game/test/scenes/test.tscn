@@ -23,6 +23,7 @@ radius = 44.59
 [node name="test" type="Node2D" unique_id=840178364]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1208376020]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1996273556]
 material = SubResource("ShaderMaterial_4xr6u")

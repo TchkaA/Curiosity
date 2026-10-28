@@ -2,19 +2,19 @@
 
 [ext_resource type="Texture2D" uid="uid://bj6euqoiogt27" path="res://Assets/Origin/characters/main/Persona.png" id="1_en7h4"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l6qvc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_en7h4"]
 atlas = ExtResource("1_en7h4")
 region = Rect2(0, 320, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u7h0m"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6qvc"]
 atlas = ExtResource("1_en7h4")
 region = Rect2(32, 320, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mj8ig"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7h0m"]
 atlas = ExtResource("1_en7h4")
 region = Rect2(64, 320, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uepsb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mj8ig"]
 atlas = ExtResource("1_en7h4")
 region = Rect2(96, 320, 32, 32)
 
@@ -210,6 +210,9 @@ region = Rect2(96, 192, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_en7h4")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_l6qvc")
 }, {
 "duration": 1.0,
@@ -217,9 +220,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mj8ig")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uepsb")
 }],
 "loop": 0,
 "name": &"dash",
@@ -243,7 +243,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_eey6m")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"get_up",
 "speed": 3.0
 }, {
@@ -367,7 +367,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"run_forward",
-"speed": 6.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -424,5 +424,5 @@ animations = [{
 }],
 "loop": 1,
 "name": &"walk_up",
-"speed": 5.0
+"speed": 3.0
 }]

@@ -39,11 +39,11 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     public event Action<float> OnHealthChanged;
 
     //---------------------
-	// Flags
+	// Flags                //TODO пепренести логику в компонеенет.
 	//---------------------
 	public bool isRunning = false; // TODO перенести логику в protected
     protected bool CanDash = true;
-
+    protected bool CanAttack = true;
 
     /// <summary>
 	/// Остаток перезарядки рывка в секундах.

@@ -121,7 +121,7 @@ public partial class PlayerDashState : IState
     /// <summary>
     /// Длительность рывка в секундах.
     /// </summary>
-    private const double Duration = 0.5;
+    private const double Duration = 0.46;
 
     public Player Player;
 
@@ -176,5 +176,30 @@ public partial class PlayerDashState : IState
     {
         if (Player.inputComponent.MovementInput == Vector2.Zero) return Player.idleState;
         return Player.isRunning ? Player.runState : Player.moveState;
+    }
+}
+
+
+public partial class PlaeyrAttackState : IState
+{
+    private Player _player;
+    Vector2 input;
+    public void Enter()
+    {
+        _player.animation.SetAnimation("idle");
+    }
+
+    public void Exit()
+    {
+    }
+
+    public PlaeyrAttackState(Player _player)
+    {
+        this._player = _player;
+    }
+
+    public void Update(double delta)
+    {
+        
     }
 }
