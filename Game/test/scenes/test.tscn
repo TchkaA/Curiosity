@@ -14,6 +14,7 @@ radius = 44.59
 
 [node name="BookMenu" parent="." unique_id=595888724 node_paths=PackedStringArray("_player") instance=ExtResource("4_7qmx5")]
 layer = 2
+visible = false
 _player = NodePath("../Player")
 
 [node name="Player" parent="." unique_id=2106905218 node_paths=PackedStringArray("GlobalBookMenu", "PlayerUI") instance=ExtResource("1_omwuo")]
@@ -31,6 +32,7 @@ metadata/_custom_type_script = "uid://4spcpn08s5n5"
 
 [node name="Area2D" type="Area2D" parent="." unique_id=826591922]
 script = ExtResource("5_t4bch")
+Damage = 5.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2058635051]
 position = Vector2(119, -3)
