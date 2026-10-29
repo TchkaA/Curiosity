@@ -50,6 +50,7 @@ public class ProfilePageState : IState
         _profilePage.Visible = true;
         _profilePage.ShowInfo(_player);
         _profleButton.ButtonPressed = true;
+        _profilePage.ShowStats();
     }
 
     public void Exit()

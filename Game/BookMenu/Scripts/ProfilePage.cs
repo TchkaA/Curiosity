@@ -13,8 +13,12 @@ public partial class ProfilePage : Control
 
     public void LinkActions()
     {
-        GD.Print(_player);
         _player.OnHealthChanged += profile.ChangeHealthUI;
+    }
+
+    public void ShowStats()
+    {
+        profile.ChangeHealthUI(_player.Stats.CurrentHealth);
     }
 
 }

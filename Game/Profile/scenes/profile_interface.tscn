@@ -1,6 +1,42 @@
 [gd_scene format=3 uid="uid://nx8ida0yi52c"]
 
 [ext_resource type="Script" uid="uid://caqq801jvik88" path="res://Game/Profile/scripts/ProfileInterface.cs" id="1_jusk0"]
+[ext_resource type="Texture2D" uid="uid://t25dpwvkuqog" path="res://Game/Player/PlayerUI/Res/Profile/PlayerIcon.tres" id="2_aa2yi"]
+[ext_resource type="Texture2D" uid="uid://cvrfrjd1agaq6" path="res://Game/Player/PlayerUI/Res/Profile/LvlBar.tres" id="3_m3x7q"]
+[ext_resource type="Texture2D" uid="uid://dbwjihvu0vgsy" path="res://Assets/Origin/UI/Player_UI.png" id="4_wrdtb"]
+[ext_resource type="FontFile" uid="uid://cd8p4r546xbcv" path="res://Assets/Origin/Fonts/Pixel/Classic-Console-Neue-Regular.ttf" id="5_wrdtb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrdtb"]
+atlas = ExtResource("4_wrdtb")
+region = Rect2(345.96674, 5.045847, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_su7ka"]
+atlas = ExtResource("4_wrdtb")
+region = Rect2(279, 50, 18, 2)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4iymr"]
+atlas = ExtResource("4_wrdtb")
+region = Rect2(353.98996, 5, 5, 5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3f0cj"]
+font = ExtResource("5_wrdtb")
+font_size = 20
+font_color = Color(0.56078434, 0.53333336, 0.5176471, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_itwh7"]
+font = ExtResource("5_wrdtb")
+font_size = 20
+font_color = Color(0.56078434, 0.53333336, 0.5176471, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ats1p"]
+font = ExtResource("5_wrdtb")
+font_size = 40
+font_color = Color(0.56078434, 0.53333336, 0.5176471, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_su7ka"]
+font = ExtResource("5_wrdtb")
+font_size = 42
+font_color = Color(0.56078434, 0.53333336, 0.5176471, 1)
 
 [node name="ProfileInterface" type="Control" unique_id=2069722770 node_paths=PackedStringArray("Health", "Stamina")]
 layout_mode = 3
@@ -10,25 +46,119 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jusk0")
-Health = NodePath("Health")
-Stamina = NodePath("Stamina")
+Health = NodePath("stats/Health")
+Stamina = NodePath("stats/Stamina")
 
-[node name="Health" type="Label" parent="." unique_id=693640310]
+[node name="visual" type="Control" parent="." unique_id=750986251]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PlayerIcon" type="TextureRect" parent="visual" unique_id=956307599]
 layout_mode = 0
-offset_left = 351.0
-offset_top = 110.0
-offset_right = 465.0
-offset_bottom = 166.0
+offset_left = 168.0
+offset_top = 107.0
+offset_right = 326.0
+offset_bottom = 286.0
+texture = ExtResource("2_aa2yi")
+stretch_mode = 5
+
+[node name="LvlBar" type="TextureRect" parent="visual" unique_id=1706075793]
+layout_mode = 0
+offset_left = 332.0
+offset_top = 130.0
+offset_right = 514.0
+offset_bottom = 231.0
+texture = ExtResource("3_m3x7q")
+stretch_mode = 5
+
+[node name="HealthStat" type="Control" parent="visual" unique_id=444216846]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthIcon" type="TextureRect" parent="visual/HealthStat" unique_id=237230965]
+layout_mode = 0
+offset_left = 173.0
+offset_top = 297.0
+offset_right = 202.0
+offset_bottom = 325.0
+texture = SubResource("AtlasTexture_wrdtb")
+
+[node name="Podcherk" type="TextureRect" parent="visual/HealthStat" unique_id=1111859157]
+layout_mode = 0
+offset_left = 201.0
+offset_top = 315.0
+offset_right = 278.0
+offset_bottom = 332.0
+texture = SubResource("AtlasTexture_su7ka")
+stretch_mode = 5
+
+[node name="StaminaStat" type="Control" parent="visual" unique_id=283462584]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StaminaIcon" type="TextureRect" parent="visual/StaminaStat" unique_id=369767027]
+layout_mode = 0
+offset_left = 173.0
+offset_top = 330.0
+offset_right = 202.0
+offset_bottom = 358.0
+texture = SubResource("AtlasTexture_4iymr")
+
+[node name="Podcherk2" type="TextureRect" parent="visual/StaminaStat" unique_id=1199028805]
+layout_mode = 0
+offset_left = 201.0
+offset_top = 349.0
+offset_right = 278.0
+offset_bottom = 366.0
+texture = SubResource("AtlasTexture_su7ka")
+stretch_mode = 5
+
+[node name="stats" type="Control" parent="." unique_id=513945280]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Health" type="Label" parent="stats" unique_id=693640310]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 290.0
+offset_right = 308.0
+offset_bottom = 330.0
 text = "Heal"
+label_settings = SubResource("LabelSettings_3f0cj")
+vertical_alignment = 1
+
+[node name="Stamina" type="Label" parent="stats" unique_id=787407856]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 330.0
+offset_right = 313.0
+offset_bottom = 360.0
+text = "Stamina "
+label_settings = SubResource("LabelSettings_itwh7")
+vertical_alignment = 1
+
+[node name="Name" type="Label" parent="stats" unique_id=516512385]
+layout_mode = 0
+offset_left = 349.0
+offset_top = 121.0
+offset_right = 496.0
+offset_bottom = 154.0
+text = "Player"
+label_settings = SubResource("LabelSettings_ats1p")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Stamina" type="Label" parent="." unique_id=787407856]
+[node name="LVL" type="Label" parent="stats" unique_id=697284302]
 layout_mode = 0
 offset_left = 351.0
-offset_top = 163.0
-offset_right = 465.0
-offset_bottom = 219.0
-text = "Stamina - 12"
+offset_top = 166.0
+offset_right = 495.0
+offset_bottom = 210.0
+text = "2 LVL"
+label_settings = SubResource("LabelSettings_su7ka")
 horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
