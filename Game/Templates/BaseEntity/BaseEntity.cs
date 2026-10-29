@@ -27,6 +27,11 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     public DirectionComponent direction;
 
     /// <summary>
+    /// Компонент визуала существа
+    /// </summary>
+    public VisualComponent visualComponent;
+
+    /// <summary>
     /// Машина состояний сущесвта
     /// </summary>
     public StateMachine stateMachine = new();
@@ -92,6 +97,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
             Stats.CurrentHealth = 0;
             Died?.Invoke(this);
         }
+        visualComponent.PlayHitFlash();
         OnHealthChanged?.Invoke(Stats.CurrentHealth);
     }
 
@@ -172,6 +178,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
         animation = new(this, sprite);
         movement = new(this);
         direction = new(this);
+        visualComponent = new(this, sprite);
 
     }
 
