@@ -27,7 +27,11 @@ public partial class Player : BaseEntity
 	public PlayerRunState runState;
 	public PlayerDashState dashState;
 
-	
+	//---------------------
+	//		UI
+	//---------------------
+	[Export]
+	public PlayerUI PlayerUI;
 
 
 	public override void _Ready()
@@ -50,7 +54,6 @@ public partial class Player : BaseEntity
     {
         base._Process(delta);
 		inputComponent.Update();
-		GD.Print("кулдаун рывка - " + _dashCooldown);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -81,10 +84,25 @@ public partial class Player : BaseEntity
 		dashState = new(this);
 	}
 
+	/// <summary>
+	/// Биндит UI игрока на его события.
+	/// </summary>
+	public void BindUI()
+	{
+		if (PlayerUI == null)
+		{
+			GD.PushWarning("Player.BindUI: PlayerUI не назначен в инспекторе Player.");
+			return;
+		}
+
+		PlayerUI.Bind(this);
+	}
+
     public override void LinksActions()
     {
         base.LinksActions();
 		GlobalBookMenu.IsMenuOpen += UI.ToggleMenu;
+		BindUI();
 	}
 
 

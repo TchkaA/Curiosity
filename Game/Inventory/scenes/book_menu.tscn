@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cvwc4itvt3kch"]
 
 [ext_resource type="Script" uid="uid://cvm1mbm11dvrx" path="res://Game/BookMenu/Scripts/BookMenu.cs" id="1_oh6x1"]
-[ext_resource type="Texture2D" uid="uid://c40fpx0ybdld3" path="res://Assets/UI/Book/BookUI.tres" id="1_p14fj"]
 [ext_resource type="Texture2D" uid="uid://cwi34tia86skv" path="res://Assets/UI/Book/BookMark2.tres" id="2_j41kw"]
+[ext_resource type="Texture2D" uid="uid://chmimkpdfa05r" path="res://Game/Player/PlayerUI/Res/Book.tres" id="2_o805s"]
 [ext_resource type="Texture2D" uid="uid://cgwdxcv8vq8ww" path="res://Assets/UI/Book/BookMark1.tres" id="3_oh6x1"]
 [ext_resource type="Script" uid="uid://cjjn6kfc1igv" path="res://Game/BookMenu/Scripts/InventoryPage.cs" id="5_7anev"]
 [ext_resource type="PackedScene" uid="uid://o30vjs13ky7r" path="res://Game/Inventory/scenes/inventory_page.tscn" id="6_25quv"]
@@ -28,7 +28,7 @@ offset_right = -99.0
 offset_bottom = -21.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_p14fj")
+texture = ExtResource("2_o805s")
 
 [node name="InventoryButton" type="TextureButton" parent="TextureRect" unique_id=461172051]
 layout_mode = 0
