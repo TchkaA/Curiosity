@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://omhlrd5jc7g5"]
+
+[ext_resource type="AudioStream" uid="uid://cke3ibjqv1tx5" path="res://Assets/Origin/Sounds/GameUI/Damage/damage1.wav" id="1_o6nfn"]
+[ext_resource type="AudioStream" uid="uid://b2wlu52ayvbxq" path="res://Assets/Origin/Sounds/GameUI/Damage/damage2.wav" id="2_sbtf1"]
+[ext_resource type="AudioStream" uid="uid://dvfaodtltd1rp" path="res://Assets/Origin/Sounds/GameUI/Damage/damage3.wav" id="3_jtcka"]
+
+[resource]
+streams_count = 3
+stream_0/stream = ExtResource("1_o6nfn")
+stream_1/stream = ExtResource("2_sbtf1")
+stream_2/stream = ExtResource("3_jtcka")

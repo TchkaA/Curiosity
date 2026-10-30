@@ -11,6 +11,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 	/// </summary>
 	public StatsComponent Stats = new();
 
+    [Export]
     /// <summary>
     /// Компонент Анимации
     /// </summary>
@@ -35,9 +36,6 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     /// Машина состояний сущесвта
     /// </summary>
     public StateMachine stateMachine = new();
-
-    //визуальный спрайт анимации
-    public AnimatedSprite2D sprite;
 
     //---------------------
 	//		Audio
@@ -71,7 +69,6 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 
 	public override void _Ready()
     {
-        sprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
         InitComponents();
         LinksActions();
 
@@ -83,7 +80,6 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     public override void _PhysicsProcess(double delta)
     {
         stateMachine.Update(delta);
-        animation.Update();
         CountDashTime((float)delta);
     }
 
@@ -182,10 +178,9 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     public virtual void InitComponents()
     {
         Stats = new();
-        animation = new(this, sprite);
         movement = new(this);
         direction = new(this);
-        visualComponent = new(this, sprite);
+        visualComponent = new(this, animation);
 
     }
 

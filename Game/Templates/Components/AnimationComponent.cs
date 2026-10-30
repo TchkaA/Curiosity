@@ -4,32 +4,46 @@ using System.Security;
 using System.Threading.Tasks;
 using Godot;
 
-public class AnimationComponent
+public partial class AnimationComponent : AnimatedSprite2D
 {
+    /// <summary>
+    /// Анимации существа
+    /// </summary>
+    public SpriteFrames EntityAnimation = GD.Load<SpriteFrames>("res://Game/Templates/BaseEntity/Resourses/BaseAnimations.tres");
+    /// <summary>
+    /// Анимации оружия
+    /// </summary>
+    public SpriteFrames WeaponAnimation;
+    /// <summary>
+    /// Анимации выбранного пути
+    /// </summary>
+    public SpriteFrames PathAnimations;
+
+
     public bool isChanged;
 
     private BaseEntity _owner;
-    private AnimatedSprite2D _sprite;
 
     public string Direction = "down";
-    public string Animation = "idle";
+    public string CurrentAnimation = "idle";
 
 
     
-    public AnimationComponent(BaseEntity owner, AnimatedSprite2D sprite)
+    public override void _Ready()
     {
-        _owner = owner;
-        _sprite = sprite;
+        _owner = GetParent<BaseEntity>();
     }
 
-    public void Update()
+    public override void _Process(double delta)
     {
         if (isChanged == true)
         {
-            _sprite.Play(AnimationRequest());
+            Play(AnimationRequest());
             isChanged = false;
         }
     }
+
+    public void ChangeAnimation(SpriteFrames spriteFrames) => SpriteFrames = spriteFrames;
 
     public string AnimationRequest()
     {
@@ -37,20 +51,20 @@ public class AnimationComponent
         switch (Direction)
         {
             case "left":
-                _sprite.FlipH = true;
-                request = $"{Animation}_forward".ToLower();
+                FlipH = true;
+                request = $"{CurrentAnimation}_forward".ToLower();
                 break;
             case "right":
-                _sprite.FlipH = false;
-                request = $"{Animation}_forward".ToLower();
+                FlipH = false;
+                request = $"{CurrentAnimation}_forward".ToLower();
                 break;
             default:
-                request = $"{Animation}_{Direction}".ToLower();
+                request = $"{CurrentAnimation}_{Direction}".ToLower();
                 break;
         }
 
         // Анимации без направлений (например, "dash") играются как есть.
-        return _sprite.SpriteFrames.HasAnimation(request) ? request : Animation.ToLower();
+        return SpriteFrames.HasAnimation(request) ? request : CurrentAnimation.ToLower();
     }
 
     public void SetDirection(string dir)
@@ -61,24 +75,24 @@ public class AnimationComponent
 
     public void SetAnimation(string anim)
     {
-        Animation = anim;
+        CurrentAnimation = anim;
         isChanged = true;
     }
 
 
     public async Task PlayAndWaitAsync(string anim)
     {
-        Animation = anim;
+        CurrentAnimation = anim;
         isChanged = true;
         
         var tcs = new TaskCompletionSource<bool>();
         
-        _sprite.Play(AnimationRequest());
-        _sprite.AnimationFinished += OnAnimationFinished;
+        Play(AnimationRequest());
+        AnimationFinished += OnAnimationFinished;
         
         void OnAnimationFinished()
         {
-            _sprite.AnimationFinished -= OnAnimationFinished;
+            AnimationFinished -= OnAnimationFinished;
             tcs.SetResult(true);
         }
         
@@ -108,4 +122,12 @@ public class AnimationComponent
         }
     }
 
+    #region WeaponAnimations
+    public void PlayWeaponAnimation(string Animation)
+    {
+        ChangeAnimation(WeaponAnimation);
+        SetAnimation(Animation);
+        ChangeAnimation(EntityAnimation); 
+    }
+    #endregion
 }

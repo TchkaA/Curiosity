@@ -26,6 +26,7 @@ public partial class Player : BaseEntity
 	public PlayerMoveState moveState;
 	public PlayerRunState runState;
 	public PlayerDashState dashState;
+	public PlaeyrAttackState attackState;
 
 	//---------------------
 	//		UI
