@@ -39,6 +39,12 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     //визуальный спрайт анимации
     public AnimatedSprite2D sprite;
 
+    //---------------------
+	//		Audio
+	//---------------------
+	[Export]
+	public EntitySoundMaker SoundMaker;
+
 	// Events
 	public event Action<BaseEntity> Died;
     public event Action<float> OnHealthChanged;
@@ -98,6 +104,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
             Died?.Invoke(this);
         }
         visualComponent.PlayHitFlash();
+        SoundMaker.PlayHurt();
         OnHealthChanged?.Invoke(Stats.CurrentHealth);
     }
 

@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://o30vjs13ky7r" path="res://Game/Inventory/scenes/inventory_page.tscn" id="6_25quv"]
 [ext_resource type="Script" uid="uid://7f00gj6p8o5f" path="res://Game/BookMenu/Scripts/ProfilePage.cs" id="7_7anev"]
 [ext_resource type="PackedScene" uid="uid://nx8ida0yi52c" path="res://Game/Profile/scenes/profile_interface.tscn" id="8_wrl5x"]
-[ext_resource type="AudioStream" uid="uid://cc043c3v4o7j0" path="res://Assets/Origin/Sounds/UI/perelist-1792046803880-uiulq-trimmed.mp3" id="9_o805s"]
+[ext_resource type="AudioStream" uid="uid://cc043c3v4o7j0" path="res://Assets/Origin/Sounds/UI/paper.mp3" id="9_o805s"]
 
 [node name="BookMenu" type="CanvasLayer" unique_id=595888724 node_paths=PackedStringArray("InventoryPage", "ProfilePage", "InventoryButton", "ProfileButton", "audio")]
 script = ExtResource("1_oh6x1")

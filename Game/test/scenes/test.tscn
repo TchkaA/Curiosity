@@ -13,7 +13,7 @@ radius = 44.59
 [node name="test" type="Node2D" unique_id=840178364]
 
 [node name="BookMenu" parent="." unique_id=595888724 node_paths=PackedStringArray("_player") instance=ExtResource("4_7qmx5")]
-layer = 2
+layer = 0
 visible = false
 _player = NodePath("../Player")
 
