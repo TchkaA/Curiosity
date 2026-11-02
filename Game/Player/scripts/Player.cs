@@ -10,6 +10,7 @@ public partial class Player : BaseEntity
 	public InputComponent inputComponent;
 	public InteractionComponent interaction;
 	public UIComponent UI;
+	public CombatComponent combatComponent;
 
 	//---------------------
 
@@ -26,7 +27,7 @@ public partial class Player : BaseEntity
 	public PlayerMoveState moveState;
 	public PlayerRunState runState;
 	public PlayerDashState dashState;
-	public PlaeyrAttackState attackState;
+	public PlayerAttackState attackState;
 
 	//---------------------
 	//		UI
@@ -60,6 +61,7 @@ public partial class Player : BaseEntity
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
+		combatComponent.update(delta);
     }
 
 
@@ -69,9 +71,12 @@ public partial class Player : BaseEntity
 	public override void InitComponents()
 	{
 		base.InitComponents();
+		weapon = new Hands();
+		animation.WeaponAnimation = weapon.UserAnimation;
 		inputComponent = new(this);
 		UI = new(this, GlobalBookMenu);
 		interaction = new(this);
+		combatComponent = new(this);
 	}
 
 	/// <summary>
@@ -83,6 +88,7 @@ public partial class Player : BaseEntity
 		moveState = new(this);
 		runState = new(this);
 		dashState = new(this);
+		attackState = new(this);
 	}
 
 
@@ -92,6 +98,14 @@ public partial class Player : BaseEntity
 		GlobalBookMenu.IsMenuOpen += UI.ToggleMenu;
 	}
 
+	/// <summary>
+    /// Состояние, в которое игрок переходит после рывка.
+    /// </summary>
+    public IState NextState()
+    {
+        if (inputComponent.MovementInput == Vector2.Zero) return idleState;
+        return isRunning ? runState : moveState;
+    }
 
 	#region Dash
 	/// <summary>
@@ -112,4 +126,27 @@ public partial class Player : BaseEntity
 
 	#endregion
 
+	#region Attack
+
+	public void TryAttack()
+	{
+		// Уже атакуем — следующий удар можно начать только в последней трети анимации.
+		if (stateMachine.CurrentState == attackState)
+		{
+			if (combatComponent.CanStartNextAttack())
+			{
+				combatComponent.StartAttack();
+			}
+			return;
+		}
+
+		if (CanAttack)
+		{
+			stateMachine.ChangeState(attackState);
+		}
+	}
+
+	public void ChangeAttackFlag(bool flag) => CanAttack = flag;
+
+	#endregion
 }

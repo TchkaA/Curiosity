@@ -17,9 +17,15 @@ public abstract partial class Weapon : Resource
 
     [Export] public Type WeaponType;
     [Export] public float Damage;
-    [Export] public int Cooldown;
+    /// <summary>
+    /// Урон сильной атаки.
+    /// </summary>
+    [Export] public float StrongDamage;
+    [Export] public float Cooldown;
     [Export] public SpriteFrames UserAnimation;
     [Export] public int Radious;
+    [Export] public float ComboWindow;
+    [Export] public int MaxCombo;
 
     //TODO добавить базовые баффы/дебаффы при испольховании или произведении атаки.
 

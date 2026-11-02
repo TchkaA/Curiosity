@@ -1,0 +1,44 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://b3nwr77jy4f1j"]
+
+[ext_resource type="Texture2D" uid="uid://bj6euqoiogt27" path="res://Assets/Origin/characters/main/Persona.png" id="1_jae6j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_np336"]
+atlas = ExtResource("1_jae6j")
+region = Rect2(0, 416, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bqc7"]
+atlas = ExtResource("1_jae6j")
+region = Rect2(32, 416, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6b5vx"]
+atlas = ExtResource("1_jae6j")
+region = Rect2(0, 416, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgfkn"]
+atlas = ExtResource("1_jae6j")
+region = Rect2(64, 416, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_np336")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bqc7")
+}],
+"loop": 0,
+"name": &"base_attack_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6b5vx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qgfkn")
+}],
+"loop": 0,
+"name": &"base_attack_2",
+"speed": 5.0
+}]

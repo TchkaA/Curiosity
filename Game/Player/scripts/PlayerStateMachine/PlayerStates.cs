@@ -152,7 +152,7 @@ public partial class PlayerDashState : IState
         _elapsed += delta;
         if (_elapsed >= Duration)
         {
-            Player.stateMachine.ChangeState(NextState());
+            Player.stateMachine.ChangeState(Player.NextState());
             return;
         }
 
@@ -169,37 +169,37 @@ public partial class PlayerDashState : IState
         return input != Vector2.Zero ? input : -Player.direction.ToVector();
     }
 
-    /// <summary>
-    /// Состояние, в которое игрок переходит после рывка.
-    /// </summary>
-    private IState NextState()
-    {
-        if (Player.inputComponent.MovementInput == Vector2.Zero) return Player.idleState;
-        return Player.isRunning ? Player.runState : Player.moveState;
-    }
+    
 }
 
 
-public partial class PlaeyrAttackState : IState
+public partial class PlayerAttackState : IState
 {
-    private Player _player;
-    Vector2 input;
+    private Player Player;
+    
     public void Enter()
     {
-        _player.animation.SetAnimation("idle");
+        Player.combatComponent.StartAttack();
     }
 
     public void Exit()
     {
+        Player.combatComponent.EndAttack();
     }
 
-    public PlaeyrAttackState(Player _player)
+    public PlayerAttackState(Player _player)
     {
-        this._player = _player;
+        Player = _player;
     }
 
     public void Update(double delta)
     {
-        
+        if (Player.combatComponent.StopAttack)
+        {
+            Player.stateMachine.ChangeState(Player.NextState());
+            return;
+        }
     }
+
+    
 }

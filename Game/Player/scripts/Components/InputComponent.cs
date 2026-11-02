@@ -33,6 +33,8 @@ public class InputComponent
         if( Input.IsActionJustPressed("dash")) _player.PerformDash();
         if(Input.IsActionJustPressed("interact")) _player.interaction.Interact();
         if(Input.IsActionJustPressed("ctrl")) _player.ToggleRun();
+        if(Input.IsActionJustPressed("base_attack")) _player.combatComponent.PerformAttack(TypeAttack.BaseAttack);
+        if(Input.IsActionJustPressed("strong_attack")) _player.combatComponent.PerformAttack(TypeAttack.StrongAttack);
         // if(Input.IsActionJustPressed("Tab")) UIOpen?.Invoke();
     }
 

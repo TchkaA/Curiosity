@@ -52,13 +52,16 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 	//---------------------
 	public bool isRunning = false; // TODO перенести логику в protected
     protected bool CanDash = true;
-    protected bool CanAttack = true;
+    public bool CanAttack = true;
 
     /// <summary>
 	/// Остаток перезарядки рывка в секундах.
 	/// </summary>
 	protected float _dashCooldown;
 
+
+    //Weapon
+    public Weapon weapon;
 
     //Inventory
     public Inventory Inventory {get; private set;}

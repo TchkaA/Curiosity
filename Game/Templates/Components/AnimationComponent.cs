@@ -127,7 +127,12 @@ public partial class AnimationComponent : AnimatedSprite2D
     {
         ChangeAnimation(WeaponAnimation);
         SetAnimation(Animation);
-        ChangeAnimation(EntityAnimation); 
+    }
+
+    public void EndWeaponAnimation()
+    {
+        ChangeAnimation(EntityAnimation);
+        SetAnimation("idle");
     }
     #endregion
 }
