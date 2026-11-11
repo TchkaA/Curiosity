@@ -34,6 +34,8 @@ public class CombatComponent
     /// </summary>
     public bool StopAttack;
 
+    public Area2D damageArea;
+
     public CombatComponent(Player player)
     {
         _player = player;
@@ -69,6 +71,11 @@ public class CombatComponent
             {
                 _elipse = 0;
                 StopAttack = true;
+                RemoveDamageArea();
+            }
+            if (_elipse <= 0.1)
+            {
+                RemoveDamageArea();
             }
         }
 
@@ -89,6 +96,7 @@ public class CombatComponent
     public void StartAttack()
     {
         StopAttack = false;
+        AddDamageArea();
         _comboWindow = _player.weapon.ComboWindow;
 
         if (CurrentAttack == "base_attack")
@@ -164,6 +172,49 @@ public class CombatComponent
         }
 
         return count / speed;
+    }
+
+
+    public void AddDamageArea()
+    {
+        if (GodotObject.IsInstanceValid(damageArea))
+        {
+            return;
+        }
+        damageArea = new Area2D();
+        CollisionShape2D collision = new CollisionShape2D();
+        CapsuleShape2D shape = new CapsuleShape2D() { Radius = _player.weapon.Radious };
+        collision.Shape = shape;
+
+        damageArea.AddChild(collision);
+
+        _player.AddChild(damageArea);
+
+        
+        
+        damageArea.Position = _player.direction.ToVector() * 50;
+        damageArea.BodyEntered += Entity_Entered;
+    }
+
+    public void RemoveDamageArea()
+    {
+        if (GodotObject.IsInstanceValid(damageArea))
+        {
+            damageArea.QueueFree();
+            damageArea.BodyEntered -= Entity_Entered;
+        }
+    }
+
+    public void Entity_Entered(Node2D node)
+    {
+       if (node is BaseEntity body && node != _player)
+        {
+            if(CurrentAttack == "base_attack")
+                body.TakeDamage(_player.weapon.Damage);
+            else
+                body.TakeDamage(_player.weapon.StrongDamage);
+        }
+        
     }
 }
 
