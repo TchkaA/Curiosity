@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://4spcpn08s5n5" path="res://Game/Item/PickUp/PickUp.cs" id="3_600mi"]
 [ext_resource type="PackedScene" uid="uid://cvwc4itvt3kch" path="res://Game/Inventory/scenes/book_menu.tscn" id="4_7qmx5"]
 [ext_resource type="Script" uid="uid://c6sggjxad4u0c" path="res://Game/test/scripts/DamageTests/DamageArea.cs" id="5_t4bch"]
+[ext_resource type="PackedScene" uid="uid://ddkmkd5ndjdun" path="res://Game/NPC/Sceenes/NPC.tscn" id="7_1bf80"]
 [ext_resource type="PackedScene" uid="uid://5qied6gl7erb" path="res://Game/Player/PlayerUI/player_ui.tscn" id="7_4xr6u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4iymr"]
@@ -39,3 +40,6 @@ position = Vector2(119, -3)
 shape = SubResource("CircleShape2D_4iymr")
 
 [node name="PlayerUI" parent="." unique_id=1435611260 instance=ExtResource("7_4xr6u")]
+
+[node name="NPC" parent="." unique_id=1127348593 instance=ExtResource("7_1bf80")]
+position = Vector2(492, 285)

@@ -1,0 +1,44 @@
+[gd_scene format=4 uid="uid://ddkmkd5ndjdun"]
+
+[ext_resource type="Script" uid="uid://bfp1g324gniq6" path="res://Game/NPC/Scripts/BaseNPC.cs" id="1_s1jxv"]
+[ext_resource type="SpriteFrames" uid="uid://b1oiajn21d5je" path="res://Game/Templates/BaseEntity/Resourses/BaseAnimations.tres" id="2_f8u7d"]
+[ext_resource type="Script" uid="uid://bxgl2t6k00nek" path="res://Game/Templates/Components/AnimationComponent.cs" id="3_rl3cb"]
+[ext_resource type="Script" uid="uid://cruywe4l87wy1" path="res://Game/Templates/BaseEntity/SoundMaker/EntitySoundMaker.cs" id="4_2w6ii"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6cm4c"]
+radius = 26.0
+height = 76.0
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_3oiqn"]
+data = PackedByteArray("cW9hZgAACL0BAFYiCL0DmAAAAAAAAAAAAAAAAOAAQAD7l51vqJ9Ot+G++/wGqeqn99Gm7Rd6rqLQC7eqcoCMOf0bPqryhrCQ/XKk6lJTGmf4F6Iq2uVNZd/Z98EM0Pj86d/ee34+Bt3v4tpucG79Cv6N4cMXSUVl1/4kIojRTcDzcbw722zIa8rb2Bu7DtYJ8nIGMgEgvki+MzwVQgO3Z7O0niHRCYLJ4kkkEnFBdE38QIAEDEABwdDaxHpt9OLM0IoEAEHlJZn2+SW2SISwIPJIIIJ5AbUIxSXgO2olkgiwSCQQQQQQb5MyQIIQZBBIwEYlkEEEEEFiQQSQQSQSDoyIQCAAABABgAgggEE/8ktva2ySwSQSCDZBAIIIBBAOKmkEgkEEEEGASASAQQSBNlXE2kUSSQQALaJRIJAIAEBwQQ/QgQQSCShNbbbLbLbLMzMsAgggggiyCCCCC+QASC99YIJBBIBIXuIAAggEgJiyASAs2SCQQUjJJJJJJfJBF///2u211ttTeUgQACACCHBBAI/ESABA8gEEgEgEHEGNMkkAAACCAdBI7ALJJJBIwggkEEEaEhJZNIkEQAAQQTQOzdIJBoQBkEgEEEEgepA9EggkEEAgELBBBBHYJZJJP11lkkkEEAhyADwkQCCCATIABOZIJAIIwE7MhIIAgAgxCECAACCAaKBBB5QAIIIBKLBJJJBJIIKwQQQQQRiWQTtbZJIJBBAIMgigIgAggEBCASOUgACAQyCiABAAIBBAMggEEEDoAAEcEUUAAAAAiDBBHSBABAIBMAgggEAggigZpAggAEAAADBBBAIB6QIAEBAAIooooooyAQD0gQAQCBQAQIQBRRCAM0BEAEAgTNswSCCCCAQQaB2SSQCAARRCMEEEA0AAAgAaAgAEQiEQiDHQABABBABBMEAgEEA0oAEYkgEAEAAAADBBA6ABABAIMEEAgEEAgimAQQQQRygQQSxRIIIIIIIICpogAgAgAAgACAACACAACAAIAAIAIAAIAAgAAgAgAAgACAACACAACAAIAAIAIAAIAAgAAgAgAAgACAACACAACFBIB2JCAAARLaSKKcSJJJAdtJIpIokokjBABpQIAIAIFIIIIIBBABAgR6gAAAQAQBACAAQAAAQAMcAAgEAggEAyCAQCCAQQDRcgQAQAQACAUelEgkokggkwSSQSSCSQTh/5ZLJLJJYJMgggnEkEgggP+wwySSSQAA==")
+format = 3
+mix_rate = 22050
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nwmde"]
+streams_count = 1
+stream_0/stream = SubResource("AudioStreamWAV_3oiqn")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_djwf3"]
+
+[node name="NPC" type="CharacterBody2D" unique_id=1127348593 node_paths=PackedStringArray("NavigationAgent", "animation", "SoundMaker")]
+motion_mode = 1
+script = ExtResource("1_s1jxv")
+NavigationAgent = NodePath("NavigationAgent2D")
+animation = NodePath("AnimatedSprite2D")
+SoundMaker = NodePath("AudioStreamPlayer2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1356597130]
+shape = SubResource("CapsuleShape2D_6cm4c")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=723897136]
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("2_f8u7d")
+animation = &"lying"
+script = ExtResource("3_rl3cb")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=336148585]
+script = ExtResource("4_2w6ii")
+FootstepSound = SubResource("AudioStreamRandomizer_nwmde")
+DeathSound = SubResource("AudioStreamRandomizer_djwf3")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=98250085]
