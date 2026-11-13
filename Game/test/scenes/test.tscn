@@ -13,6 +13,14 @@ radius = 44.59
 
 [node name="test" type="Node2D" unique_id=840178364]
 
+[node name="NPC3" parent="." unique_id=1127348593 instance=ExtResource("7_1bf80")]
+position = Vector2(428, 448)
+color = Color(0.753261, 0.91804737, 0.9396552, 0)
+
+[node name="NPC2" parent="." unique_id=751098040 instance=ExtResource("7_1bf80")]
+position = Vector2(984, 570)
+color = Color(0.14374495, 0.16702855, 0.41589752, 0)
+
 [node name="BookMenu" parent="." unique_id=595888724 node_paths=PackedStringArray("_player") instance=ExtResource("4_7qmx5")]
 layer = 0
 visible = false
@@ -41,6 +49,7 @@ shape = SubResource("CircleShape2D_4iymr")
 
 [node name="PlayerUI" parent="." unique_id=1435611260 instance=ExtResource("7_4xr6u")]
 
-[node name="NPC" parent="." unique_id=1127348593 node_paths=PackedStringArray("Collision") instance=ExtResource("7_1bf80")]
-position = Vector2(492, 285)
-Collision = NodePath("CollisionShape2D")
+[node name="NPC" parent="." unique_id=368149853 instance=ExtResource("7_1bf80")]
+position = Vector2(498, 170)
+TEST = true
+color = Color(1, 1, 1, 0)

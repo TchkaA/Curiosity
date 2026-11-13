@@ -70,6 +70,10 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     //Inventory
     public Inventory Inventory {get; private set;}
 
+    [Export]
+    public Color color; 
+
+
 	public BaseEntity()
 	{
 	}
@@ -79,6 +83,8 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
         InitComponents();
         LinksActions();
         ResetConsts();
+
+        SetUpSkin();
 
         //Init Inventory TODO: create InventoryComponent
         Inventory = new(this);
@@ -221,6 +227,14 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 		if (isRunning) { isRunning = false; return; }
 		if (CanRun()) isRunning = true;
 	}
+
+    #endregion
+
+    #region Visual
+    public void SetUpSkin()
+    {
+        visualComponent.SetSkinTint(color);
+    }
 
     #endregion
 
