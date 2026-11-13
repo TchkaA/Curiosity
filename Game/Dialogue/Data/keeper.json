@@ -1,0 +1,59 @@
+{
+  "startId": "keeper.intro",
+  "dialogues": [
+    {
+      "id": "keeper.intro",
+      "npcText": "Чужак. В этих землях ходит немного живых. Чего тебе?",
+      "answers": [
+        {
+          "playerText": "Расскажи о крае.",
+          "nextId": "keeper.land",
+          "effects": [
+            { "type": "flag", "arg": "met_keeper", "value": 1 }
+          ]
+        },
+        {
+          "playerText": "У тебя найдётся что-нибудь для меня?",
+          "nextId": "keeper.gift",
+          "conditions": [
+            { "type": "flag", "key": "met_keeper", "op": ">=", "value": 1 }
+          ],
+          "effects": [
+            { "type": "relationship", "arg": "keeper", "value": 5 }
+          ]
+        },
+        {
+          "playerText": "Ничего. Прощай.",
+          "nextId": ""
+        }
+      ]
+    },
+    {
+      "id": "keeper.land",
+      "npcText": "Земля здесь помнит больше, чем её жители. Одинокий огонь в тумане — уже удача.",
+      "answers": [
+        {
+          "playerText": "Понятно.",
+          "nextId": "keeper.intro"
+        }
+      ]
+    },
+    {
+      "id": "keeper.gift",
+      "npcText": "Держи. Пригодится, когда туман снова придёт.",
+      "answers": [
+        {
+          "playerText": "Спасибо.",
+          "effects": [
+            {
+              "type": "item",
+              "arg": "res://Objects/Items/Potions/HealingPotion/Healing_potion.tres",
+              "value": 1
+            },
+            { "type": "achievement", "arg": "keeper_gift" }
+          ]
+        }
+      ]
+    }
+  ]
+}
