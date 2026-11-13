@@ -1,11 +1,17 @@
 using Godot;
 using NPC.StateMachine;
 using System;
+using System.Collections.Generic;
 
-public partial class BaseNPC : BaseEntity
+public partial class BaseNPC : BaseEntity, IInteractable
 {
 
-
+    //----------------------
+    //      TEST
+    //----------------------
+    [ExportCategory("Тесты")]
+    [Export] public bool TEST = false;
+    // [Export] public List<Action> Tests;
     //----------------------
     //      flags
     //----------------------
@@ -39,7 +45,10 @@ public partial class BaseNPC : BaseEntity
         base._Ready();
         InitStates();
 
-        stateMachine.ChangeState(IdleState);        
+        stateMachine.ChangeState(IdleState);      
+        #if DEBUG
+        if(TEST) TryTest();
+        #endif  
     }
 
     public override void _PhysicsProcess(double delta)
@@ -78,4 +87,37 @@ public partial class BaseNPC : BaseEntity
     {
         stateMachine.ChangeState(DiedState);
     }
+
+    public void Interact(BaseEntity interactor)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void InteractEnter()
+    {
+        if(TEST)
+        {
+            Test1();
+            return;
+        }
+        visualComponent.ShowOutline();
+    }
+
+    public void InteractExit()
+    {
+        visualComponent.HideOutline();
+    }
+
+
+    public void TryTest()
+    {
+        
+    }
+
+    public void Test1()
+    {
+        visualComponent.ShowOutline(2.0f, Colors.Red);
+        visualComponent.EnableOutlineGradient(Colors.Cyan, vertical: false);
+    }
+
 }
