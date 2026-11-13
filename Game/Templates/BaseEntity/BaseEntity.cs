@@ -56,7 +56,10 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 	//---------------------
 	public bool isRunning = false; // TODO перенести логику в protected
     protected bool CanDash = true;
+    public virtual void ChangeDashFlag(bool flag) => CanDash = flag;
     public bool CanAttack = true;
+    protected bool CanInteract = true;
+    public bool InDialogue = false;
 
     /// <summary>
 	/// Остаток перезарядки рывка в секундах.
@@ -252,6 +255,14 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 
     #endregion
 
+    #region Interaction
+
+    public virtual void GoToInteraction(BaseEntity entity)
+    {
+        //Используется для малосвязанности и не переписывания кучи систем.
+    }
+
+    #endregion
 
     public void ResetConsts()
     {

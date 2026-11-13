@@ -182,3 +182,31 @@ public partial class NPCAttackState(BaseNPC owner) : IState
     {
     }
 }
+
+
+public partial class NPCInteractState : IState
+{
+    private BaseNPC _owner;
+    public void Enter()
+    {
+        _owner.animation.SetAnimation("idle");
+    }
+
+    public void Exit()
+    {
+    }
+
+    public NPCInteractState(BaseNPC owner)
+    {
+        _owner = owner;
+    }
+
+    public void Update(double delta)
+    {
+        
+    }
+    public void Interact(Node2D interactor)
+    {
+        _owner.direction.TurnTo(interactor.GlobalPosition);
+    }
+}

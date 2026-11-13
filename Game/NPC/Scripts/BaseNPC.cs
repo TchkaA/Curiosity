@@ -25,6 +25,7 @@ public partial class BaseNPC : BaseEntity, IInteractable
     public NPCFollowState followState;
     public NPCIdleState IdleState;
     public NPCDied DiedState;
+    public NPCInteractState InteractState;
     //----------------------
 
     /// <summary>
@@ -75,6 +76,7 @@ public partial class BaseNPC : BaseEntity, IInteractable
         followState = new(this);
         IdleState = new(this);
         DiedState = new(this);
+        InteractState = new(this);
     }
 
     public override void LinksActions()
@@ -89,9 +91,16 @@ public partial class BaseNPC : BaseEntity, IInteractable
         stateMachine.ChangeState(DiedState);
     }
 
+
+
     public void Interact(BaseEntity interactor)
     {
-        throw new NotImplementedException();
+        if (CanInteract)
+        {
+            stateMachine.ChangeState(InteractState);
+            InteractState.Interact(interactor);
+            interactor.GoToInteraction(this);
+        }
     }
 
     public void InteractEnter()

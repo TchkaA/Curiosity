@@ -28,6 +28,7 @@ public partial class Player : BaseEntity
 	public PlayerRunState runState;
 	public PlayerDashState dashState;
 	public PlayerAttackState attackState;
+	public PlayerInteractionState interactionState;
 
 	//---------------------
 	//		UI
@@ -89,6 +90,7 @@ public partial class Player : BaseEntity
 		runState = new(this);
 		dashState = new(this);
 		attackState = new(this);
+		interactionState = new(this);
 	}
 
 
@@ -121,7 +123,7 @@ public partial class Player : BaseEntity
 		//Тут позже добавить сообщение выводящееся.
 	}
 
-	public void ChangeDashFlag(bool flag) => CanDash = flag;
+	public override void ChangeDashFlag(bool flag) => CanDash = flag;
 	
 
 	#endregion
@@ -147,6 +149,20 @@ public partial class Player : BaseEntity
 	}
 
 	public void ChangeAttackFlag(bool flag) => CanAttack = flag;
+
+    #endregion
+
+    #region Interaction
+
+    public override void GoToInteraction(BaseEntity entity)
+    {
+        if (CanInteract)
+		{
+			stateMachine.ChangeState(interactionState);
+			interactionState.Interact(entity);
+		}
+    }
+
 
 	#endregion
 }

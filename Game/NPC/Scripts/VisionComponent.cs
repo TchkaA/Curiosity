@@ -12,7 +12,7 @@ public class VisionComponent
     private const float OFFSET = 150f;
     private const float Radius = 200f;
 
-    public bool IsFolloving {get;set;} = true;
+    public bool IsFolloving {get;set;} = false;
 
     public VisionComponent(BaseEntity owner)
     {

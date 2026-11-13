@@ -203,3 +203,48 @@ public partial class PlayerAttackState : IState
 
     
 }
+
+
+public partial class PlayerInteractionState : IState
+{
+    private Player Player;
+    public BaseEntity interactor;
+
+    public bool CanStopDialogue = false;
+    public void Enter()
+    {
+        Player.InDialogue = true;
+
+
+        Player.animation.SetAnimation("idle");
+        Camera.Instance.AddZoom(new Vector2(2,2));
+    }
+
+    public void Exit()
+    {
+        Player.InDialogue = false;
+        Camera.Instance.RemoveZoom();
+        Camera.Instance.RemoveTarget(interactor);
+    }
+
+    public PlayerInteractionState(Player _player)
+    {
+        Player = _player;
+    }
+
+    public void Update(double delta)
+    {
+        if (Input.IsKeyPressed(Key.Escape))
+        {
+            // if (CanStopDialogue) return;
+            Player.stateMachine.ChangeState(Player.idleState);
+        }
+    }
+
+    public void Interact(BaseEntity entity)
+    {
+        interactor = entity;
+        Player.direction.TurnTo(entity.GlobalPosition);
+        Camera.Instance.AddTarget(interactor);
+    }
+}

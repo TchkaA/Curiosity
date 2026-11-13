@@ -22,8 +22,8 @@ public class InputComponent
     public void Update()
     {
         // В диалоге действия недоступны (Esc закрывает диалог).
-        // if (_player.InDialogue || _player.IsAttacking)
-        //     return;
+        if (_player.InDialogue || _player.combatComponent.StopAttack)
+            return;
 
         MovementInput = new Vector2(
             Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left"),
