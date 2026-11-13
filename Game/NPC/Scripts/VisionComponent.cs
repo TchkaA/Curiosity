@@ -7,12 +7,12 @@ public class VisionComponent
     private BaseEntity _owner { get; set; }
     private Area2D area {get; set;}
     private RayCast2D rayCast {get;set;}
-    public bool InVision {get; private set;} = true;
+    public bool InVision {get; private set;} = false;
 
-    private const float OFFSET = 45f;
+    private const float OFFSET = 150f;
     private const float Radius = 200f;
 
-    public bool IsFolloving {get;set;} = false;
+    public bool IsFolloving {get;set;} = true;
 
     public VisionComponent(BaseEntity owner)
     {
@@ -24,6 +24,8 @@ public class VisionComponent
     {
         area = new Area2D() {Name = "VisionArea"};
         var shape = new CollisionShape2D() {Shape = new CircleShape2D(){Radius = Radius} };
+        area.SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, Consts.EntityLayer);
+        area.SetDeferred(CollisionObject2D.PropertyName.CollisionMask, Consts.EntityLayer);
 
         InitRayCast();
         
@@ -31,6 +33,10 @@ public class VisionComponent
         area.BodyEntered += OnVisionAreaEntered;
         area.BodyExited += OnVicisonAreaExited;
         
+
+        #if DEBUG
+        area.BodyEntered += _owner.test;
+        #endif
         // Добавляем Area2D в дерево сцены
         _owner.AddChild(area);
 
@@ -47,7 +53,7 @@ public class VisionComponent
     {
         InVision = true;
 
-        rayCast.TargetPosition = body.GlobalPosition - _owner.GlobalPosition;
+        rayCast.TargetPosition = rayCast.ToLocal(body.GlobalPosition);
     }
 
     private Vector2 GetDirectionOffset(DirectionComponent.FacingDirection direction)
@@ -68,7 +74,7 @@ public class VisionComponent
         {
             if (rayCast.GetCollider() is Node2D collider)
             {
-                rayCast.TargetPosition = collider.GlobalPosition - _owner.GlobalPosition;
+                rayCast.TargetPosition = collider.GlobalPosition - rayCast.GlobalPosition;
                 rayCast.ForceRaycastUpdate(); // Принудительно обновляем
                 
                 // Проверяем, видит ли персонаж цель
@@ -91,11 +97,12 @@ public class VisionComponent
         {
             rayCast = new RayCast2D() { Name = "RayCast2D" };
             rayCast.Enabled = false; // Отключаем автоматическое обновление
+            rayCast.CollisionMask = Consts.EntityLayer;
             _owner.AddChild(rayCast);
         }
         
         // Настраиваем RayCast
-        rayCast.Scale = new Vector2(0.235f,0.235f);
+        // rayCast.Scale = new Vector2(0.95f,0.95f);
         rayCast.GlobalPosition = _owner.GlobalPosition;
         rayCast.Enabled = true;
     }

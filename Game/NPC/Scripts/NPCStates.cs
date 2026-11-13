@@ -90,8 +90,12 @@ public partial class NPCDied : IState
     {
         _owner.Navigation.Stop();
         _owner.animation.SetAnimation("lying");
-        _owner.CollisionLayer = 13;
-        _owner.ZIndex = 13;
+        _owner.SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, 0);
+        _owner.SetDeferred(CollisionObject2D.PropertyName.CollisionMask, 0);
+
+        _owner.vision.Cleanup();
+
+        _owner.ZIndex = Consts.DiedIndex;
     }
 
     public void Exit()
