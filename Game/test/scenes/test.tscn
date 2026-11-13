@@ -41,5 +41,6 @@ shape = SubResource("CircleShape2D_4iymr")
 
 [node name="PlayerUI" parent="." unique_id=1435611260 instance=ExtResource("7_4xr6u")]
 
-[node name="NPC" parent="." unique_id=1127348593 instance=ExtResource("7_1bf80")]
+[node name="NPC" parent="." unique_id=1127348593 node_paths=PackedStringArray("Collision") instance=ExtResource("7_1bf80")]
 position = Vector2(492, 285)
+Collision = NodePath("CollisionShape2D")

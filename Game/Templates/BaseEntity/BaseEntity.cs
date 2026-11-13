@@ -43,6 +43,10 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 	[Export]
 	public EntitySoundMaker SoundMaker;
 
+    //---------------------
+    //      Collision
+    //---------------------
+    [Export] public CollisionShape2D Collision;
 	// Events
 	public event Action<BaseEntity> Died;
     public event Action<float> OnHealthChanged;
@@ -74,6 +78,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     {
         InitComponents();
         LinksActions();
+        ResetConsts();
 
         //Init Inventory TODO: create InventoryComponent
         Inventory = new(this);
@@ -232,4 +237,21 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
 
 
     #endregion
+
+
+    public void ResetConsts()
+    {
+        SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, Consts.EntityLayer);
+        SetDeferred(CollisionObject2D.PropertyName.CollisionMask, Consts.EntityLayer);
+        ZIndex = Consts.EntityIndex;
+    }
+
+    public void test()
+    {
+        GD.Print("it works");
+    }
+    public void test(object obj)
+    {
+        GD.Print(obj + "is working");
+    }
 }

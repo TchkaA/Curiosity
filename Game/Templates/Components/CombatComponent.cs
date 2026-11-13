@@ -187,7 +187,8 @@ public class CombatComponent
         collision.Shape = shape;
 
         damageArea.AddChild(collision);
-
+        damageArea.SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, Consts.EntityLayer);
+        damageArea.SetDeferred(CollisionObject2D.PropertyName.CollisionMask, Consts.EntityLayer);
         _player.AddChild(damageArea);
 
         

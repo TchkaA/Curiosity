@@ -20,11 +20,12 @@ stream_0/stream = SubResource("AudioStreamWAV_3oiqn")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1v0b8"]
 
-[node name="Player" type="CharacterBody2D" unique_id=2106905218 node_paths=PackedStringArray("animation", "SoundMaker") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" unique_id=2106905218 node_paths=PackedStringArray("animation", "SoundMaker", "Collision") groups=["Player"]]
 motion_mode = 1
 script = ExtResource("1_4x5jf")
 animation = NodePath("AnimatedSprite2D")
 SoundMaker = NodePath("AudioStreamPlayer2D")
+Collision = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=420859484]
 shape = SubResource("CapsuleShape2D_4iymr")
