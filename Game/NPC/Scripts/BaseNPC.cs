@@ -30,6 +30,7 @@ public partial class BaseNPC : BaseEntity, IInteractable
     /// <summary>
     /// NavigationAgent используемый для навигации
     /// </summary>
+    [ExportCategory("Агент навигации")]
     [Export] public NavigationAgent2D NavigationAgent;
 
     //----------------------
