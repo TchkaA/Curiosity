@@ -1,7 +1,9 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 /// <summary>
 /// Хранилище диалогов, загруженных из JSON.
@@ -21,7 +23,8 @@ public sealed class DialogueLibrary
     {
         PropertyNameCaseInsensitive = true,
         ReadCommentHandling = JsonCommentHandling.Skip,
-        AllowTrailingCommas = true
+        AllowTrailingCommas = true,
+        Converters = { new FlexibleStringJsonConverter() }
     };
 
     private const int RecommendedAnswerLength = 24;
@@ -229,5 +232,40 @@ public sealed class DialogueLibrary
         }
 
         return JsonSerializer.Deserialize<DialogueFile>(text, JsonOptions);
+    }
+
+    /// <summary>
+    /// Позволяет писать строковые поля JSON как строки или числа:
+    /// "arg": "2" и "arg": 2 дают одинаковый результат.
+    /// </summary>
+    private sealed class FlexibleStringJsonConverter : JsonConverter<string>
+    {
+        public override bool HandleNull => true;
+
+        public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            switch (reader.TokenType)
+            {
+                case JsonTokenType.String:
+                    return reader.GetString();
+                case JsonTokenType.Number:
+                    return reader.TryGetInt64(out var integer)
+                        ? integer.ToString(CultureInfo.InvariantCulture)
+                        : reader.GetDouble().ToString(CultureInfo.InvariantCulture);
+                case JsonTokenType.True:
+                    return "true";
+                case JsonTokenType.False:
+                    return "false";
+                case JsonTokenType.Null:
+                    return "";
+                default:
+                    throw new JsonException($"Ожидалась строка или число, получено {reader.TokenType}");
+            }
+        }
+
+        public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value);
+        }
     }
 }
