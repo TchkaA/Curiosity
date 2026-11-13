@@ -46,6 +46,8 @@ public partial class PickUp : Area2D, IInteractable
 		SetupOutline();
 		SetupCollision();
 
+		CollisionLayer = Consts.EntityLayer;
+
 		InputPickable = true;
 	}
 
