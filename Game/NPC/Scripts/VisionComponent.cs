@@ -46,12 +46,14 @@ public class VisionComponent
     private void OnVicisonAreaExited(Node2D body)
     {
         InVision = false;
+        rayCast.Enabled = false;
     }
 
 
     private void OnVisionAreaEntered(Node2D body)
     {
         InVision = true;
+        rayCast.Enabled = true;
 
         rayCast.TargetPosition = rayCast.ToLocal(body.GlobalPosition);
     }
