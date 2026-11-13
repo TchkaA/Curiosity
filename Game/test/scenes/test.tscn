@@ -52,3 +52,4 @@ shape = SubResource("CircleShape2D_4iymr")
 [node name="NPC" parent="." unique_id=368149853 instance=ExtResource("7_1bf80")]
 position = Vector2(498, 170)
 color = Color(1, 1, 1, 0)
+DialogueFile = "res://Game/Dialogue/Data/keeper.json"

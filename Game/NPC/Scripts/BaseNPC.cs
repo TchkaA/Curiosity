@@ -35,10 +35,38 @@ public partial class BaseNPC : BaseEntity, IInteractable
     [Export] public NavigationAgent2D NavigationAgent;
 
     //----------------------
+    //      Dialogue
+    //----------------------
+    /// <summary>
+    /// Путь к JSON-файлу диалогов NPC. Пустая строка — диалог отключён.
+    /// </summary>
+    [ExportGroup("Диалог")]
+    [Export(PropertyHint.File, "*.json")] public string DialogueFile = "";
+
+    /// <summary>
+    /// Стартовый узел диалога. Если пусто, берётся startId из JSON-файла.
+    /// </summary>
+    [Export] public string StartDialogueId = "";
+
+    /// <summary>
+    /// Смещение речевого пузыря относительно NPC.
+    /// </summary>
+    [Export] public Vector2 DialogueBubbleOffset = new(0f, -70f);
+
+    /// <summary>
+    /// Масштаб речевого пузыря.
+    /// </summary>
+    [Export] public float DialogueBubbleScale = 0.3f;
+
+    //----------------------
     //      Components
     //----------------------
     public NavigationComponent Navigation;          
     public VisionComponent vision;
+    /// <summary>
+    /// Компонент диалогов NPC.
+    /// </summary>
+    public DialogueComponent Dialogue;
     //----------------------
 
 
@@ -68,6 +96,11 @@ public partial class BaseNPC : BaseEntity, IInteractable
         base.InitComponents();
         Navigation = new(this,NavigationAgent);
         vision = new(this);
+        Dialogue = new(this, DialogueFile, StartDialogueId)
+        {
+            BubbleOffset = DialogueBubbleOffset,
+            BubbleScale = DialogueBubbleScale
+        };
     }
 
     public virtual void InitStates()
@@ -100,6 +133,7 @@ public partial class BaseNPC : BaseEntity, IInteractable
             stateMachine.ChangeState(InteractState);
             InteractState.Interact(interactor);
             interactor.GoToInteraction(this);
+            Dialogue?.Start(interactor);
         }
     }
 

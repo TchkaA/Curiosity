@@ -163,6 +163,14 @@ public partial class Player : BaseEntity
 		}
     }
 
+    /// <summary>
+    /// Завершает взаимодействие (диалог), возвращая игрока в состояние бездействия.
+    /// </summary>
+    public void EndInteraction()
+    {
+        if (stateMachine.CurrentState == interactionState)
+            stateMachine.ChangeState(idleState);
+    }
 
 	#endregion
 }

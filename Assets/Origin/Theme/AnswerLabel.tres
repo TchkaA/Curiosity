@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://4grer2l2y4tu"]
+
+[ext_resource type="FontFile" uid="uid://cd8p4r546xbcv" path="res://Assets/Origin/Fonts/Pixel/Classic-Console-Neue-Regular.ttf" id="1_oi1ga"]
+
+[resource]
+font = ExtResource("1_oi1ga")
+font_size = 80
+font_color = Color(0.66288584, 0.66288584, 0.66288584, 1)
+outline_size = 18
+outline_color = Color(0.012617188, 0.012617188, 0.012617188, 1)
