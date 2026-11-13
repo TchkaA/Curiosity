@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dbwjihvu0vgsy" path="res://Assets/Origin/UI/Player_UI.png" id="1_4ih3s"]
 [ext_resource type="LabelSettings" uid="uid://4grer2l2y4tu" path="res://Assets/Origin/Theme/AnswerLabel.tres" id="2_bt76s"]
-[ext_resource type="Script" path="res://Game/Dialogue/Scripts/DialogueUI.cs" id="3_ui"]
+[ext_resource type="Script" uid="uid://dom518sn8025f" path="res://Game/Dialogue/Scripts/DialogueUI.cs" id="3_ui"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4iymr"]
 atlas = ExtResource("1_4ih3s")

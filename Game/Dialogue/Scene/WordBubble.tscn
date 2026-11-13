@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://Game/Dialogue/Scripts/WordBubble.cs" id="1_bubble"]
+[ext_resource type="Script" uid="uid://ce7ncyr77lldy" path="res://Game/Dialogue/Scripts/WordBubble.cs" id="1_bubble"]
 [ext_resource type="FontFile" uid="uid://cd8p4r546xbcv" path="res://Assets/Origin/Fonts/Pixel/Classic-Console-Neue-Regular.ttf" id="2_font"]
 
 [node name="WordBubble" type="Node2D"]
