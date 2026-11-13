@@ -79,6 +79,9 @@ public sealed class DialogueLibrary
             return false;
         }
 
+        var firstValidId = "";
+        var loadedNodes = 0;
+
         foreach (var dialogue in file.Dialogues)
         {
             if (dialogue == null || string.IsNullOrWhiteSpace(dialogue.Id))
@@ -91,9 +94,20 @@ public sealed class DialogueLibrary
                 GD.PushWarning($"[Dialogue] Узел '{dialogue.Id}' уже существует и будет перезаписан ({resPath})");
 
             _dialogues[dialogue.Id] = dialogue;
+
+            if (string.IsNullOrWhiteSpace(firstValidId))
+                firstValidId = dialogue.Id;
+
+            loadedNodes++;
         }
 
-        var startId = string.IsNullOrWhiteSpace(file.StartId) ? file.Dialogues[0].Id : file.StartId;
+        if (loadedNodes == 0)
+        {
+            GD.PushWarning($"[Dialogue] В файле нет валидных узлов: {resPath}");
+            return false;
+        }
+
+        var startId = string.IsNullOrWhiteSpace(file.StartId) ? firstValidId : file.StartId;
         if (!string.IsNullOrWhiteSpace(startId))
             _startIds[resPath] = startId;
 
