@@ -45,17 +45,24 @@ public class VisionComponent
 
     private void OnVicisonAreaExited(Node2D body)
     {
-        InVision = false;
-        rayCast.Enabled = false;
+        if(body is Player player)
+        {
+            InVision = false;
+            rayCast.Enabled = false;
+        }
     }
 
 
     private void OnVisionAreaEntered(Node2D body)
     {
-        InVision = true;
-        rayCast.Enabled = true;
-
-        rayCast.TargetPosition = rayCast.ToLocal(body.GlobalPosition);
+        
+        if(body is Player player)
+        {
+            InVision = true;
+            rayCast.Enabled = true;
+            rayCast.TargetPosition = rayCast.ToLocal(body.GlobalPosition);
+        }
+        
     }
 
     private Vector2 GetDirectionOffset(DirectionComponent.FacingDirection direction)
@@ -74,7 +81,7 @@ public class VisionComponent
     {
         if (InVision)
         {
-            if (rayCast.GetCollider() is Node2D collider)
+            if (rayCast.GetCollider() is Player collider)
             {
                 rayCast.TargetPosition = collider.GlobalPosition - rayCast.GlobalPosition;
                 rayCast.ForceRaycastUpdate(); // Принудительно обновляем
@@ -115,7 +122,7 @@ public class VisionComponent
         {
             if (obj is Player player)
             {
-                _owner.direction.SetDirectionFromVector(player.GlobalPosition);
+                _owner.direction.TurnTo(player.GlobalPosition);
             }
         }
     }
