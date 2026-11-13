@@ -74,7 +74,7 @@ public sealed class DialogueContext
 
     /// <summary>
     /// Возвращает количество предмета в инвентаре игрока.
-    /// Ключом может быть путь к .tres, имя предмета или его ID.
+    /// Ключом может быть имя класса предмета или его числовой ID.
     /// </summary>
     public int GetItemCount(string itemKey)
     {

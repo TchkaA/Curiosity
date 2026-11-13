@@ -24,6 +24,8 @@ public sealed class DialogueLibrary
         AllowTrailingCommas = true
     };
 
+    private const int RecommendedAnswerLength = 24;
+
     /// <summary>
     /// Все загруженные узлы диалогов (только для чтения).
     /// </summary>
@@ -94,6 +96,7 @@ public sealed class DialogueLibrary
                 GD.PushWarning($"[Dialogue] Узел '{dialogue.Id}' уже существует и будет перезаписан ({resPath})");
 
             _dialogues[dialogue.Id] = dialogue;
+            Validate(dialogue);
 
             if (string.IsNullOrWhiteSpace(firstValidId))
                 firstValidId = dialogue.Id;
@@ -191,6 +194,24 @@ public sealed class DialogueLibrary
             return "";
 
         return _startIds.TryGetValue(resPath, out var startId) ? startId : "";
+    }
+
+    private static void Validate(Dialogue dialogue)
+    {
+        if (dialogue.Answers == null)
+            return;
+
+        foreach (var answer in dialogue.Answers)
+        {
+            if (answer == null || string.IsNullOrWhiteSpace(answer.PlayerText))
+                continue;
+
+            if (answer.PlayerText.Length > RecommendedAnswerLength)
+            {
+                GD.PushWarning(
+                    $"[Dialogue] Ответ '{answer.PlayerText}' в узле '{dialogue.Id}' слишком длинный. Используйте 1–2 слова.");
+            }
+        }
     }
 
     private static DialogueFile Parse(string text)

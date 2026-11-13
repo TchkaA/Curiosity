@@ -12,7 +12,7 @@ public partial class ChickenMeat : Item
         Description = "КУРОЧКА!!!!";
         Icon = GD.Load<Texture2D>("res://Objects/Items/Food/CheckenMeat.tres");
         MaxStack = 4;
-        ID = 2; 
+        ID = 3; 
     }
 
     public override bool Use(Node2D user)

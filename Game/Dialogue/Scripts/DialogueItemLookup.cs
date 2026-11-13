@@ -1,101 +1,93 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 
 /// <summary>
-/// Небольшой каталог предметов для диалоговых эффектов и условий.
-/// Ищет предмет по пути "res://...", имени, ID или имени файла.
-/// При первом поиске сканирует res://Objects/Items.
+/// Каталог предметов для диалоговых эффектов и условий.
+/// Предмет ищется по имени C#-класса ("HealingPotion") или по числовому ID ("2").
+/// Экземпляр создаётся через конструктор класса, поэтому пути к сценам не нужны.
 /// </summary>
 internal static class DialogueItemLookup
 {
-    private const string ItemsRoot = "res://Objects/Items";
-
-    private static readonly Dictionary<string, Item> Cache = new(StringComparer.OrdinalIgnoreCase);
-    private static bool _scanned;
+    private static readonly Dictionary<string, Type> ItemTypes = BuildItemTypes();
 
     /// <summary>
-    /// Находит предмет по ключу. Ключ может быть путём к ресурсу или обычным именем.
+    /// Находит предмет по имени класса или ID.
     /// </summary>
     public static Item Find(string key)
     {
         if (string.IsNullOrWhiteSpace(key))
             return null;
 
-        if (key.StartsWith("res://", StringComparison.OrdinalIgnoreCase))
-            return ResourceLoader.Load(key) as Item;
+        var normalized = Normalize(key);
+        if (ItemTypes.TryGetValue(normalized, out var type))
+            return Create(type);
 
-        if (Cache.TryGetValue(key, out var cached))
-            return cached;
+        if (int.TryParse(key, out var id))
+        {
+            Item match = null;
+            foreach (var candidate in ItemTypes.Values)
+            {
+                var item = Create(candidate);
+                if (item == null || item.ID != id)
+                    continue;
 
-        Scan();
+                if (match != null)
+                {
+                    GD.PushWarning(
+                        $"[Dialogue] ID {id} есть у нескольких предметов: {match.GetType().Name} и {candidate.Name}. Укажите имя класса.");
+                    return match;
+                }
 
-        if (Cache.TryGetValue(key, out cached))
-            return cached;
+                match = item;
+            }
 
-        GD.PushWarning($"[Dialogue] Предмет '{key}' не найден. Укажите путь к .tres или имя предмета.");
+            if (match != null)
+                return match;
+        }
+
+        GD.PushWarning(
+            $"[Dialogue] Предмет '{key}' не найден. Укажите имя класса или ID. Доступны: {string.Join(", ", ItemTypes.Keys)}");
         return null;
     }
 
-    /// <summary>
-    /// Регистрирует предмет вручную под дополнительным ключом.
-    /// </summary>
-    public static void Register(string key, Item item)
+    private static Dictionary<string, Type> BuildItemTypes()
     {
-        if (string.IsNullOrWhiteSpace(key) || item == null)
-            return;
+        var result = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
 
-        Cache[key] = item;
-    }
-
-    private static void Scan()
-    {
-        if (_scanned)
-            return;
-
-        _scanned = true;
-        ScanDirectory(ItemsRoot);
-    }
-
-    private static void ScanDirectory(string path)
-    {
-        var directory = DirAccess.Open(path);
-        if (directory == null)
-            return;
-
-        directory.ListDirBegin();
-
-        for (var name = directory.GetNext(); !string.IsNullOrEmpty(name); name = directory.GetNext())
+        foreach (var type in typeof(Item).Assembly.GetTypes())
         {
-            if (name.StartsWith("."))
+            if (type == typeof(Item) || type.IsAbstract || !typeof(Item).IsAssignableFrom(type))
                 continue;
 
-            var fullPath = path.PathJoin(name);
-            if (directory.CurrentIsDir())
+            if (type.GetConstructor(Type.EmptyTypes) == null)
             {
-                ScanDirectory(fullPath);
+                GD.PushWarning($"[Dialogue] У предмета {type.Name} нет конструктора без параметров");
                 continue;
             }
 
-            // В экспортированном проекте ресурсы могут быть переименованы в .remap.
-            if (name.EndsWith(".remap", StringComparison.OrdinalIgnoreCase))
-                fullPath = fullPath[..^".remap".Length];
-
-            if (!fullPath.EndsWith(".tres", StringComparison.OrdinalIgnoreCase) &&
-                !fullPath.EndsWith(".res", StringComparison.OrdinalIgnoreCase))
-                continue;
-
-            var item = ResourceLoader.Load(fullPath) as Item;
-            if (item == null)
-                continue;
-
-            Register(item.Name, item);
-            Register(item.ID.ToString(), item);
-            Register(item.ResourcePath, item);
-            Register(Path.GetFileNameWithoutExtension(item.ResourcePath), item);
+            result[Normalize(type.Name)] = type;
         }
 
-        directory.ListDirEnd();
+        return result;
+    }
+
+    private static Item Create(Type type)
+    {
+        try
+        {
+            return Activator.CreateInstance(type) as Item;
+        }
+        catch (Exception exception)
+        {
+            GD.PushError($"[Dialogue] Не удалось создать предмет {type.Name}: {exception.Message}");
+            return null;
+        }
+    }
+
+    private static string Normalize(string value)
+    {
+        return new string(value.Where(char.IsLetterOrDigit).Select(char.ToLowerInvariant).ToArray());
     }
 }

@@ -107,7 +107,8 @@ public sealed class DialogueEffect
     public string Type { get; set; } = "";
 
     /// <summary>
-    /// Аргумент эффекта: id/имя/путь предмета, ключ флага, id достижения и т.п.
+    /// Аргумент эффекта: id/имя класса предмета, ключ флага, id достижения и т.п.
+    /// Для предметов используйте имя класса ("HealingPotion") или числовой ID ("2").
     /// </summary>
     public string Arg { get; set; } = "";
 

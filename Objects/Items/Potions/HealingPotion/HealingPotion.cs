@@ -12,7 +12,7 @@ public partial class HealingPotion : Item
         Description = "Восстанавливает здоровье.";
         Icon = GD.Load<Texture2D>("res://Objects/Items/Potions/HealingPotion/Healing_potion_texture.tres");
         MaxStack = 6;
-        ID = 1; 
+        ID = 2; 
     }
 
     public override bool Use(Node2D user)
