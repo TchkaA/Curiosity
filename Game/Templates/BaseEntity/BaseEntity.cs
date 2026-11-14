@@ -209,6 +209,7 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     {
         // Уведомляем анимации, что они 
         direction.DirectionChanged += animation.NotifyAnimation;
+        Died += Die;
     }
 
     #endregion
@@ -267,6 +268,12 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     public void ReturnZIndex()
     {
         ZIndex = Consts.EntityIndex;
+    }
+
+
+    public virtual void Die(BaseEntity died)
+    {
+        
     }
 
     #endregion

@@ -58,6 +58,12 @@ public partial class BaseNPC : BaseEntity, IInteractable
     /// </summary>
     [Export] public float DialogueBubbleScale = 0.3f;
 
+    /// <summary>
+    /// Предметы, которые лежат в инвентаре NPC и доступны после смерти.
+    /// </summary>
+    [ExportCategory("Лут")]
+    [Export] public Godot.Collections.Array<Item> Loot = new();
+
     //----------------------
     //      Components
     //----------------------
@@ -73,6 +79,19 @@ public partial class BaseNPC : BaseEntity, IInteractable
     public override void _Ready()
     {
         base._Ready();
+
+        foreach (var item in Loot)
+            Inventory.AddItem(item);
+
+        #if DEBUG
+        // Временный лут для проверки MVP, пока NPC не заполняются из кода.
+        if (Loot.Count == 0)
+        {
+            Inventory.AddItem(new HealingPotion(), 2);
+            Inventory.AddItem(new ChickenMeat(), 1);
+        }
+        #endif
+
         InitStates();
 
         stateMachine.ChangeState(IdleState);      
@@ -115,25 +134,39 @@ public partial class BaseNPC : BaseEntity, IInteractable
     public override void LinksActions()
     {
         base.LinksActions();
-        Died += Die;
+        Interaction += DialogueInteraction;
     }
 
 
-    public void Die(BaseEntity entity)
+    public override void Die(BaseEntity entity)
     {
         stateMachine.ChangeState(DiedState);
+        Interaction = DiedInteraction;
     }
 
-
+    public Action<BaseEntity> Interaction;
 
     public void Interact(BaseEntity interactor)
     {
         if (CanInteract)
         {
-            stateMachine.ChangeState(InteractState);
-            InteractState.Interact(interactor);
-            interactor.GoToInteraction(this);
-            Dialogue?.Start(interactor);
+            Interaction?.Invoke(interactor);
+        }
+    }
+
+    public void DialogueInteraction(BaseEntity interactor)
+    {
+        stateMachine.ChangeState(InteractState);
+        InteractState.Interact(interactor);
+        interactor.GoToInteraction(this);
+        Dialogue?.Start(interactor);
+    }
+
+    public void DiedInteraction(BaseEntity interactor)
+    {
+        if(interactor is Player player)
+        {
+            player.GlobalBookMenu.OpenLoot(Inventory);
         }
     }
 

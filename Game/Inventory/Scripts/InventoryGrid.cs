@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 
@@ -5,6 +6,17 @@ public partial class InventoryGrid : GridContainer
 {
     private Inventory _boundInventory;
     private readonly List<InventorySlot> _slots = new();
+
+    /// <summary>
+    /// Инвентарь, привязанный к сетке.
+    /// </summary>
+    public Inventory BoundInventory => _boundInventory;
+
+    /// <summary>
+    /// Предмет перетащен на слот этой сетки.
+    /// Если подписчиков нет, предметы меняются местами внутри одного инвентаря.
+    /// </summary>
+    public event Action<InventorySlot, InventorySlot> SlotDropped;
 
     public override void _Ready()
     {
@@ -71,10 +83,13 @@ public partial class InventoryGrid : GridContainer
 
     private void OnSlotItemDropped(InventorySlot sourceSlot, InventorySlot targetSlot)
     {
-        if (_boundInventory != null)
+        if (SlotDropped != null)
         {
-            _boundInventory.SwapSlots(sourceSlot.SlotIndex, targetSlot.SlotIndex);
+            SlotDropped.Invoke(sourceSlot, targetSlot);
+            return;
         }
+
+        _boundInventory?.SwapSlots(sourceSlot.SlotIndex, targetSlot.SlotIndex);
     }
 
     public override void _ExitTree()

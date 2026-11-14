@@ -22,11 +22,12 @@ public class Inventory
         return _slots[index];
     }
 
-    public void AddItem(Item item, int count = 1)
+    public int AddItem(Item item, int count = 1)
     {
-        if (item == null || count <= 0) return;
+        if (item == null || count <= 0) return 0;
 
         int remaining = count;
+        int added = 0;
 
         // 1. Пытаемся добавить в существующие стаки с таким же ID
         for (int i = 0; i < Capacity && remaining > 0; i++)
@@ -38,6 +39,7 @@ public class Inventory
 
                 _slots[i].Count += addCount;
                 remaining -= addCount;
+                added += addCount;
                 
                 OnSlotChanged?.Invoke(i); // Обновляем только этот слот в UI
             }
@@ -56,9 +58,34 @@ public class Inventory
             int newStack = Math.Min(remaining, item.MaxStack > 0 ? item.MaxStack : remaining);
             _slots[emptyIndex] = new InventorySlotData(item, newStack);
             remaining -= newStack;
+            added += newStack;
             
             OnSlotChanged?.Invoke(emptyIndex);
         }
+
+        return added;
+    }
+
+    /// <summary>
+    /// Перекладывает предмет из слота в другой инвентарь.
+    /// </summary>
+    /// <returns>Сколько предметов удалось переместить.</returns>
+    public int MoveTo(Inventory target, int sourceIndex)
+    {
+        if (target == null || target == this) return 0;
+
+        var source = GetSlot(sourceIndex);
+        if (source?.Item == null) return 0;
+
+        int moved = target.AddItem(source.Item, source.Count);
+        if (moved <= 0) return 0;
+
+        source.Count -= moved;
+        if (source.Count <= 0)
+            _slots[sourceIndex] = null;
+
+        OnSlotChanged?.Invoke(sourceIndex);
+        return moved;
     }
 
     public bool RemoveItem(Item item, int count = 1)

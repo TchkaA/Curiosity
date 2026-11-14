@@ -89,8 +89,8 @@ public partial class NPCDied : IState
     public void Enter()
     {
         _owner.Navigation.Stop();
-        _owner.animation.SetAnimation("lying");
-        _owner.SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, 0);
+        _owner.animation.SetAnimation("die");
+        // _owner.SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, 0);
         _owner.SetDeferred(CollisionObject2D.PropertyName.CollisionMask, 0);
 
         _owner.vision.Cleanup();

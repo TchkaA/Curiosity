@@ -68,9 +68,20 @@ public partial class BookMenu : CanvasLayer
     public void Close()
     {
         Visible = false;
+        InventoryPage.Unbind();
         GetTree().Paused = false; // Снимаем с паузы
 
         CurrentState = OpenState.Closed;
+    }
+
+    /// <summary>
+    /// Открывает инвентарь игрока и второй инвентарь для лута.
+    /// </summary>
+    public void OpenLoot(Inventory extraInventory)
+    {
+        Page = Pages.Inventory;
+        Open();
+        InventoryPage.Bind(_player.Inventory, extraInventory);
     }
 
     public override void _Input(InputEvent @event)
