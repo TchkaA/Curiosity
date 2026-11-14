@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://ce7ncyr77lldy" path="res://Game/Dialogue/Scripts/WordBubble.cs" id="1_bubble"]
 [ext_resource type="FontFile" uid="uid://cd8p4r546xbcv" path="res://Assets/Origin/Fonts/Pixel/Classic-Console-Neue-Regular.ttf" id="2_font"]
+[ext_resource type="AudioStream" uid="uid://63sacywelqk6" path="res://Assets/Origin/Sounds/Voices/voice2.wav" id="3_3oosd"]
 
-[node name="WordBubble" type="Node2D" unique_id=835871882]
+[node name="WordBubble" type="Node2D" unique_id=835871882 node_paths=PackedStringArray("audio")]
 z_index = 20
 script = ExtResource("1_bubble")
+audio = NodePath("AudioStreamPlayer2D")
 
 [node name="Label" type="Label" parent="." unique_id=715456247]
 offset_left = -335.0
@@ -20,3 +22,6 @@ theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1157949332]
+stream = ExtResource("3_3oosd")

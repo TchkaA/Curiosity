@@ -48,7 +48,7 @@ public class VisionComponent
         if(body is Player player)
         {
             InVision = false;
-            rayCast.Enabled = false;
+            if(GodotObject.IsInstanceValid(rayCast)) rayCast.Enabled = false;
         }
     }
 

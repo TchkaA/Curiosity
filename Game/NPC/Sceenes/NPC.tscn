@@ -39,6 +39,7 @@ animation = &"idle_up"
 script = ExtResource("3_rl3cb")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=336148585]
+volume_db = -10.0
 script = ExtResource("4_2w6ii")
 FootstepSound = SubResource("AudioStreamRandomizer_nwmde")
 DeathSound = SubResource("AudioStreamRandomizer_djwf3")

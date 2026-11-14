@@ -19,6 +19,7 @@ shader_parameter/contrast = 0.8030000143925
 shader_parameter/black_clip = 0.0
 
 [node name="PlayerUI" type="CanvasLayer" unique_id=1435611260]
+layer = 2
 script = ExtResource("5_ui4xr")
 
 [node name="Beauty" type="Node2D" parent="." unique_id=636336450]

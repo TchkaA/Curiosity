@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 public partial class WordBubble : Node2D
 {
     private Label _label;
+    [Export] public AudioStreamPlayer2D audio;
 
     /// <inheritdoc/>
     public override void _Ready()
@@ -57,11 +58,13 @@ public partial class WordBubble : Node2D
 
             _label.Text += character;
 
+            audio.Play();
+
             var tree = GetTree();
             if (tree == null)
                 return;
 
-            await ToSignal(tree.CreateTimer(0.11f), "timeout");
+            await ToSignal(tree.CreateTimer(0.06f), "timeout");
         }
     }
 

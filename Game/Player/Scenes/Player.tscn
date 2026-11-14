@@ -20,12 +20,11 @@ stream_0/stream = SubResource("AudioStreamWAV_3oiqn")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1v0b8"]
 
-[node name="Player" type="CharacterBody2D" unique_id=2106905218 node_paths=PackedStringArray("animation", "SoundMaker", "Collision") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" unique_id=2106905218 node_paths=PackedStringArray("animation", "SoundMaker") groups=["Player"]]
 motion_mode = 1
 script = ExtResource("1_4x5jf")
 animation = NodePath("AnimatedSprite2D")
 SoundMaker = NodePath("AudioStreamPlayer2D")
-Collision = NodePath("")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1976842598]
 position = Vector2(0, 6)
@@ -41,6 +40,7 @@ script = ExtResource("3_df4c4")
 current = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=185133207]
+volume_db = -10.0
 script = ExtResource("3_3oiqn")
 FootstepSound = SubResource("AudioStreamRandomizer_ynnsp")
 DeathSound = SubResource("AudioStreamRandomizer_1v0b8")
