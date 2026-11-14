@@ -19,11 +19,12 @@ public partial class DialogueUI : Control
     /// </summary>
     [Export] public string ContinueText = "...";
 
+    [Export] public DialogueAudioStream AudioStream;
+
     private static DialogueUI _instance;
 
     private readonly TextureButton[] _buttons = new TextureButton[3];
     private readonly Label[] _labels = new Label[3];
-    [Export] public AudioStreamPlayer MouseEnteredSound;
     private Action<int> _onSelected;
     private bool _isOpen;
 
@@ -206,6 +207,7 @@ public partial class DialogueUI : Control
 
         var callback = _onSelected;
         Close();
+        AudioStream?.PlayMouseClickSound();
         callback?.Invoke(index);
     }
 
@@ -242,7 +244,7 @@ public partial class DialogueUI : Control
         t.TweenProperty(btn, "scale", Vector2.One * 1.1f, 0.15f);
         _hoverTweens[index] = t;
 
-        MouseEnteredSound?.Play();
+        AudioStream?.PlayMouseEnteredSound();
     }
 
     private void OnMouseExited(int index)

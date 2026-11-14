@@ -95,8 +95,8 @@ public sealed class DialogueLibrary
                 continue;
             }
 
-            if (_dialogues.ContainsKey(dialogue.Id))
-                GD.PushWarning($"[Dialogue] Узел '{dialogue.Id}' уже существует и будет перезаписан ({resPath})");
+            // if (_dialogues.ContainsKey(dialogue.Id))
+            //     GD.PushWarning($"[Dialogue] Узел '{dialogue.Id}' уже существует и будет перезаписан ({resPath})");
 
             _dialogues[dialogue.Id] = dialogue;
             Validate(dialogue);

@@ -4,6 +4,8 @@
 [ext_resource type="LabelSettings" uid="uid://4grer2l2y4tu" path="res://Assets/Origin/Theme/AnswerLabel.tres" id="2_bt76s"]
 [ext_resource type="Script" uid="uid://dom518sn8025f" path="res://Game/Dialogue/Scripts/DialogueUI.cs" id="3_ui"]
 [ext_resource type="AudioStream" uid="uid://c8sox1fis8g67" path="res://Assets/Origin/Sounds/GameUI/click/input.wav" id="4_i21tg"]
+[ext_resource type="Script" uid="uid://bqgrx1ope6qck" path="res://Game/Dialogue/Scripts/Audio/DialogueAudioStream.cs" id="5_1irmw"]
+[ext_resource type="AudioStream" uid="uid://cfqv3csifj83w" path="res://Assets/Origin/Sounds/GameUI/click/select.wav" id="6_1irmw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4iymr"]
 atlas = ExtResource("1_4ih3s")
@@ -17,7 +19,7 @@ region = Rect2(638, 30, 52, 20)
 atlas = ExtResource("1_4ih3s")
 region = Rect2(574, 62, 52, 20)
 
-[node name="UserDialogue" type="Control" unique_id=1125487585 node_paths=PackedStringArray("MouseEnteredSound")]
+[node name="UserDialogue" type="Control" unique_id=1125487585 node_paths=PackedStringArray("AudioStream")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,7 +28,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("3_ui")
-MouseEnteredSound = NodePath("AudioStreamPlayer")
+AudioStream = NodePath("AudioStreamPlayer")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2138338400]
 layout_mode = 1
@@ -105,3 +107,6 @@ vertical_alignment = 1
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1894805383]
 stream = ExtResource("4_i21tg")
 volume_db = -15.053
+script = ExtResource("5_1irmw")
+MouseEnteredSound = ExtResource("4_i21tg")
+MouseClickSound = ExtResource("6_1irmw")
