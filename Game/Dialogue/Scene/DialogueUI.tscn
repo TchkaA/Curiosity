@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dbwjihvu0vgsy" path="res://Assets/Origin/UI/Player_UI.png" id="1_4ih3s"]
 [ext_resource type="LabelSettings" uid="uid://4grer2l2y4tu" path="res://Assets/Origin/Theme/AnswerLabel.tres" id="2_bt76s"]
 [ext_resource type="Script" uid="uid://dom518sn8025f" path="res://Game/Dialogue/Scripts/DialogueUI.cs" id="3_ui"]
+[ext_resource type="AudioStream" uid="uid://c8sox1fis8g67" path="res://Assets/Origin/Sounds/GameUI/click/input.wav" id="4_i21tg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4iymr"]
 atlas = ExtResource("1_4ih3s")
@@ -12,7 +13,11 @@ region = Rect2(574, 30, 52, 20)
 atlas = ExtResource("1_4ih3s")
 region = Rect2(638, 30, 52, 20)
 
-[node name="UserDialogue" type="Control" unique_id=1125487585]
+[sub_resource type="AtlasTexture" id="AtlasTexture_i21tg"]
+atlas = ExtResource("1_4ih3s")
+region = Rect2(574, 62, 52, 20)
+
+[node name="UserDialogue" type="Control" unique_id=1125487585 node_paths=PackedStringArray("MouseEnteredSound")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("3_ui")
+MouseEnteredSound = NodePath("AudioStreamPlayer")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2138338400]
 layout_mode = 1
@@ -28,7 +34,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -250.0
+offset_top = -139.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
@@ -39,6 +45,7 @@ size_flags_horizontal = 3
 offset_transform_enabled = true
 texture_normal = SubResource("AtlasTexture_4iymr")
 texture_pressed = SubResource("AtlasTexture_vnmtf")
+texture_hover = SubResource("AtlasTexture_i21tg")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="HBoxContainer/Answer1" unique_id=798144898]
@@ -59,6 +66,7 @@ size_flags_horizontal = 3
 offset_transform_enabled = true
 texture_normal = SubResource("AtlasTexture_4iymr")
 texture_pressed = SubResource("AtlasTexture_vnmtf")
+texture_hover = SubResource("AtlasTexture_i21tg")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="HBoxContainer/Answer2" unique_id=1591246204]
@@ -79,6 +87,7 @@ size_flags_horizontal = 3
 offset_transform_enabled = true
 texture_normal = SubResource("AtlasTexture_4iymr")
 texture_pressed = SubResource("AtlasTexture_vnmtf")
+texture_hover = SubResource("AtlasTexture_i21tg")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="HBoxContainer/Answer3" unique_id=1137107822]
@@ -92,3 +101,7 @@ text = "Truth"
 label_settings = ExtResource("2_bt76s")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1894805383]
+stream = ExtResource("4_i21tg")
+volume_db = -15.053

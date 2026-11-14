@@ -23,6 +23,7 @@ public partial class DialogueUI : Control
 
     private readonly TextureButton[] _buttons = new TextureButton[3];
     private readonly Label[] _labels = new Label[3];
+    [Export] public AudioStreamPlayer MouseEnteredSound;
     private Action<int> _onSelected;
     private bool _isOpen;
 
@@ -45,6 +46,7 @@ public partial class DialogueUI : Control
 
             var index = i;
             _buttons[i].Pressed += () => OnPressed(index);
+            _buttons[i].MouseEntered += () => OnMouseEntered(index);
         }
 
         Visible = false;
@@ -119,6 +121,8 @@ public partial class DialogueUI : Control
 
         _isOpen = true;
         Visible = true;
+
+        StartAnimations();
     }
 
     /// <summary>
@@ -159,5 +163,18 @@ public partial class DialogueUI : Control
         var callback = _onSelected;
         Close();
         callback?.Invoke(index);
+    }
+
+    private void OnMouseEntered(int index)
+    {
+        if (!_isOpen)
+            return;
+        
+        MouseEnteredSound.Play();
+    }
+
+    private void StartAnimations()
+    {
+        
     }
 }

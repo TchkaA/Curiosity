@@ -22,7 +22,7 @@ public class InputComponent
     public void Update()
     {
         // В диалоге действия недоступны (Esc закрывает диалог).
-        if (_player.InDialogue || _player.combatComponent.StopAttack)
+        if (_player.InDialogue)
             return;
 
         MovementInput = new Vector2(

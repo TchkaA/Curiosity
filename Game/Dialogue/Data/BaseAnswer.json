@@ -1,0 +1,15 @@
+{
+  "startId": "first_answer",
+  "dialogues": [
+    {
+        "id": "first_answer",
+        "npcText": "Отвали.",
+        "answers": [
+            {
+          "playerText": "(",
+          "nextId": ""
+        }
+        ]
+    }
+    ]
+}

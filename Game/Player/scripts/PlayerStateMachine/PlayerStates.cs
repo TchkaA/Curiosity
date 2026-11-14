@@ -236,7 +236,7 @@ public partial class PlayerInteractionState : IState
     {
         if (Input.IsKeyPressed(Key.Escape))
         {
-            // if (CanStopDialogue) return;
+            if (CanStopDialogue) return;
             Player.stateMachine.ChangeState(Player.idleState);
         }
     }

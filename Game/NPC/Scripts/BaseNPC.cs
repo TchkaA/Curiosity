@@ -40,8 +40,8 @@ public partial class BaseNPC : BaseEntity, IInteractable
     /// <summary>
     /// Путь к JSON-файлу диалогов NPC. Пустая строка — диалог отключён.
     /// </summary>
-    [ExportGroup("Диалог")]
-    [Export(PropertyHint.File, "*.json")] public string DialogueFile = "";
+    [ExportCategory("Диалог")]
+    [Export(PropertyHint.File, "*.json")] public string DialogueFile = "res://Game/Dialogue/Data/BaseAnswer.json";
 
     /// <summary>
     /// Стартовый узел диалога. Если пусто, берётся startId из JSON-файла.
