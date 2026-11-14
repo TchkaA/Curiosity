@@ -252,6 +252,22 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
         // GD.Print(_dashCooldown);
     }
 
+    public void ChangeVisibleLayerPosition(Node2D obj)
+    {
+		if(GlobalPosition.Y > obj.GlobalPosition.Y)
+		{
+			obj.ZIndex = Consts.EntityIndex - 1;
+		}
+		else
+		{
+			obj.ZIndex = Consts.EntityIndex + 1;
+		}
+	}
+
+    public void ReturnZIndex()
+    {
+        ZIndex = Consts.EntityIndex;
+    }
 
     #endregion
 

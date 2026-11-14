@@ -54,6 +54,7 @@ public partial class InteractionComponent
 		{
 			obj.InteractEnter();
 		}
+        _owner.ChangeVisibleLayerPosition(body);
     }
 
     /// <summary>
@@ -67,6 +68,7 @@ public partial class InteractionComponent
 		{
 			obj.InteractExit();
 		}
+        _owner.ReturnZIndex();
     }
 
 	public void InitialInteractionArea()
