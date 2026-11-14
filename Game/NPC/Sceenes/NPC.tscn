@@ -5,8 +5,8 @@
 [ext_resource type="Script" uid="uid://bxgl2t6k00nek" path="res://Game/Templates/Components/AnimationComponent.cs" id="3_rl3cb"]
 [ext_resource type="Script" uid="uid://cruywe4l87wy1" path="res://Game/Templates/BaseEntity/SoundMaker/EntitySoundMaker.cs" id="4_2w6ii"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6cm4c"]
-radius = 26.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s1jxv"]
+radius = 20.0
 height = 76.0
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_3oiqn"]
@@ -28,13 +28,14 @@ animation = NodePath("AnimatedSprite2D")
 SoundMaker = NodePath("AudioStreamPlayer2D")
 Collision = NodePath("CollisionShape2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1356597130]
-shape = SubResource("CapsuleShape2D_6cm4c")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=651842491]
+position = Vector2(0, 6)
+shape = SubResource("CapsuleShape2D_s1jxv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=723897136]
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("2_f8u7d")
-animation = &"lying"
+animation = &"idle_up"
 script = ExtResource("3_rl3cb")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=336148585]

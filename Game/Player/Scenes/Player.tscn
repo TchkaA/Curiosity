@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://bxgl2t6k00nek" path="res://Game/Templates/Components/AnimationComponent.cs" id="3_df4c4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4iymr"]
-radius = 26.0
+radius = 20.0
 height = 76.0
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_3oiqn"]
@@ -25,17 +25,16 @@ motion_mode = 1
 script = ExtResource("1_4x5jf")
 animation = NodePath("AnimatedSprite2D")
 SoundMaker = NodePath("AudioStreamPlayer2D")
-Collision = NodePath("CollisionShape2D")
+Collision = NodePath("")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=420859484]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1976842598]
+position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_4iymr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=774314259]
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("2_4x5jf")
-animation = &"dash"
-frame = 3
-frame_progress = 1.0
+animation = &"idle_down"
 script = ExtResource("3_df4c4")
 
 [node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=842805927]

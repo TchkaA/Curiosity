@@ -4,6 +4,7 @@
 [ext_resource type="FontFile" uid="uid://cd8p4r546xbcv" path="res://Assets/Origin/Fonts/Pixel/Classic-Console-Neue-Regular.ttf" id="2_font"]
 
 [node name="WordBubble" type="Node2D" unique_id=835871882]
+z_index = 20
 script = ExtResource("1_bubble")
 
 [node name="Label" type="Label" parent="." unique_id=715456247]

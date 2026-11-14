@@ -27,6 +27,12 @@ public partial class DialogueUI : Control
     private Action<int> _onSelected;
     private bool _isOpen;
 
+    // Активные анимации «вылета» и «плавания» — убиваем их при закрытии
+    private readonly System.Collections.Generic.List<Tween> _animTweens = new();
+
+    // Твин наведения на каждую кнопку — чтобы не плодить их при быстром mouse-in/out
+    private readonly Tween[] _hoverTweens = new Tween[3];
+
     /// <summary>
     /// Существующий экземпляр UI или null.
     /// </summary>
@@ -47,8 +53,11 @@ public partial class DialogueUI : Control
             var index = i;
             _buttons[i].Pressed += () => OnPressed(index);
             _buttons[i].MouseEntered += () => OnMouseEntered(index);
+        _buttons[i].MouseExited += () => OnMouseExited(index);   // <-- новое
         }
 
+        // Пивот для scale/rotation выставим, когда контейнер посчитает размеры
+        CallDeferred(nameof(UpdatePivots));
         Visible = false;
     }
 
@@ -138,9 +147,44 @@ public partial class DialogueUI : Control
     /// </summary>
     public void Close()
     {
+        KillAllAnimations();
+
+        // Возвращаем кнопки в исходное состояние (после прерванных твинов)
+        foreach (var btn in _buttons)
+        {
+            if (btn == null || !GodotObject.IsInstanceValid(btn))
+                continue;
+            btn.Scale = Vector2.One;
+            btn.Rotation = 0;
+            btn.Modulate = new Color(1, 1, 1, 1);
+        }
+
         _onSelected = null;
         _isOpen = false;
         Visible = false;
+    }
+
+    /// <summary>
+    /// Создаёт твин и кладёт его в список, чтобы убить при закрытии/перезапуске.
+    /// </summary>
+    private Tween TrackTween()
+    {
+        var t = CreateTween();
+        _animTweens.Add(t);
+        return t;
+    }
+
+    private void KillAllAnimations()
+    {
+        for (var i = 0; i < _hoverTweens.Length; i++)
+        {
+            _hoverTweens[i]?.Kill();
+            _hoverTweens[i] = null;
+        }
+
+        foreach (var t in _animTweens)
+            t?.Kill();
+        _animTweens.Clear();
     }
 
     /// <inheritdoc/>
@@ -165,16 +209,116 @@ public partial class DialogueUI : Control
         callback?.Invoke(index);
     }
 
+    /// <summary>
+    /// Ставит pivot_offset в центр каждой кнопки — нужно для масштабирования
+    /// и вращения «вокруг себя», а не вокруг левого верхнего угла.
+    /// </summary>
+    private void UpdatePivots()
+    {
+        foreach (var btn in _buttons)
+        {
+            if (btn != null && GodotObject.IsInstanceValid(btn))
+                btn.PivotOffset = btn.Size / 2f;
+        }
+    }
+
     private void OnMouseEntered(int index)
     {
         if (!_isOpen)
             return;
-        
-        MouseEnteredSound.Play();
+
+        var btn = _buttons[index];
+        if (btn == null || !GodotObject.IsInstanceValid(btn))
+            return;
+
+        btn.PivotOffset = btn.Size / 2f;
+
+        // Убиваем предыдущий твин этой кнопки, чтобы они не спорили
+        _hoverTweens[index]?.Kill();
+
+        var t = CreateTween();
+        t.SetEase(Tween.EaseType.Out)
+        .SetTrans(Tween.TransitionType.Back);
+        t.TweenProperty(btn, "scale", Vector2.One * 1.1f, 0.15f);
+        _hoverTweens[index] = t;
+
+        MouseEnteredSound?.Play();
+    }
+
+    private void OnMouseExited(int index)
+    {
+        if (!_isOpen)
+            return;
+
+        var btn = _buttons[index];
+        if (btn == null || !GodotObject.IsInstanceValid(btn))
+            return;
+
+        _hoverTweens[index]?.Kill();
+
+        var t = CreateTween();
+        t.SetEase(Tween.EaseType.Out)
+        .SetTrans(Tween.TransitionType.Quad);
+        t.TweenProperty(btn, "scale", Vector2.One, 0.15f);
+        _hoverTweens[index] = t;
     }
 
     private void StartAnimations()
     {
-        
+        KillAllAnimations();
+        // Ждём один кадр, чтобы HBoxContainer расставил кнопки —
+        // только после этого мы знаем их настоящие basePos.
+        CallDeferred(nameof(PlayIntroAnimations));
+    }
+
+    private void PlayIntroAnimations()
+    {
+        if (!_isOpen)
+            return;
+
+        for (var i = 0; i < _buttons.Length; i++)
+        {
+            var btn = _buttons[i];
+            if (btn == null || !GodotObject.IsInstanceValid(btn) || !btn.Visible)
+                continue;
+
+            btn.PivotOffset = btn.Size / 2f;
+
+            var basePos = btn.Position;    // куда приземлиться
+
+            // Старт: ниже на 120 px и прозрачная
+            btn.Position = basePos + new Vector2(0, 120);
+            btn.Rotation = 0;
+            btn.Modulate = new Color(1, 1, 1, 0);
+
+            var flyIn = TrackTween();
+            flyIn.SetEase(Tween.EaseType.Out)
+                .SetTrans(Tween.TransitionType.Back);
+            flyIn.TweenProperty(btn, "position", basePos, 0.5f)
+                .SetDelay(i * 0.08f);
+            flyIn.Parallel().TweenProperty(btn, "modulate:a", 1.0f, 0.3f)
+                .SetDelay(i * 0.08f);
+
+            // Как только долетела — стартуем «плавание»
+            flyIn.TweenCallback(Callable.From(() => StartFloating(btn, basePos, i)));
+        }
+    }
+
+    private void StartFloating(TextureButton btn, Vector2 basePos, int index)
+    {
+        if (!_isOpen || btn == null || !GodotObject.IsInstanceValid(btn))
+            return;
+
+        var t = TrackTween();
+        t.SetLoops();
+        t.SetEase(Tween.EaseType.InOut)
+        .SetTrans(Tween.TransitionType.Sine);
+
+        // Фаза 1 (вверх + наклон вправо)
+        t.TweenProperty(btn, "position:y", basePos.Y - 8f, 1.5f + index * 0.1f);
+
+        // Фаза 2 (вниз + наклон влево)
+        t.TweenProperty(btn, "position:y", basePos.Y + 8f, 1.5f + index * 0.1f);
+
     }
 }
