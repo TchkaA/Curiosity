@@ -40,6 +40,7 @@ public partial class BookMenu : CanvasLayer
 
         CurrentState = OpenState.Closed;
         // Меню изначально скрыто
+        Layer = 15;
         Visible = false;
         ProcessMode = Node.ProcessModeEnum.Always;
     }

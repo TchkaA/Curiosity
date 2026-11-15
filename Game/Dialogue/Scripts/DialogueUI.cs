@@ -94,7 +94,7 @@ public partial class DialogueUI : Control
         var layer = new CanvasLayer
         {
             Name = "DialogueUILayer",
-            Layer = 100
+            Layer = 10
         };
 
         var root = context.GetTree().CurrentScene ?? context.GetTree().Root;

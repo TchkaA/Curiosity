@@ -4,15 +4,21 @@
 [ext_resource type="SpriteFrames" uid="uid://b1oiajn21d5je" path="res://Game/Templates/BaseEntity/Resourses/BaseAnimations.tres" id="2_4x5jf"]
 [ext_resource type="Script" uid="uid://cruywe4l87wy1" path="res://Game/Templates/BaseEntity/SoundMaker/EntitySoundMaker.cs" id="3_3oiqn"]
 [ext_resource type="Script" uid="uid://bxgl2t6k00nek" path="res://Game/Templates/Components/AnimationComponent.cs" id="3_df4c4"]
-[ext_resource type="AudioStream" uid="uid://bndm4r7n05lce" path="res://Assets/Origin/Sounds/GameUI/FootStep/footst.wav" id="5_wlcpr"]
+[ext_resource type="AudioStream" uid="uid://b2lk7eryh1fol" path="res://Assets/Origin/Sounds/GameUI/FootStep/footsterpconv_[cut_0sec](1).wav" id="5_8vvyg"]
+[ext_resource type="AudioStream" uid="uid://c4qnp8mjctlwh" path="res://Assets/Origin/Sounds/GameUI/FootStep/footsterpconv_[cut_0sec](2).wav" id="6_75y6p"]
+[ext_resource type="AudioStream" uid="uid://b2rh2xcvjhlcs" path="res://Assets/Origin/Sounds/GameUI/FootStep/footsterpconv_[cut_0sec](3).wav" id="7_cejqm"]
+[ext_resource type="AudioStream" uid="uid://b31uc4j84h1ct" path="res://Assets/Origin/Sounds/GameUI/FootStep/footsterpconv_[cut_0sec].wav" id="8_2ccu0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4iymr"]
 radius = 20.0
 height = 76.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ynnsp"]
-streams_count = 1
-stream_0/stream = ExtResource("5_wlcpr")
+streams_count = 4
+stream_0/stream = ExtResource("5_8vvyg")
+stream_1/stream = ExtResource("6_75y6p")
+stream_2/stream = ExtResource("7_cejqm")
+stream_3/stream = ExtResource("8_2ccu0")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1v0b8"]
 
@@ -20,7 +26,7 @@ stream_0/stream = ExtResource("5_wlcpr")
 motion_mode = 1
 script = ExtResource("1_4x5jf")
 animation = NodePath("AnimatedSprite2D")
-SoundMaker = NodePath("AudioStreamPlayer2D")
+SoundMaker = NodePath("Node2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1976842598]
 position = Vector2(0, 6)
@@ -35,8 +41,7 @@ script = ExtResource("3_df4c4")
 [node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=842805927]
 current = true
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=185133207]
-volume_db = -10.0
+[node name="Node2D" type="Node2D" parent="." unique_id=1818059655]
 script = ExtResource("3_3oiqn")
 FootstepSound = SubResource("AudioStreamRandomizer_ynnsp")
 DeathSound = SubResource("AudioStreamRandomizer_1v0b8")
