@@ -21,4 +21,6 @@ public static class Consts
     /// </summary>
     public const int EntityLayer = 18;
 
+    public static bool GameStopedState = false; 
+
 }

@@ -202,7 +202,7 @@ public partial class DialogueUI : Control
 
     private void OnPressed(int index)
     {
-        if (!_isOpen)
+        if (!_isOpen || Consts.GameStopedState)
             return;
 
         var callback = _onSelected;
@@ -230,7 +230,7 @@ public partial class DialogueUI : Control
             return;
 
         var btn = _buttons[index];
-        if (btn == null || !GodotObject.IsInstanceValid(btn))
+        if (btn == null || !GodotObject.IsInstanceValid(btn) || Consts.GameStopedState)
             return;
 
         btn.PivotOffset = btn.Size / 2f;
@@ -253,7 +253,7 @@ public partial class DialogueUI : Control
             return;
 
         var btn = _buttons[index];
-        if (btn == null || !GodotObject.IsInstanceValid(btn))
+        if (btn == null || !GodotObject.IsInstanceValid(btn) || Consts.GameStopedState)
             return;
 
         _hoverTweens[index]?.Kill();
