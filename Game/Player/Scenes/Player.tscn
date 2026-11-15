@@ -1,22 +1,18 @@
-[gd_scene format=4 uid="uid://bkbhf3xw2ajn6"]
+[gd_scene format=3 uid="uid://bkbhf3xw2ajn6"]
 
 [ext_resource type="Script" uid="uid://6g8d6yu5ehcx" path="res://Game/Player/scripts/Player.cs" id="1_4x5jf"]
 [ext_resource type="SpriteFrames" uid="uid://b1oiajn21d5je" path="res://Game/Templates/BaseEntity/Resourses/BaseAnimations.tres" id="2_4x5jf"]
 [ext_resource type="Script" uid="uid://cruywe4l87wy1" path="res://Game/Templates/BaseEntity/SoundMaker/EntitySoundMaker.cs" id="3_3oiqn"]
 [ext_resource type="Script" uid="uid://bxgl2t6k00nek" path="res://Game/Templates/Components/AnimationComponent.cs" id="3_df4c4"]
+[ext_resource type="AudioStream" uid="uid://bndm4r7n05lce" path="res://Assets/Origin/Sounds/GameUI/FootStep/footst.wav" id="5_wlcpr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4iymr"]
 radius = 20.0
 height = 76.0
 
-[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_3oiqn"]
-data = PackedByteArray("cW9hZgAACL0BAFYiCL0DmAAAAAAAAAAAAAAAAOAAQAD7l51vqJ9Ot+G++/wGqeqn99Gm7Rd6rqLQC7eqcoCMOf0bPqryhrCQ/XKk6lJTGmf4F6Iq2uVNZd/Z98EM0Pj86d/ee34+Bt3v4tpucG79Cv6N4cMXSUVl1/4kIojRTcDzcbw722zIa8rb2Bu7DtYJ8nIGMgEgvki+MzwVQgO3Z7O0niHRCYLJ4kkkEnFBdE38QIAEDEABwdDaxHpt9OLM0IoEAEHlJZn2+SW2SISwIPJIIIJ5AbUIxSXgO2olkgiwSCQQQQQQb5MyQIIQZBBIwEYlkEEEEEFiQQSQQSQSDoyIQCAAABABgAgggEE/8ktva2ySwSQSCDZBAIIIBBAOKmkEgkEEEEGASASAQQSBNlXE2kUSSQQALaJRIJAIAEBwQQ/QgQQSCShNbbbLbLbLMzMsAgggggiyCCCCC+QASC99YIJBBIBIXuIAAggEgJiyASAs2SCQQUjJJJJJJfJBF///2u211ttTeUgQACACCHBBAI/ESABA8gEEgEgEHEGNMkkAAACCAdBI7ALJJJBIwggkEEEaEhJZNIkEQAAQQTQOzdIJBoQBkEgEEEEgepA9EggkEEAgELBBBBHYJZJJP11lkkkEEAhyADwkQCCCATIABOZIJAIIwE7MhIIAgAgxCECAACCAaKBBB5QAIIIBKLBJJJBJIIKwQQQQQRiWQTtbZJIJBBAIMgigIgAggEBCASOUgACAQyCiABAAIBBAMggEEEDoAAEcEUUAAAAAiDBBHSBABAIBMAgggEAggigZpAggAEAAADBBBAIB6QIAEBAAIooooooyAQD0gQAQCBQAQIQBRRCAM0BEAEAgTNswSCCCCAQQaB2SSQCAARRCMEEEA0AAAgAaAgAEQiEQiDHQABABBABBMEAgEEA0oAEYkgEAEAAAADBBA6ABABAIMEEAgEEAgimAQQQQRygQQSxRIIIIIIIICpogAgAgAAgACAACACAACAAIAAIAIAAIAAgAAgAgAAgACAACACAACAAIAAIAIAAIAAgAAgAgAAgACAACACAACFBIB2JCAAARLaSKKcSJJJAdtJIpIokokjBABpQIAIAIFIIIIIBBABAgR6gAAAQAQBACAAQAAAQAMcAAgEAggEAyCAQCCAQQDRcgQAQAQACAUelEgkokggkwSSQSSCSQTh/5ZLJLJJYJMgggnEkEgggP+wwySSSQAA==")
-format = 3
-mix_rate = 22050
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ynnsp"]
 streams_count = 1
-stream_0/stream = SubResource("AudioStreamWAV_3oiqn")
+stream_0/stream = ExtResource("5_wlcpr")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1v0b8"]
 
@@ -33,7 +29,7 @@ shape = SubResource("CapsuleShape2D_4iymr")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=774314259]
 scale = Vector2(4, 4)
 sprite_frames = ExtResource("2_4x5jf")
-animation = &"idle_down"
+animation = &"walk_forward"
 script = ExtResource("3_df4c4")
 
 [node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=842805927]

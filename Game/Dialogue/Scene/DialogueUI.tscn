@@ -106,7 +106,7 @@ vertical_alignment = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1894805383]
 stream = ExtResource("4_i21tg")
-volume_db = -15.053
+volume_db = -30.79
 script = ExtResource("5_1irmw")
 MouseEnteredSound = ExtResource("4_i21tg")
 MouseClickSound = ExtResource("6_1irmw")

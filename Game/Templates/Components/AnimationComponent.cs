@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ public partial class AnimationComponent : AnimatedSprite2D
     public override void _Ready()
     {
         _owner = GetParent<BaseEntity>();
+        FrameChanged += OnFrameChanged;
     }
 
     public override void _Process(double delta)
@@ -134,5 +136,27 @@ public partial class AnimationComponent : AnimatedSprite2D
         ChangeAnimation(EntityAnimation);
         SetAnimation("idle");
     }
+    #endregion
+
+    #region Steps
+    private readonly Dictionary<string, int[]> _footstepFrames = new()
+    {
+        { "walk_forward", new[] { 1, 4 } },
+        { "run_forward", new[] { 1, 4 } }
+    };
+
+        private void OnFrameChanged()
+    {
+        // Проверяем, есть ли для текущей анимации настроенные кадры шагов
+        if (_footstepFrames.TryGetValue(Animation, out int[] eventFrames))
+        {
+            // Если текущий кадр (Frame) есть в списке — играем звук
+            if (System.Array.IndexOf(eventFrames, Frame) >= 0)
+            {
+                _owner.SoundMaker.PlayFootstep();
+            }
+        }
+    }
+
     #endregion
 }
