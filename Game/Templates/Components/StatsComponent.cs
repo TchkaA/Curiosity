@@ -14,6 +14,21 @@ public class StatsComponent
     public float Strength;
 
     /// <summary>
+    /// Плоское поглощение входящего урона.
+    /// </summary>
+    public float Armor;
+
+    /// <summary>
+    /// Процентное сопротивление урону (0..1).
+    /// </summary>
+    public float DamageResistance;
+
+    /// <summary>
+    /// Дополнительное сопротивление урону во время блока (0..1).
+    /// </summary>
+    public float BlockResistance = 0.5f;
+
+    /// <summary>
     /// Скорость рывка.
     /// </summary>
     public float DashSpeed;

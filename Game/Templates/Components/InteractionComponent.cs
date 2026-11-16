@@ -85,7 +85,7 @@ public partial class InteractionComponent
         };
         shape.Shape = circleShape;
         _interactionArea.CollisionLayer = 0; // Не участвует в коллизиях физики
-        _interactionArea.CollisionMask = Consts.EntityLayer;
+        _interactionArea.CollisionMask = Consts.InteractableLayer;
         _interactionArea.InputPickable = true;
         
         // Добавляем Area2D в текущую ноду

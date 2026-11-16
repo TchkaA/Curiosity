@@ -2,6 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://bj6euqoiogt27" path="res://Assets/Origin/characters/main/Persona.png" id="1_en7h4"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_vlqgu"]
+atlas = ExtResource("1_en7h4")
+region = Rect2(160, 480, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_en7h4"]
 atlas = ExtResource("1_en7h4")
 region = Rect2(0, 320, 32, 32)
@@ -260,6 +264,14 @@ region = Rect2(96, 192, 32, 32)
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vlqgu")
+}],
+"loop": 0,
+"name": &"block",
+"speed": 8.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_en7h4")

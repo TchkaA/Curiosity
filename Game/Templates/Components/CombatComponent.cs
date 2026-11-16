@@ -30,6 +30,26 @@ public class CombatComponent
     public int comboAttack;
 
     /// <summary>
+    /// Сколько секунд осталось до готовности базовой атаки.
+    /// </summary>
+    private double _baseCooldownLeft;
+
+    /// <summary>
+    /// Сколько секунд осталось до готовности сильной атаки.
+    /// </summary>
+    private double _strongCooldownLeft;
+
+    /// <summary>
+    /// Остаток перезарядки базовой атаки.
+    /// </summary>
+    public double BaseCooldownLeft => _baseCooldownLeft;
+
+    /// <summary>
+    /// Остаток перезарядки сильной атаки.
+    /// </summary>
+    public double StrongCooldownLeft => _strongCooldownLeft;
+
+    /// <summary>
     /// Атака закончилась.
     /// </summary>
     public bool StopAttack;
@@ -43,10 +63,23 @@ public class CombatComponent
     }
 
     /// <summary>
+    /// Можно ли выполнить атаку с учётом её перезарядки.
+    /// </summary>
+    public bool CanPerformAttack(TypeAttack type)
+    {
+        return type == TypeAttack.StrongAttack
+            ? _strongCooldownLeft <= 0
+            : _baseCooldownLeft <= 0;
+    }
+
+    /// <summary>
     /// Метод инициализации атаки
     /// </summary>
     public void PerformAttack(TypeAttack type)
     {
+        if (!CanPerformAttack(type))
+            return;
+
         switch (type)
         {
             case TypeAttack.BaseAttack:
@@ -64,6 +97,20 @@ public class CombatComponent
 
     public void update(double delta)
     {
+        if (_baseCooldownLeft > 0)
+        {
+            _baseCooldownLeft -= delta;
+            if (_baseCooldownLeft < 0)
+                _baseCooldownLeft = 0;
+        }
+
+        if (_strongCooldownLeft > 0)
+        {
+            _strongCooldownLeft -= delta;
+            if (_strongCooldownLeft < 0)
+                _strongCooldownLeft = 0;
+        }
+
         if (_elipse > 0)
         {
             _elipse -= delta;
@@ -96,6 +143,7 @@ public class CombatComponent
     public void StartAttack()
     {
         StopAttack = false;
+        SetCooldown();
         AddDamageArea();
         _comboWindow = _player.weapon.ComboWindow;
 
@@ -112,6 +160,20 @@ public class CombatComponent
         {
             PlayAttackAnimation(CurrentAttack);
         }
+    }
+
+    /// <summary>
+    /// Запускает перезарядку текущей атаки.
+    /// </summary>
+    private void SetCooldown()
+    {
+        if (_player.weapon == null)
+            return;
+
+        if (CurrentAttack == "strong_attack")
+            _strongCooldownLeft = _player.weapon.CooldownStrongAttack;
+        else
+            _baseCooldownLeft = _player.weapon.CooldownBaseAttack;
     }
 
     public void EndAttack()
@@ -187,7 +249,7 @@ public class CombatComponent
         collision.Shape = shape;
 
         damageArea.AddChild(collision);
-        damageArea.SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, Consts.EntityLayer);
+        damageArea.SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, Consts.AttackLayer);
         damageArea.SetDeferred(CollisionObject2D.PropertyName.CollisionMask, Consts.EntityLayer);
         _player.AddChild(damageArea);
 
@@ -208,14 +270,10 @@ public class CombatComponent
 
     public void Entity_Entered(Node2D node)
     {
-       if (node is BaseEntity body && node != _player)
+        if (node is BaseEntity body && node != _player)
         {
-            if(CurrentAttack == "base_attack")
-                body.TakeDamage(_player.weapon.Damage);
-            else
-                body.TakeDamage(_player.weapon.StrongDamage);
+            body.TakeAttackDamage(_player, _player.weapon, CurrentAttack == "strong_attack");
         }
-        
     }
 }
 

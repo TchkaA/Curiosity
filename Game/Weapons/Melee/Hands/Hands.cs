@@ -7,7 +7,8 @@ public partial class Hands : Weapon
         WeaponType = Type.Melee;
         Damage = 3;
         StrongDamage = 6;
-        Cooldown = 0.1f;
+        CooldownBaseAttack = 0.3f;
+        CooldownStrongAttack = 1f;
         UserAnimation = GD.Load<SpriteFrames>("res://Game/Weapons/Melee/Hands/HandsAnimation.tres");
         Radious = 30;
         ComboWindow = 2f;

@@ -60,6 +60,10 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     public bool CanAttack = true;
     protected bool CanInteract = true;
     public bool InDialogue = false;
+    /// <summary>
+    /// Активен ли блок. Влияет на входящий урон.
+    /// </summary>
+    public bool IsBlocking = false;
 
     /// <summary>
 	/// Остаток перезарядки рывка в секундах.
@@ -110,6 +114,9 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
     /// <param name="damage">Урон</param>
     public void TakeDamage(float damage)
     {
+        if (damage <= 0f || Stats.CurrentHealth <= 0f)
+            return;
+
         Stats.CurrentHealth -= damage;
         if(Stats.CurrentHealth <= 0)
         {
@@ -119,6 +126,42 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
         visualComponent.PlayHitFlash();
         SoundMaker.PlayHurt();
         OnHealthChanged?.Invoke(Stats.CurrentHealth);
+    }
+
+    /// <summary>
+    /// Считает урон атаки с учётом оружия и силы атакующего.
+    /// </summary>
+    public float CalculateOutgoingDamage(Weapon attackWeapon, bool strongAttack)
+    {
+        if (attackWeapon == null)
+            return 0f;
+
+        float baseDamage = strongAttack ? attackWeapon.StrongDamage : attackWeapon.Damage;
+        return Mathf.Max(0f, baseDamage + Stats.Strength);
+    }
+
+    /// <summary>
+    /// Считает, сколько из входящего урона существо реально получит.
+    /// Учитывает броню, сопротивление и активный блок.
+    /// </summary>
+    public float CalculateIncomingDamage(float damage)
+    {
+        float result = Mathf.Max(0f, damage - Stats.Armor);
+        float resistance = Stats.DamageResistance + (IsBlocking ? Stats.BlockResistance : 0f);
+        result *= 1f - Mathf.Clamp(resistance, 0f, 0.95f);
+        return Mathf.Max(0f, result);
+    }
+
+    /// <summary>
+    /// Наносит урон от атаки другого существа с учётом всех бафов.
+    /// </summary>
+    public void TakeAttackDamage(BaseEntity attacker, Weapon attackWeapon, bool strongAttack)
+    {
+        if (attacker == null)
+            return;
+
+        float damage = CalculateIncomingDamage(attacker.CalculateOutgoingDamage(attackWeapon, strongAttack));
+        TakeDamage(damage);
     }
 
 	/// <summary>

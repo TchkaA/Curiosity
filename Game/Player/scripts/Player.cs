@@ -30,6 +30,7 @@ public partial class Player : BaseEntity
 	public PlayerDashState dashState;
 	public PlayerAttackState attackState;
 	public PlayerInteractionState interactionState;
+	public PlayerBlockState blockState;
 
 	//---------------------
 	//		UI
@@ -92,6 +93,7 @@ public partial class Player : BaseEntity
 		dashState = new(this);
 		attackState = new(this);
 		interactionState = new(this);
+		blockState = new(this);
 	}
 
 
@@ -133,6 +135,9 @@ public partial class Player : BaseEntity
 
 	public void TryAttack()
 	{
+		if (stateMachine.CurrentState == blockState)
+			return;
+
 		// Уже атакуем — следующий удар можно начать только в последней трети анимации.
 		if (stateMachine.CurrentState == attackState)
 		{
@@ -150,6 +155,17 @@ public partial class Player : BaseEntity
 	}
 
 	public void ChangeAttackFlag(bool flag) => CanAttack = flag;
+
+	/// <summary>
+	/// Пытается войти в блок. Из атаки блок не включается.
+	/// </summary>
+	public void TryBlock()
+	{
+		if (stateMachine.CurrentState == attackState)
+			return;
+
+		stateMachine.ChangeState(blockState);
+	}
 
     #endregion
 

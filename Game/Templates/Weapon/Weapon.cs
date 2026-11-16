@@ -21,7 +21,11 @@ public abstract partial class Weapon : Resource
     /// Урон сильной атаки.
     /// </summary>
     [Export] public float StrongDamage;
-    [Export] public float Cooldown;
+    [Export] public float CooldownBaseAttack;
+    /// <summary>
+    /// Перезарядка сильной атаки в секундах.
+    /// </summary>
+    [Export] public float CooldownStrongAttack = 1f;
     [Export] public SpriteFrames UserAnimation;
     [Export] public int Radious;
     [Export] public float ComboWindow;

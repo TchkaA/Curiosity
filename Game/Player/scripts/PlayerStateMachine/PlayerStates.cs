@@ -205,6 +205,43 @@ public partial class PlayerAttackState : IState
 }
 
 
+/// <summary>
+/// Состояние блока. Игрок стоит на месте, пока удерживает клавишу block.
+/// </summary>
+public partial class PlayerBlockState : IState
+{
+    private Player Player;
+
+    public PlayerBlockState(Player player)
+    {
+        Player = player;
+    }
+
+    public void Enter()
+    {
+        Player.IsBlocking = true;
+        Player.Velocity = Vector2.Zero;
+        Player.animation.SetAnimation("block");
+    }
+
+    public void Exit()
+    {
+        Player.IsBlocking = false;
+    }
+
+    public void Update(double delta)
+    {
+        if (!Input.IsActionPressed("block"))
+        {
+            Player.stateMachine.ChangeState(Player.NextState());
+            return;
+        }
+
+        Player.Velocity = Vector2.Zero;
+    }
+}
+
+
 public partial class PlayerInteractionState : IState
 {
     private Player Player;
