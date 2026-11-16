@@ -139,10 +139,15 @@ public partial class PlayerDashState : IState
         _elapsed = 0;
         _dashDirection = GetDashDirection();
         Player.animation.SetAnimation("dash");
+        Player.SoundMaker.PlayDash();
+        Player.SetDeferred(CollisionObject2D.PropertyName.CollisionMask, Consts.CorpseLayer);
+        Player.SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, Consts.CorpseLayer);
     }
 
     public void Exit()
     {
+        Player.SetDeferred(CollisionObject2D.PropertyName.CollisionMask, Consts.EntityLayer);
+        Player.SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, Consts.EntityLayer);
         Player.ChangeDashFlag(true);
         Player.Velocity = Vector2.Zero;
     }
@@ -222,11 +227,13 @@ public partial class PlayerBlockState : IState
         Player.IsBlocking = true;
         Player.Velocity = Vector2.Zero;
         Player.animation.SetAnimation("block");
+        Camera.Instance.AddZoom(new Vector2(1.2f,1.2f));
     }
 
     public void Exit()
     {
         Player.IsBlocking = false;
+        Camera.Instance.RemoveZoom();
     }
 
     public void Update(double delta)

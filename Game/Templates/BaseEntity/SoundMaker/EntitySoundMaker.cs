@@ -7,6 +7,7 @@ public partial class EntitySoundMaker : Node2D
     [Export] public AudioStreamRandomizer FootstepSound;
     [Export] public AudioStreamRandomizer HurtSound = GD.Load<AudioStreamRandomizer>("res://Assets/Origin/Sounds/GameUI/Damage/Damage_randomizer.tres");
     [Export] public AudioStreamRandomizer DeathSound;
+    [Export] public AudioStreamRandomizer DashSound;
 
     public Dictionary<EntitySound, Action> Sounds { get; } = new();
 
@@ -18,6 +19,7 @@ public partial class EntitySoundMaker : Node2D
     public void PlayFootstep() => PlayOn(_footstepPlayer, FootstepSound);
     public void PlayHurt() => PlayOn(_entityPlayer, HurtSound);
     public void PlayDeath() => PlayOn(_entityPlayer, DeathSound);
+    public void PlayDash() => PlayOn(_footstepPlayer, DashSound);
 
     private static void PlayOn(AudioStreamPlayer2D player, AudioStreamRandomizer sound)
     {
