@@ -191,7 +191,7 @@ public partial class DialogueUI : Control
     /// <inheritdoc/>
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (!_isOpen || !@event.IsActionPressed("ui_cancel"))
+        if (!_isOpen || !@event.IsActionPressed("ui_cancel") || Consts.GameStopedState)
             return;
 
         var callback = _onSelected;

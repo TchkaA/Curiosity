@@ -10,10 +10,14 @@ public class Inventory
     // Событие для обновления конкретного слота
     public event Action<int> OnSlotChanged;
 
+    public Action<Item,int> OnItemAdded;
+
     public Inventory(Node2D owner, int capacity = 20)
     {
         _owner = owner ?? throw new ArgumentNullException(nameof(owner));
         _slots = new InventorySlotData?[capacity];
+
+        OnItemAdded += Logger.PrintItem;
     }
 
     public InventorySlotData? GetSlot(int index)
@@ -62,6 +66,8 @@ public class Inventory
             
             OnSlotChanged?.Invoke(emptyIndex);
         }
+
+        OnItemAdded?.Invoke(item, count);
 
         return added;
     }

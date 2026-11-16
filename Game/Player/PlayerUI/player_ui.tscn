@@ -2,7 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://dbwjihvu0vgsy" path="res://Assets/Origin/UI/Player_UI.png" id="3_5ko3e"]
 [ext_resource type="Shader" uid="uid://ctf74itvrik5u" path="res://Visual/Shaders/Dithering/dithering.gdshader" id="4_h0nwj"]
+[ext_resource type="Script" uid="uid://qi7lawpetbqu" path="res://Game/Logger/Logger.cs" id="4_jgr15"]
+[ext_resource type="AudioStream" uid="uid://b8yydw3u75bsk" path="res://Assets/Origin/Sounds/GameUI/Notif/alarm.wav" id="5_7wclb"]
 [ext_resource type="Script" uid="uid://dmk8crm75bi0e" path="res://Game/Player/PlayerUI/Scripts/PlayerUI.cs" id="5_ui4xr"]
+[ext_resource type="Texture2D" uid="uid://duxirj8sh2uo6" path="res://icon.svg" id="6_7wclb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4iymr"]
 atlas = ExtResource("3_5ko3e")
@@ -64,3 +67,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="LogMessages" type="VBoxContainer" parent="." unique_id=1030256316 node_paths=PackedStringArray("Notif")]
+offset_left = 5.0
+offset_top = 485.0
+offset_right = 293.0
+offset_bottom = 599.0
+alignment = 2
+script = ExtResource("4_jgr15")
+Notif = NodePath("Notification")
+
+[node name="Notification" type="AudioStreamPlayer" parent="LogMessages" unique_id=683878869]
+stream = ExtResource("5_7wclb")
+
+[node name="Button" type="Button" parent="." unique_id=481100715]
+visible = false
+offset_left = -27.0
+offset_top = -279.0
+offset_right = 371.0
+offset_bottom = -116.0
+text = "sdadadasdasdsadasdsad"
+icon = ExtResource("6_7wclb")
+icon_alignment = 2
+expand_icon = true

@@ -19,6 +19,7 @@ color = Color(0.753261, 0.91804737, 0.9396552, 0)
 
 [node name="NPC2" parent="." unique_id=751098040 instance=ExtResource("7_1bf80")]
 position = Vector2(984, 570)
+TEST = true
 color = Color(0.14374495, 0.16702855, 0.41589752, 0)
 
 [node name="BookMenu" parent="." unique_id=595888724 node_paths=PackedStringArray("_player") instance=ExtResource("4_7qmx5")]
