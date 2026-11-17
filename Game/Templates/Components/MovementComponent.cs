@@ -19,6 +19,11 @@ public class MovementComponent
         MoveAt(direction, WalkSpeed);
     }
 
+    public void MoveNPC(Vector2 direction)
+    {
+        MoveAt(direction, WalkSpeed - 7);
+    }
+
     public void Run(Vector2 direction)
     {
         MoveAt(direction, _owner.Stats.Speed);

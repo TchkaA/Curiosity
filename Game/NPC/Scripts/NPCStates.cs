@@ -35,6 +35,7 @@ public partial class NPCFollowState : IState
 {
     private BaseNPC _owner;
     public Node2D _targetPosition;
+    public MovingType type = MovingType.walk; 
 
     public float FOLLOW_DISTANCE { get; private set; } = 70f;  
 
@@ -64,14 +65,19 @@ public partial class NPCFollowState : IState
             
             float distance = _owner.GlobalPosition.DistanceTo(_targetPosition.GlobalPosition);
             
+            if (distance > (FOLLOW_DISTANCE * 4f))
+            {
+                if(type != MovingType.run) type = MovingType.run;
+            }
             if (distance > (FOLLOW_DISTANCE * 2.2))
             {
-                _owner.animation.SetAnimation("walk");
-                _owner.Navigation.GoTo(targetPoint);
+                _owner.animation.SetAnimation(type.ToString());
+                _owner.Navigation.GoTo(targetPoint, 0 , type);
             }
             if (_owner.Navigation.IsFinished)
             {
                 _owner.animation.SetAnimation("idle");
+                type = MovingType.walk; 
             }
         }
     }

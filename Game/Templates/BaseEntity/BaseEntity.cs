@@ -328,6 +328,12 @@ public abstract partial class BaseEntity : CharacterBody2D, IDamageble
         //Используется для малосвязанности и не переписывания кучи систем.
     }
 
+
+    public virtual void Follow(BaseEntity entity)
+    {
+        
+    }
+
     #endregion
 
     public void ResetConsts()

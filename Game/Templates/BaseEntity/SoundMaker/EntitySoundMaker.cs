@@ -40,7 +40,7 @@ public partial class EntitySoundMaker : Node2D
         _footstepPlayer = new AudioStreamPlayer2D
         {
             Bus = "Game",
-            MaxDistance = 200,
+            MaxDistance = 500,
             Attenuation = 1,
             VolumeDb = -10,
         };
