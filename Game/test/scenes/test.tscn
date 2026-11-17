@@ -11,10 +11,16 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_4iymr"]
 radius = 44.59
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_4iymr"]
+vertices = PackedVector2Array(1565.3672, -667.40625, 1796.2813, 626.25, 139.53125, 812.6406, -1205.7422, -95.46094, -971.3594, -1132.4297)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-979, -1144, 1574, -676, 1808, 635, 137, 823, -1217, -91)])
+
 [node name="test" type="Node2D" unique_id=840178364]
 
 [node name="NPC3" parent="." unique_id=1127348593 instance=ExtResource("7_1bf80")]
 position = Vector2(428, 448)
+DialogueFile = "res://Game/Dialogue/Data/FriendlyDialogue.json"
 color = Color(0.753261, 0.91804737, 0.9396552, 0)
 
 [node name="NPC2" parent="." unique_id=751098040 instance=ExtResource("7_1bf80")]
@@ -54,3 +60,6 @@ layer = 20
 position = Vector2(498, 170)
 DialogueFile = "res://Game/Dialogue/Data/NPCAnswers/keeper.json"
 color = Color(1, 1, 1, 0)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=2132937033]
+navigation_polygon = SubResource("NavigationPolygon_4iymr")

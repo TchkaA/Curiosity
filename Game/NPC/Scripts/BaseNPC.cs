@@ -138,7 +138,7 @@ public partial class BaseNPC : BaseEntity, IInteractable
     }
 
 
-    public override void Die(BaseEntity entity)
+    public override void Die(BaseEntity entity = null)
     {
         stateMachine.ChangeState(DiedState);
         Interaction = DiedInteraction;
@@ -195,6 +195,12 @@ public partial class BaseNPC : BaseEntity, IInteractable
     {
         visualComponent.ShowOutline(2.0f, Colors.Red);
         visualComponent.EnableOutlineGradient(Colors.Cyan, vertical: false);
+    }
+
+    public override void Follow(BaseEntity entity)
+    {
+        stateMachine.ChangeState(followState);
+        followState.SelectTarget(entity);
     }
 
 }

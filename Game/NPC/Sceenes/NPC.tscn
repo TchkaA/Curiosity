@@ -1,31 +1,38 @@
-[gd_scene format=4 uid="uid://ddkmkd5ndjdun"]
+[gd_scene format=3 uid="uid://ddkmkd5ndjdun"]
 
 [ext_resource type="Script" uid="uid://bfp1g324gniq6" path="res://Game/NPC/Scripts/BaseNPC.cs" id="1_s1jxv"]
 [ext_resource type="SpriteFrames" uid="uid://b1oiajn21d5je" path="res://Game/Templates/BaseEntity/Resourses/BaseAnimations.tres" id="2_f8u7d"]
 [ext_resource type="Script" uid="uid://bxgl2t6k00nek" path="res://Game/Templates/Components/AnimationComponent.cs" id="3_rl3cb"]
 [ext_resource type="Script" uid="uid://cruywe4l87wy1" path="res://Game/Templates/BaseEntity/SoundMaker/EntitySoundMaker.cs" id="4_2w6ii"]
+[ext_resource type="AudioStream" uid="uid://b2lk7eryh1fol" path="res://Assets/Origin/Sounds/GameUI/FootStep/footsterpconv_[cut_0sec](1).wav" id="5_nwmde"]
+[ext_resource type="AudioStream" uid="uid://c4qnp8mjctlwh" path="res://Assets/Origin/Sounds/GameUI/FootStep/footsterpconv_[cut_0sec](2).wav" id="6_djwf3"]
+[ext_resource type="AudioStream" uid="uid://b2rh2xcvjhlcs" path="res://Assets/Origin/Sounds/GameUI/FootStep/footsterpconv_[cut_0sec](3).wav" id="7_t2vaa"]
+[ext_resource type="AudioStream" uid="uid://b31uc4j84h1ct" path="res://Assets/Origin/Sounds/GameUI/FootStep/footsterpconv_[cut_0sec].wav" id="8_m6ev0"]
+[ext_resource type="AudioStream" uid="uid://ytrj7j0xa3m2" path="res://Assets/Origin/Sounds/Entity/dash.wav" id="9_3v23t"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s1jxv"]
 radius = 20.0
 height = 76.0
 
-[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_3oiqn"]
-data = PackedByteArray("cW9hZgAACL0BAFYiCL0DmAAAAAAAAAAAAAAAAOAAQAD7l51vqJ9Ot+G++/wGqeqn99Gm7Rd6rqLQC7eqcoCMOf0bPqryhrCQ/XKk6lJTGmf4F6Iq2uVNZd/Z98EM0Pj86d/ee34+Bt3v4tpucG79Cv6N4cMXSUVl1/4kIojRTcDzcbw722zIa8rb2Bu7DtYJ8nIGMgEgvki+MzwVQgO3Z7O0niHRCYLJ4kkkEnFBdE38QIAEDEABwdDaxHpt9OLM0IoEAEHlJZn2+SW2SISwIPJIIIJ5AbUIxSXgO2olkgiwSCQQQQQQb5MyQIIQZBBIwEYlkEEEEEFiQQSQQSQSDoyIQCAAABABgAgggEE/8ktva2ySwSQSCDZBAIIIBBAOKmkEgkEEEEGASASAQQSBNlXE2kUSSQQALaJRIJAIAEBwQQ/QgQQSCShNbbbLbLbLMzMsAgggggiyCCCCC+QASC99YIJBBIBIXuIAAggEgJiyASAs2SCQQUjJJJJJJfJBF///2u211ttTeUgQACACCHBBAI/ESABA8gEEgEgEHEGNMkkAAACCAdBI7ALJJJBIwggkEEEaEhJZNIkEQAAQQTQOzdIJBoQBkEgEEEEgepA9EggkEEAgELBBBBHYJZJJP11lkkkEEAhyADwkQCCCATIABOZIJAIIwE7MhIIAgAgxCECAACCAaKBBB5QAIIIBKLBJJJBJIIKwQQQQQRiWQTtbZJIJBBAIMgigIgAggEBCASOUgACAQyCiABAAIBBAMggEEEDoAAEcEUUAAAAAiDBBHSBABAIBMAgggEAggigZpAggAEAAADBBBAIB6QIAEBAAIooooooyAQD0gQAQCBQAQIQBRRCAM0BEAEAgTNswSCCCCAQQaB2SSQCAARRCMEEEA0AAAgAaAgAEQiEQiDHQABABBABBMEAgEEA0oAEYkgEAEAAAADBBA6ABABAIMEEAgEEAgimAQQQQRygQQSxRIIIIIIIICpogAgAgAAgACAACACAACAAIAAIAIAAIAAgAAgAgAAgACAACACAACAAIAAIAIAAIAAgAAgAgAAgACAACACAACFBIB2JCAAARLaSKKcSJJJAdtJIpIokokjBABpQIAIAIFIIIIIBBABAgR6gAAAQAQBACAAQAAAQAMcAAgEAggEAyCAQCCAQQDRcgQAQAQACAUelEgkokggkwSSQSSCSQTh/5ZLJLJJYJMgggnEkEgggP+wwySSSQAA==")
-format = 3
-mix_rate = 22050
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kgj8r"]
+streams_count = 4
+stream_0/stream = ExtResource("5_nwmde")
+stream_1/stream = ExtResource("6_djwf3")
+stream_2/stream = ExtResource("7_t2vaa")
+stream_3/stream = ExtResource("8_m6ev0")
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nwmde"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vt2gy"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7dpxs"]
 streams_count = 1
-stream_0/stream = SubResource("AudioStreamWAV_3oiqn")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_djwf3"]
+stream_0/stream = ExtResource("9_3v23t")
 
 [node name="NPC" type="CharacterBody2D" unique_id=1127348593 node_paths=PackedStringArray("NavigationAgent", "animation", "SoundMaker", "Collision")]
 motion_mode = 1
 script = ExtResource("1_s1jxv")
 NavigationAgent = NodePath("NavigationAgent2D")
 animation = NodePath("AnimatedSprite2D")
-SoundMaker = NodePath("AudioStreamPlayer2D")
+SoundMaker = NodePath("SoundMaker")
 Collision = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=651842491]
@@ -38,10 +45,10 @@ sprite_frames = ExtResource("2_f8u7d")
 animation = &"idle_up"
 script = ExtResource("3_rl3cb")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=336148585]
-volume_db = -10.0
-script = ExtResource("4_2w6ii")
-FootstepSound = SubResource("AudioStreamRandomizer_nwmde")
-DeathSound = SubResource("AudioStreamRandomizer_djwf3")
-
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=98250085]
+
+[node name="SoundMaker" type="Node2D" parent="." unique_id=1871656469]
+script = ExtResource("4_2w6ii")
+FootstepSound = SubResource("AudioStreamRandomizer_kgj8r")
+DeathSound = SubResource("AudioStreamRandomizer_vt2gy")
+DashSound = SubResource("AudioStreamRandomizer_7dpxs")

@@ -31,7 +31,7 @@ stream_0/stream = ExtResource("9_75y6p")
 motion_mode = 1
 script = ExtResource("1_4x5jf")
 animation = NodePath("AnimatedSprite2D")
-SoundMaker = NodePath("Node2D")
+SoundMaker = NodePath("SoundMaker")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1976842598]
 position = Vector2(0, 6)
@@ -46,7 +46,7 @@ script = ExtResource("3_df4c4")
 [node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=842805927]
 current = true
 
-[node name="Node2D" type="Node2D" parent="." unique_id=1818059655]
+[node name="SoundMaker" type="Node2D" parent="." unique_id=1818059655]
 script = ExtResource("3_3oiqn")
 FootstepSound = SubResource("AudioStreamRandomizer_ynnsp")
 DeathSound = SubResource("AudioStreamRandomizer_1v0b8")

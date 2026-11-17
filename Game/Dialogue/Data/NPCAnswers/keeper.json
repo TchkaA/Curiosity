@@ -41,12 +41,12 @@
     {
       "id": "keeper.gift",
       "npcText": "Держи. Пригодится, когда туман снова придёт.",
-      "effects": [
-            { "type": "item", "arg": "HealingPotion", "value": 1 }
-          ],
       "answers": [
         {
-          "playerText": "Спасибо."
+          "playerText": "Спасибо.",
+          "effects": [
+            { "type": "item", "arg": "ChickenMeat", "value": 1 }
+          ]
         }
       ]
     }

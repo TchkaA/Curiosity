@@ -5,6 +5,7 @@ public class NavigationComponent
 {
     NavigationAgent2D _navigationAgent;
     private BaseNPC _owner;
+    public MovingType movingType;
 
     private float _stopDistance = 30f;
 
@@ -26,10 +27,11 @@ public class NavigationComponent
     }
 
 
-    public void GoTo(Vector2 target, float stopDistance = 0)
+    public void GoTo(Vector2 target, float stopDistance = 0, MovingType type = MovingType.walk)
     {
         _stopDistance = stopDistance;
-        
+        movingType = type;
+
         if (_navigationAgent.TargetPosition == target)
             return;
         if (_navigationAgent.TargetPosition.IsEqualApprox(target))
@@ -48,7 +50,6 @@ public class NavigationComponent
         // Проверяем, достигли ли нужной дистанции
         if (DistanceToTarget <= _stopDistance)
         {
-            // Если достигли - останавливаемся
             _owner.movement.Move(Vector2.Zero);
             return;
         }
@@ -62,7 +63,7 @@ public class NavigationComponent
         Vector2 direction = _owner.GlobalPosition.DirectionTo(nextPathPosition);
         
         // Желаемая скорость = направление × максимальная скорость персонажа
-        Vector2 desiredVelocity = direction * _owner.Stats.Speed;
+        Vector2 desiredVelocity = direction;
 
         // Обновляем направление взгляда/анимации (если нужно)
         _owner.direction.SetDirectionFromVector(direction);
@@ -81,8 +82,18 @@ public class NavigationComponent
 
     private void OnVelocityComputed(Vector2 safeVelocity)
     {
-        // Теперь Move просто применяет переданную скорость
-        _owner.movement.Move(safeVelocity);
+        switch (movingType)
+        {
+            case MovingType.run:
+                _owner.movement.Run(safeVelocity);
+                break;
+            case MovingType.walk:
+                _owner.movement.MoveNPC(safeVelocity);
+                break;
+            default:
+                _owner.movement.MoveNPC(safeVelocity);
+                break;
+        }
     }
 
     public void Stop()
@@ -92,4 +103,12 @@ public class NavigationComponent
 
 
 
+}
+
+
+public enum MovingType
+{
+    run,
+    walk,
+    crouch
 }
