@@ -29,6 +29,7 @@ public sealed class DialogueEffectExecutor
             context.State.AddRelationship(effect.Arg, Mathf.RoundToInt(effect.Value)));
         Register("stat", (context, effect) => context.AddStat(effect.Arg, effect.Value));
         Register("item", (context, effect) => context.GiveItem(effect.Arg, Mathf.RoundToInt(effect.Value)));
+        Register("func", (context, effect) => context.PerformMethod(effect.Arg));
     }
 
     /// <summary>

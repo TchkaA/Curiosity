@@ -27,6 +27,8 @@ public sealed class DialogueContext
     /// </summary>
     public DialogueState State => DialogueState.Shared;
 
+    public DialogueMethodsExecutor MethodsExecutor;
+
     /// <summary>
     /// Создаёт контекст диалога.
     /// </summary>
@@ -34,6 +36,8 @@ public sealed class DialogueContext
     {
         Owner = owner;
         Player = player;
+
+        MethodsExecutor = new(Owner,Player);
     }
 
     /// <summary>
@@ -107,6 +111,14 @@ public sealed class DialogueContext
             return false;
 
         Player.Inventory.AddItem(item, count);
+        return true;
+    }
+
+    public bool PerformMethod(string func)
+    {
+        if(MethodsExecutor == null) return false;
+
+        MethodsExecutor.ParseMethod(func);
         return true;
     }
 

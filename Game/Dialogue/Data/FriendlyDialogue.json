@@ -1,0 +1,29 @@
+{
+  "startId": "first_answer",
+  "dialogues": [
+    {
+        "id": "first_answer",
+        "npcText": "Привет",
+        
+        "answers": [
+            {
+          "playerText": "Пойдем за мной.",
+          "effects": [
+            { "type": "func", "arg": "follow"}
+          ],
+          "nextId": "follow_answer"
+        }
+        ]
+    },
+    {
+        "id": "follow_answer",
+        "npcText": "Хорошо",
+        "answers": [
+            {
+          "playerText": "...",
+          "nextId": ""
+        }
+        ]
+    }
+    ]
+}
