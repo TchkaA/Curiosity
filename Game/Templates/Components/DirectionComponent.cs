@@ -13,7 +13,7 @@ public partial class DirectionComponent
         Left,
         Right
     }
-    private BaseEntity _owner;
+    private Node2D _owner;
 
     /// <summary>
     /// Текущее направление
@@ -32,7 +32,7 @@ public partial class DirectionComponent
 	/// </summary>
 	public event Action<FacingDirection> DirectionChanged;
 	//---------------------------------
-    public DirectionComponent(BaseEntity owner)
+    public DirectionComponent(Node2D owner)
     {
         _owner = owner;
     }

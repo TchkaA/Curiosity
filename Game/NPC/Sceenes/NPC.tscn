@@ -46,6 +46,7 @@ animation = &"idle_up"
 script = ExtResource("3_rl3cb")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=98250085]
+debug_enabled = true
 
 [node name="SoundMaker" type="Node2D" parent="." unique_id=1871656469]
 script = ExtResource("4_2w6ii")

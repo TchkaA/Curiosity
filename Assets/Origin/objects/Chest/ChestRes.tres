@@ -1,0 +1,14 @@
+[gd_resource type="Resource" format=3 uid="uid://dq4xyhvh36y6n"]
+
+[ext_resource type="Texture2D" uid="uid://djdaa7fb3jvrt" path="res://Assets/Origin/objects/Chest/Textures/Chest_down.tres" id="1_5fxxl"]
+[ext_resource type="Texture2D" uid="uid://b1tfuxg1vfuvy" path="res://Assets/Origin/objects/Chest/Textures/Chest_left.tres" id="2_h6nup"]
+[ext_resource type="Texture2D" uid="uid://575rmyuisguy" path="res://Assets/Origin/objects/Chest/Textures/Chest_right.tres" id="3_nbosv"]
+[ext_resource type="Texture2D" uid="uid://b5t6iomg6hi6u" path="res://Assets/Origin/objects/Chest/Textures/Chest_up.tres" id="4_h3cgb"]
+[ext_resource type="Script" uid="uid://c0mbpmfbgdnpx" path="res://Game/Templates/Objects/ObjectRes.cs" id="5_ih5b4"]
+
+[resource]
+script = ExtResource("5_ih5b4")
+SpriteDown = ExtResource("1_5fxxl")
+SpriteUp = ExtResource("4_h3cgb")
+SpriteLeft = ExtResource("2_h6nup")
+SpriteRight = ExtResource("3_nbosv")

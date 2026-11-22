@@ -7,14 +7,16 @@
 [ext_resource type="Script" uid="uid://c6sggjxad4u0c" path="res://Game/test/scripts/DamageTests/DamageArea.cs" id="5_t4bch"]
 [ext_resource type="PackedScene" uid="uid://ddkmkd5ndjdun" path="res://Game/NPC/Sceenes/NPC.tscn" id="7_1bf80"]
 [ext_resource type="PackedScene" uid="uid://5qied6gl7erb" path="res://Game/Player/PlayerUI/player_ui.tscn" id="7_4xr6u"]
+[ext_resource type="Script" uid="uid://cupmvfq6fqswg" path="res://Game/Templates/Objects/WorldObject.cs" id="8_r88qa"]
+[ext_resource type="Resource" uid="uid://dq4xyhvh36y6n" path="res://Assets/Origin/objects/Chest/ChestRes.tres" id="9_2wgon"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4iymr"]
 radius = 44.59
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_4iymr"]
-vertices = PackedVector2Array(1565.3672, -667.40625, 1796.2813, 626.25, 139.53125, 812.6406, -1205.7422, -95.46094, -971.3594, -1132.4297)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-979, -1144, 1574, -676, 1808, 635, 137, 823, -1217, -91)])
+vertices = PackedVector2Array(1120.3125, -204.20313, 1150.6406, 728.03125, 1037.4609, 717.8906, 1048.4922, 495.29688, -119.89844, 722.8203, -208.99219, -232.75, 926, 491.70313, 926, 703.1797)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 0, 6), PackedInt32Array(6, 7, 4), PackedInt32Array(6, 0, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-129, 733, 936, 713, 936, 502, 1038, 505, 1027, 727, 1161, 739, 1130, -214, -220, -243)])
 
 [node name="test" type="Node2D" unique_id=840178364]
 
@@ -62,4 +64,32 @@ DialogueFile = "res://Game/Dialogue/Data/NPCAnswers/keeper.json"
 color = Color(1, 1, 1, 0)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=2132937033]
+visible = false
 navigation_polygon = SubResource("NavigationPolygon_4iymr")
+
+[node name="WorldObject" type="StaticBody2D" parent="." unique_id=1638146236]
+position = Vector2(-13, 98)
+script = ExtResource("8_r88qa")
+Direction = 1
+Resource = ExtResource("9_2wgon")
+metadata/_custom_type_script = "uid://cupmvfq6fqswg"
+
+[node name="WorldObject2" type="StaticBody2D" parent="." unique_id=300022206]
+position = Vector2(-13, 208)
+script = ExtResource("8_r88qa")
+Direction = 2
+Resource = ExtResource("9_2wgon")
+metadata/_custom_type_script = "uid://cupmvfq6fqswg"
+
+[node name="WorldObject3" type="StaticBody2D" parent="." unique_id=728251532]
+position = Vector2(-13, 312)
+script = ExtResource("8_r88qa")
+Direction = 3
+Resource = ExtResource("9_2wgon")
+metadata/_custom_type_script = "uid://cupmvfq6fqswg"
+
+[node name="WorldObject4" type="StaticBody2D" parent="." unique_id=585631633]
+position = Vector2(-13, 406)
+script = ExtResource("8_r88qa")
+Resource = ExtResource("9_2wgon")
+metadata/_custom_type_script = "uid://cupmvfq6fqswg"
