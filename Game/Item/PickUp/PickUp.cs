@@ -1,146 +1,281 @@
 using Godot;
-using System;
 
 /// <summary>
 /// Предмет на земле: можно осмотреть или подобрать.
+/// Скрипт помечен [Tool], поэтому выполняется и в редакторе —
+/// изменения Item, VisualScale и CollisionRadius сразу видны в сцене.
+/// Созданные узлы (PickUpVisual, PickUpCollision) не сохраняются в сцену:
+/// они являются предпросмотром и пересоздаются при загрузке.
 /// </summary>
+[Tool]
 [GlobalClass]
 public partial class PickUp : Area2D, IInteractable
 {
-	public Item Item;
+    /// <summary>
+    /// Предмет, который лежит на земле.
+    /// В редакторе изменение сразу обновляет спрайт.
+    /// </summary>
+    [Export]
+    public Item Item
+    {
+        get
+        {
+            return _item;
+        }
+        set
+        {
+            _item = value;
 
-	[ExportGroup("Настройки")]
-	[Export] public float VisualScale = 2f;
-	[Export] public float CollisionRadius = 14f;
-	[Export] public float OutlineActiveSize = 0.8f;
+            if (Visual != null)
+            {
+                RefreshVisual();
+            }
+        }
+    }
+    private Item _item;
 
-	private Sprite2D _visual;
-	private ShaderMaterial _material;
-	private bool _isInRange;
-    
+    [ExportGroup("Настройки")]
+
+    /// <summary>
+    /// Масштаб спрайта предмета.
+    /// </summary>
+    [Export]
+    public float VisualScale
+    {
+        get
+        {
+            return _visualScale;
+        }
+        set
+        {
+            _visualScale = value;
+
+            if (Visual != null)
+            {
+                Visual.Scale = new Vector2(_visualScale, _visualScale);
+            }
+        }
+    }
+    private float _visualScale = 2.0f;
+
+    /// <summary>
+    /// Радиус коллизии для взаимодействия.
+    /// </summary>
+    [Export]
+    public float CollisionRadius
+    {
+        get
+        {
+            return _collisionRadius;
+        }
+        set
+        {
+            _collisionRadius = value;
+            UpdateCollisionShape();
+        }
+    }
+    private float _collisionRadius = 14.0f;
+
+    /// <summary>
+    /// Толщина обводки при наведении (используется только в рантайме).
+    /// </summary>
+    [Export]
+    public float OutlineActiveSize = 0.8f;
+
+    /// <summary>
+    /// Спрайт предмета. Создаётся автоматически.
+    /// </summary>
+    public Sprite2D Visual;
+
+    private ShaderMaterial _material;
+    private CollisionShape2D _collision;
+    private bool _isInRange;
 
     public int Count;
 
-	/// <summary>
-	/// Задать предмет до того, как нода попадёт в дерево сцены (например, при спавне из кода).
-	/// Вся остальная настройка (визуал, коллизия, шейдер) происходит один раз в _Ready.
-	/// </summary>
-    public void Init(Item item) => Item = item;
+    /// <summary>
+    /// Задать предмет до того, как нода попадёт в дерево сцены.
+    /// Вся остальная настройка (визуал, коллизия, шейдер) произойдёт один раз в _Ready.
+    /// </summary>
+    public void Init(Item item)
+    {
+        Item = item;
+    }
 
-	public override void _Ready()
-	{
-		if (Item == null)
-		{
-			#if DEBUG
-			GD.PrintErr($"{Name}: PickUp создан без Item, настроен как Empty item.");
-			#endif 
+    public override void _Ready()
+    {
+        if (Item == null && !Engine.IsEditorHint())
+        {
+            GD.PrintErr(Name + ": PickUp создан без Item, настроен как Empty item.");
+            Item = GD.Load<Item>("res://Objects/Items/Empty_item/Empty_item.tres");
+        }
 
-			Item = GD.Load<Item>("res://Objects/Items/Empty_item/Empty_item.tres"); //Empty item пустой Item
-		}
+        if (!Engine.IsEditorHint() && Item != null)
+        {
+            Name = Item.Name;
+        }
 
-		ZIndex = -1;
+        ZIndex = -1;
 
-		Name = Item.Name;
+        EnsureVisual();
+        EnsureMaterial();
+        EnsureCollision();
 
-		SetupVisual();
-		SetupOutline();
-		SetupCollision();
+        RefreshVisual();
 
-		CollisionLayer = Consts.EntityLayer;
+        CollisionLayer = Consts.EntityLayer;
+        InputPickable = true;
+    }
 
-		InputPickable = true;
-	}
+    /// <summary>
+    /// Гарантирует наличие спрайта. Ищет уже созданный узел по имени,
+    /// чтобы не плодить дубликаты при перезагрузке tool-скрипта.
+    /// </summary>
+    private void EnsureVisual()
+    {
+        if (Visual == null)
+        {
+            Visual = GetNodeOrNull<Sprite2D>("PickUpVisual");
+        }
 
-	private void SetupVisual()
-	{
-		_visual = new Sprite2D
-		{
-			Texture = Item.Icon,
-			Scale = Vector2.One * VisualScale
-		};
-		AddChild(_visual);
-	}
+        if (Visual == null)
+        {
+            Visual = new Sprite2D();
+            Visual.Name = "PickUpVisual";
+            AddChild(Visual);
+        }
 
-	private void SetupOutline()
-	{
-		var shader = GD.Load<Shader>("res://Visual/Shaders/Outline/outline.gdshader");
-		_material = new ShaderMaterial { Shader = shader };
-		_material.SetShaderParameter("outline_size", 0f);
-		_visual.Material = _material;
-	}
+        Visual.Scale = new Vector2(_visualScale, _visualScale);
+    }
 
-	private void SetupCollision()
-	{
-		var collision = new CollisionShape2D
-		{
-			Shape = new CircleShape2D { Radius = CollisionRadius }
-		};
-		AddChild(collision);
-	}
+    /// <summary>
+    /// Применяет текстуру предмета к спрайту. Если предмета нет — скрывает текстуру.
+    /// </summary>
+    private void RefreshVisual()
+    {
+        if (Visual == null)
+        {
+            return;
+        }
 
-	// private void OnInputEvent(Node viewport, InputEvent @event, long shapeIdx)
-	// {
-	// 	if (_isInRange && @event is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Right })
-	// 	{
-	// 		contextMenu.ShowContextMenu();
-	// 		// Важно: без этого тот же клик долетит до _UnhandledInput и сразу закроет
-	// 		// меню, которое мы только что открыли.
-	// 		GetViewport().SetInputAsHandled();
-	// 	}
-	// }
+        if (Item == null)
+        {
+            Visual.Texture = null;
+            return;
+        }
 
-	// private void ShowContextMenu()
-	// {
-	// 	CloseContextMenu();
+        Visual.Texture = Item.Icon;
+        Visual.Scale = new Vector2(_visualScale, _visualScale);
+    }
 
-	// 	var menu = new ContextMenu { Name = "ContextMenu" };
-	// 	AddChild(menu);
-	// 	menu.Initialize(GetContextAction(MainManager.Instance.Player));
-	// 	_activeContextMenu = menu;
-	// }
+    /// <summary>
+    /// Создаёт материал обводки, если он ещё не создан и шейдер найден.
+    /// </summary>
+    private void EnsureMaterial()
+    {
+        if (Visual == null || _material != null)
+        {
+            return;
+        }
 
-	// public void CloseContextMenu()
-	// {
-	// 	if (IsInstanceValid(_activeContextMenu))
-	// 		_activeContextMenu.QueueFree();
-	// 	_activeContextMenu = null;
-	// }
+        Shader shader = GD.Load<Shader>("res://Visual/Shaders/Outline/outline.gdshader");
+        if (shader == null)
+        {
+            return;
+        }
 
+        _material = new ShaderMaterial();
+        _material.Shader = shader;
+        _material.SetShaderParameter("outline_size", 0.0f);
+        Visual.Material = _material;
+    }
 
-	public void Interact(BaseEntity interactor)
-	{
+    /// <summary>
+    /// Гарантирует наличие коллизии. Ищет уже созданный узел по имени.
+    /// </summary>
+    private void EnsureCollision()
+    {
+        if (_collision == null)
+        {
+            _collision = GetNodeOrNull<CollisionShape2D>("PickUpCollision");
+        }
+
+        if (_collision == null)
+        {
+            _collision = new CollisionShape2D();
+            _collision.Name = "PickUpCollision";
+            AddChild(_collision);
+        }
+
+        UpdateCollisionShape();
+    }
+
+    /// <summary>
+    /// Обновляет радиус круговой коллизии.
+    /// </summary>
+    private void UpdateCollisionShape()
+    {
+        if (_collision == null)
+        {
+            return;
+        }
+
+        CircleShape2D circle = _collision.Shape as CircleShape2D;
+        if (circle == null)
+        {
+            circle = new CircleShape2D();
+            _collision.Shape = circle;
+        }
+
+        circle.Radius = _collisionRadius;
+    }
+
+    public void Interact(BaseEntity interactor)
+    {
         #if DEBUG
-        GD.Print("Interact with item" + Name);
-		QueueFree();
+        GD.Print("Interact with item " + Name);
+        QueueFree();
         #endif
-		// if (interactor is IInventoryOwner owner)
-		// {
-		// 	owner.Inventory.AddItem(Item);
-		// 	GD.Print($"Picked up: {Item.Name} -> {interactor.Name}");
-		// 	QueueFree();
-		// }
-		// else
-		// {
-		// 	GD.PushWarning($"Cannot add item {Item.Name}: у {interactor.Name} нет инвентаря");
-		// }
-        
-	}
+        // TODO: Реализовать добавление в инвентарь через IInventoryOwner.
+        // Пример:
+        // if (interactor is IInventoryOwner owner)
+        // {
+        //     owner.Inventory.AddItem(Item);
+        //     QueueFree();
+        // }
+        // else
+        // {
+        //     GD.PushWarning("Cannot add item " + Item.Name + ": у " + interactor.Name + " нет инвентаря");
+        // }
+    }
 
-	public void Inspect()
-	{
-		GD.Print($"Название - {Item.Name}\nОписание - {Item.Description}");
-	}
+    public void Inspect()
+    {
+        if (Item == null)
+        {
+            return;
+        }
 
+        GD.Print("Название - " + Item.Name + "\nОписание - " + Item.Description);
+    }
 
-	public virtual void InteractEnter()
-	{
-		_isInRange = true;
-		_material?.SetShaderParameter("outline_size", OutlineActiveSize);
-	}
+    public virtual void InteractEnter()
+    {
+        _isInRange = true;
 
-	public virtual void InteractExit()
-	{
-		_isInRange = false;
-		_material?.SetShaderParameter("outline_size", 0f);
-	}
+        if (_material != null)
+        {
+            _material.SetShaderParameter("outline_size", OutlineActiveSize);
+        }
+    }
+
+    public virtual void InteractExit()
+    {
+        _isInRange = false;
+
+        if (_material != null)
+        {
+            _material.SetShaderParameter("outline_size", 0.0f);
+        }
+    }
 }
