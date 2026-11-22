@@ -1,5 +1,6 @@
 using Godot;
 
+[Tool]
 public partial class ObjectRes : Resource
 {
     [ExportGroup("Стороны")]
