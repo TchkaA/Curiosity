@@ -76,7 +76,7 @@ public sealed class DialogueCondition
 
     /// <summary>
     /// Ключ проверяемого значения: имя флага, поля <see cref="StatsComponent"/>,
-    /// фракции/персонажа, достижения или предмета.
+    /// фракции/персонажа, достижения или числовой ID предмета.
     /// </summary>
     public string Key { get; set; } = "";
 
@@ -96,7 +96,7 @@ public sealed class DialogueCondition
 /// Эффект, выполняемый при выборе ответа или из кода.
 /// </summary>
 /// <example>
-/// { "type": "item", "arg": "res://Objects/Items/.../Healing_potion.tres", "value": 1 }
+/// { "type": "item", "arg": 2, "value": 1 }
 /// </example>
 public sealed class DialogueEffect
 {
@@ -107,8 +107,8 @@ public sealed class DialogueEffect
     public string Type { get; set; } = "";
 
     /// <summary>
-    /// Аргумент эффекта: id/имя класса предмета, ключ флага, id достижения и т.п.
-    /// Для предметов используйте имя класса ("HealingPotion") или числовой ID ("2").
+    /// Аргумент эффекта: числовой ID предмета, ключ флага, id достижения и т.п.
+    /// Для предметов используется ID из <see cref="ItemCatalog"/>.
     /// </summary>
     public string Arg { get; set; } = "";
 

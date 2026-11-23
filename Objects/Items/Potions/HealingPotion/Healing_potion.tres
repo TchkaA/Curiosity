@@ -5,8 +5,9 @@
 
 [resource]
 script = ExtResource("2_62rvg")
-Name = "Healing Potion"
+Name = "Зелье лечения"
 Icon = ExtResource("1_dslsw")
-Description = "No descriptionsd."
+Description = "Восстанавливает здоровье при использовании."
 MaxStack = 8
-ID = 2
+Id = 2
+HealAmount = 50

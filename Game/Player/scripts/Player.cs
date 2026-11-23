@@ -50,8 +50,8 @@ public partial class Player : BaseEntity
 		_dashCooldown = 4f;
 
 		#if DEBUG
-		Inventory.AddItem(new HealingPotion(), 5);
-		Inventory.AddItem(new ChickenMeat(),10);
+		Inventory.AddItem(ItemDatabase.Get(2), 5); // 2 — зелье лечения
+		Inventory.AddItem(ItemDatabase.Get(3), 10); // 3 — куриное мясо
 		#endif
 	}
 

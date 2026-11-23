@@ -1,31 +1,27 @@
 using Godot;
-using System;
 
+/// <summary>
+/// Съедобное мясо. Восстанавливает здоровье при использовании.
+/// Все значения задаются в ресурсе <c>Chicken_meat.tres</c>.
+/// </summary>
+[GlobalClass]
 public partial class ChickenMeat : Item
 {
-    [Export] public int HealAmount { get; set; } = 10; // Уникальное поле только для зелья!
-
-    public ChickenMeat()
-    {
-        // Задаем дефолтные значения, которые можно переопределить в инспекторе Godot
-        Name = "Chicken Meat";
-        Description = "КУРОЧКА!!!!";
-        Icon = GD.Load<Texture2D>("res://Objects/Items/Food/CheckenMeat.tres");
-        MaxStack = 4;
-        ID = 3; 
-    }
+    /// <summary>
+    /// Сколько здоровья восстанавливает одна порция.
+    /// </summary>
+    [Export] public int HealAmount { get; set; } = 10;
 
     public override bool Use(Node2D user)
     {
-        // Проверяем, что пользователь - это BaseEntity, чтобы дать ему хил
         if (user is BaseEntity entity)
         {
-            entity.Heal(HealAmount); // Используем твой готовый метод из BaseEntity!
-            GD.Print($"[HealingPotion] {entity.Name} восстановил {HealAmount} HP!");
-            return true; // Использование успешно, предмет можно удалить из инвентаря
+            entity.Heal(HealAmount);
+            GD.Print($"[ChickenMeat] {entity.Name} восстановил {HealAmount} HP");
+            return true;
         }
-        
-        GD.PrintErr("[HealingPotion] Не удалось использовать: пользователь не является BaseEntity.");
+
+        GD.PushError("[ChickenMeat] Пользователь не является BaseEntity");
         return false;
     }
 }

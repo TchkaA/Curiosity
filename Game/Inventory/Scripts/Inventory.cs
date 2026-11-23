@@ -4,7 +4,7 @@ using Godot;
 public class Inventory
 {
     private readonly InventorySlotData?[] _slots;
-    private readonly Node2D _owner;
+    public readonly Node2D _owner;
     public int Capacity => _slots.Length;
 
     // Событие для обновления конкретного слота
@@ -36,7 +36,7 @@ public class Inventory
         // 1. Пытаемся добавить в существующие стаки с таким же ID
         for (int i = 0; i < Capacity && remaining > 0; i++)
         {
-            if (_slots[i] != null && _slots[i].Item.ID == item.ID && _slots[i].Count < item.MaxStack)
+            if (_slots[i] != null && _slots[i].Item.Id == item.Id && _slots[i].Count < item.MaxStack)
             {
                 int freeSpace = item.MaxStack - _slots[i].Count;
                 int addCount = Math.Min(remaining, freeSpace);
@@ -67,7 +67,7 @@ public class Inventory
             OnSlotChanged?.Invoke(emptyIndex);
         }
 
-        OnItemAdded?.Invoke(item, count);
+        if (_owner is Player) OnItemAdded?.Invoke(item, count);
 
         return added;
     }
@@ -102,7 +102,7 @@ public class Inventory
 
         for (int i = 0; i < Capacity && remaining > 0; i++)
         {
-            if (_slots[i] != null && _slots[i].Item.ID == item.ID)
+            if (_slots[i] != null && _slots[i].Item.Id == item.Id)
             {
                 int removeCount = Math.Min(remaining, _slots[i].Count);
                 _slots[i].Count -= removeCount;
@@ -158,7 +158,7 @@ public class Inventory
             _slots[sourceIndex] = null;
         }
         // Если предметы одинаковые и в целевом есть место, пытаемся слить
-        else if (sourceData != null && sourceData.Item.ID == targetData.Item.ID && targetData.Count < targetData.Item.MaxStack)
+        else if (sourceData != null && sourceData.Item.Id == targetData.Item.Id && targetData.Count < targetData.Item.MaxStack)
         {
             int spaceInTarget = targetData.Item.MaxStack - targetData.Count;
             int amountToMove = Math.Min(sourceData.Count, spaceInTarget);

@@ -106,8 +106,7 @@ public partial class PickUp : Area2D, IInteractable
     {
         if (Item == null && !Engine.IsEditorHint())
         {
-            GD.PrintErr(Name + ": PickUp создан без Item, настроен как Empty item.");
-            Item = GD.Load<Item>("res://Objects/Items/Empty_item/Empty_item.tres");
+            GD.PushError(Name + ": PickUp создан без Item. Назначьте ресурс предмета в инспекторе.");
         }
 
         if (!Engine.IsEditorHint() && Item != null)

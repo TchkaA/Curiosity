@@ -1,0 +1,13 @@
+[gd_resource type="Resource" format=3 uid="uid://d3n8v5t2y7r1k"]
+
+[ext_resource type="Texture2D" uid="uid://d1rxghqt0vy6" path="res://Objects/Items/Food/CheckenMeat.tres" id="1_icon"]
+[ext_resource type="Script" uid="uid://c88vilxwmjgws" path="res://Objects/Items/Food/ChickenMeat.cs" id="2_script"]
+
+[resource]
+script = ExtResource("2_script")
+Name = "Куриное мясо"
+Icon = ExtResource("1_icon")
+Description = "Сытное мясо. Восстанавливает здоровье при использовании."
+MaxStack = 4
+Id = 3
+HealAmount = 10

@@ -78,7 +78,7 @@ public sealed class DialogueContext
 
     /// <summary>
     /// Возвращает количество предмета в инвентаре игрока.
-    /// Ключом может быть имя класса предмета или его числовой ID.
+    /// Ключом служит числовой ID предмета из <see cref="ItemCatalog"/>.
     /// </summary>
     public int GetItemCount(string itemKey)
     {
@@ -93,7 +93,7 @@ public sealed class DialogueContext
             if (slot?.Item == null)
                 continue;
 
-            if (slot.Item == item || slot.Item.Name == item.Name)
+            if (slot.Item.Id == item.Id)
                 count += slot.Count;
         }
 

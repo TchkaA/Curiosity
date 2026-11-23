@@ -87,8 +87,8 @@ public partial class BaseNPC : BaseEntity, IInteractable
         // Временный лут для проверки MVP, пока NPC не заполняются из кода.
         if (Loot.Count == 0)
         {
-            Inventory.AddItem(new HealingPotion(), 2);
-            Inventory.AddItem(new ChickenMeat(), 1);
+            Inventory.AddItem(ItemDatabase.Get(2), 2); // 2 — зелье лечения
+            Inventory.AddItem(ItemDatabase.Get(3), 1); // 3 — куриное мясо
         }
         #endif
 

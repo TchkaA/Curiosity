@@ -77,7 +77,10 @@ public partial class InventoryGrid : GridContainer
     {
         if (_boundInventory != null)
         {
-            _boundInventory.UseItem(slot.SlotIndex);
+            if (_boundInventory._owner is Player)
+            {
+                _boundInventory.UseItem(slot.SlotIndex);
+            }
         }
     }
 
