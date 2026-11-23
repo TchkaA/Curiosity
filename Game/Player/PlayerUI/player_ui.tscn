@@ -79,6 +79,7 @@ Notif = NodePath("Notification")
 
 [node name="Notification" type="AudioStreamPlayer" parent="LogMessages" unique_id=683878869]
 stream = ExtResource("5_7wclb")
+volume_db = -15.0
 
 [node name="Button" type="Button" parent="." unique_id=481100715]
 visible = false

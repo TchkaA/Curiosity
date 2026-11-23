@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://bxdfkqnkw736p" path="res://Assets/Origin/Theme/UI/UITheme.tres" id="1_obduw"]
 [ext_resource type="Texture2D" uid="uid://tpx2s5gqeo5g" path="res://Objects/Items/Potions/HealingPotion/Healing_potion_texture.tres" id="2_6l3gs"]
-[ext_resource type="Script" uid="uid://e2k7n4vq9m1xc" path="res://Game/Panels/Scripts/InspectPanel.cs" id="3_script"]
+[ext_resource type="Script" uid="uid://66c22yipf56k" path="res://Game/Panels/Scripts/InspectPanel.cs" id="3_script"]
 
 [node name="InspectPanel" type="Control" unique_id=126441065 node_paths=PackedStringArray("NameLabel", "IconTexture", "DescriptionLabel")]
 visible = false

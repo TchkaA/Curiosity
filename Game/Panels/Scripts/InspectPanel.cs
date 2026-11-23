@@ -29,4 +29,22 @@ public partial class InspectPanel : GamePanel
 
         Show();
     }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        // if (!Visible || @event is InputEventMouseMotion)
+        //     return;
+
+        // Close();
+        // GetViewport().SetInputAsHandled();
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (!Visible || @event is InputEventMouseMotion)
+            return;
+
+        Close();
+        GetViewport().SetInputAsHandled();
+    }
 }

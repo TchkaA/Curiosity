@@ -142,7 +142,11 @@ public partial class AnimationComponent : AnimatedSprite2D
     private readonly Dictionary<string, int[]> _footstepFrames = new()
     {
         { "walk_forward", new[] { 1, 4 } },
-        { "run_forward", new[] { 1, 4 } }
+        { "run_forward", new[] { 1, 4 } },
+        { "walk_down", new[] { 0, 2 } },
+        { "walk_up", new[] { 0, 2 } },
+        { "run_up", new[] { 1, 3 } },
+        { "run_down", new[] { 1, 3 } },
     };
 
         private void OnFrameChanged()

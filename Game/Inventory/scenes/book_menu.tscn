@@ -95,7 +95,7 @@ offset_right = 320.48553
 offset_bottom = 303.575
 scale = Vector2(2.2, 2.2)
 
-[node name="TakeAllButton" type="Button" parent="Screens/InventoryPage" unique_id=1354372068]
+[node name="StoreAllButton" type="Button" parent="Screens/InventoryPage" unique_id=1354372068]
 layout_mode = 0
 offset_left = 86.0
 offset_top = 123.0
@@ -106,7 +106,7 @@ icon = SubResource("AtlasTexture_4iymr")
 icon_alignment = 1
 expand_icon = true
 
-[node name="StoreAllButton" type="Button" parent="Screens/InventoryPage" unique_id=2109471146]
+[node name="TakeAllButton" type="Button" parent="Screens/InventoryPage" unique_id=2109471146]
 layout_mode = 0
 offset_left = 1013.0
 offset_top = 123.0
@@ -148,5 +148,4 @@ bus = &"UI"
 [node name="DropPanel" parent="." unique_id=1237889130 instance=ExtResource("11_action")]
 visible = false
 
-[node name="InspectPanel" parent="." instance=ExtResource("12_inspect")]
-visible = false
+[node name="InspectPanel" parent="." unique_id=1274964110 instance=ExtResource("12_inspect")]
