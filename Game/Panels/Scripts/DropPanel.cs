@@ -2,11 +2,10 @@ using Godot;
 using System;
 
 /// <summary>
-/// Модальное окно подтверждения с выбором количества.
-/// Используется для выброса предметов из инвентаря.
+/// Панель выброса предметов с выбором количества.
 /// </summary>
 [GlobalClass]
-public partial class ActionMessage : Control
+public partial class DropPanel : GamePanel
 {
     [Export] public Label TitleLabel;
     [Export] public Label CountLabel;
@@ -20,11 +19,11 @@ public partial class ActionMessage : Control
     public event Action<int> Confirmed;
 
     /// <summary>
-    /// Отмена выбора.
+    /// Отмена выбора. Срабатывает при закрытии панели без подтверждения.
     /// </summary>
     public event Action Canceled;
 
-    public override void _Ready()
+    protected override void OnReady()
     {
         if (ConfirmButton != null)
             ConfirmButton.Pressed += OnConfirmPressed;
@@ -34,8 +33,6 @@ public partial class ActionMessage : Control
 
         if (CountSlider != null)
             CountSlider.ValueChanged += OnValueChanged;
-
-        Hide();
     }
 
     public override void _ExitTree()
@@ -51,9 +48,9 @@ public partial class ActionMessage : Control
     }
 
     /// <summary>
-    /// Показывает окно и настраивает диапазон выбора.
+    /// Показывает панель и настраивает диапазон выбора.
     /// </summary>
-    /// <param name="title">Заголовок окна.</param>
+    /// <param name="title">Заголовок панели.</param>
     /// <param name="maxCount">Максимальное доступное количество.</param>
     /// <param name="initialCount">Начальное значение слайдера.</param>
     public void Ask(string title, int maxCount, int initialCount = 1)
@@ -61,7 +58,7 @@ public partial class ActionMessage : Control
         maxCount = Math.Max(1, maxCount);
         initialCount = Math.Clamp(initialCount, 1, maxCount);
 
-        if (TitleLabel != null)
+        if (TitleLabel != null && !string.IsNullOrWhiteSpace(title))
             TitleLabel.Text = title;
 
         if (CountSlider != null)
@@ -76,29 +73,23 @@ public partial class ActionMessage : Control
         Show();
     }
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (!Visible || !@event.IsActionPressed("ui_cancel"))
-            return;
-
-        Hide();
-        Canceled?.Invoke();
-        GetViewport().SetInputAsHandled();
-    }
-
     private void OnConfirmPressed()
     {
         int count = CountSlider != null
             ? Mathf.RoundToInt((float)CountSlider.Value)
             : 1;
 
-        Hide();
+        HidePanel();
         Confirmed?.Invoke(count);
     }
 
     private void OnCancelPressed()
     {
-        Hide();
+        Close();
+    }
+
+    protected override void OnClosed()
+    {
         Canceled?.Invoke();
     }
 

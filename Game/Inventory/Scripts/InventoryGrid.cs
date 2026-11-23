@@ -7,26 +7,14 @@ public partial class InventoryGrid : GridContainer
     private Inventory _boundInventory;
     private readonly List<InventorySlot> _slots = new();
 
-    /// <summary>
-    /// Инвентарь, привязанный к сетке.
-    /// </summary>
     public Inventory BoundInventory => _boundInventory;
 
-    /// <summary>
-    /// Предмет перетащен на слот этой сетки.
-    /// Если подписчиков нет, предметы меняются местами внутри одного инвентаря.
-    /// </summary>
     public event Action<InventorySlot, InventorySlot> SlotDropped;
 
-    /// <summary>
-    /// Нажата правая кнопка мыши на слоте.
-    /// Если подписчиков нет, для инвентаря игрока предмет используется.
-    /// </summary>
-    public event Action<InventoryGrid, InventorySlot> SlotRightClicked;
+    public event Action<InventoryGrid, InventorySlot> SlotLeftClicked;
 
-    /// <summary>
-    /// Нажата средняя кнопка мыши на слоте.
-    /// </summary>
+    public event Action<InventoryGrid, InventorySlot, bool> SlotRightClicked;
+
     public event Action<InventoryGrid, InventorySlot> SlotMiddleClicked;
 
     public override void _Ready()
@@ -38,7 +26,8 @@ public partial class InventoryGrid : GridContainer
             {
                 slot.SlotIndex = index++;
                 _slots.Add(slot);
-                
+
+                slot.LeftClicked += OnSlotLeftClicked;
                 slot.RightClicked += OnSlotRightClicked;
                 slot.MiddleClicked += OnSlotMiddleClicked;
                 slot.ItemDropped += OnSlotItemDropped;
@@ -50,12 +39,11 @@ public partial class InventoryGrid : GridContainer
     {
         Unbind();
         _boundInventory = inventory;
-        
+
         if (_boundInventory != null)
         {
             _boundInventory.OnSlotChanged += UpdateSingleSlot;
-            
-            // Первоначальная отрисовка всех слотов
+
             for (int i = 0; i < _slots.Count; i++)
             {
                 UpdateSingleSlot(i);
@@ -70,7 +58,7 @@ public partial class InventoryGrid : GridContainer
             _boundInventory.OnSlotChanged -= UpdateSingleSlot;
             _boundInventory = null;
         }
-        
+
         foreach (var slot in _slots)
         {
             slot.Clear();
@@ -80,16 +68,21 @@ public partial class InventoryGrid : GridContainer
     private void UpdateSingleSlot(int index)
     {
         if (index < 0 || index >= _slots.Count || _boundInventory == null) return;
-        
+
         var data = _boundInventory.GetSlot(index);
         _slots[index].SetData(data);
     }
 
-    private void OnSlotRightClicked(InventorySlot slot)
+    private void OnSlotLeftClicked(InventorySlot slot)
+    {
+        SlotLeftClicked?.Invoke(this, slot);
+    }
+
+    private void OnSlotRightClicked(InventorySlot slot, bool shift)
     {
         if (SlotRightClicked != null)
         {
-            SlotRightClicked.Invoke(this, slot);
+            SlotRightClicked.Invoke(this, slot, shift);
             return;
         }
 
@@ -120,6 +113,7 @@ public partial class InventoryGrid : GridContainer
         Unbind();
         foreach (var slot in _slots)
         {
+            slot.LeftClicked -= OnSlotLeftClicked;
             slot.RightClicked -= OnSlotRightClicked;
             slot.MiddleClicked -= OnSlotMiddleClicked;
             slot.ItemDropped -= OnSlotItemDropped;

@@ -1,14 +1,17 @@
 using Godot;
 
 /// <summary>
-/// Страница инвентаря. Связывает сетки с инвентарями и обрабатывает
-/// действия со слотами: использование, лут и выброс предметов.
+/// Inventory page. Binds grids to inventories and handles slot actions:
+/// use, loot, transfer, inspect and drop.
 /// </summary>
 public partial class InventoryPage : Control
 {
     [Export] public InventoryGrid PlayerInventoryGrid;
     [Export] public InventoryGrid ExtraInventoryGrid;
-    [Export] public ActionMessage ActionMessage;
+    [Export] public DropPanel DropPanel;
+    [Export] public InspectPanel InspectPanel;
+    [Export] public Button TakeAllButton;
+    [Export] public Button StoreAllButton;
 
     private Player _player;
     private InventoryGrid _dropGrid;
@@ -19,16 +22,25 @@ public partial class InventoryPage : Control
         PlayerInventoryGrid.SlotDropped += OnSlotDropped;
         ExtraInventoryGrid.SlotDropped += OnSlotDropped;
 
+        PlayerInventoryGrid.SlotLeftClicked += OnSlotLeftClicked;
+        ExtraInventoryGrid.SlotLeftClicked += OnSlotLeftClicked;
+
         PlayerInventoryGrid.SlotRightClicked += OnSlotRightClicked;
         ExtraInventoryGrid.SlotRightClicked += OnSlotRightClicked;
 
         PlayerInventoryGrid.SlotMiddleClicked += OnSlotMiddleClicked;
         ExtraInventoryGrid.SlotMiddleClicked += OnSlotMiddleClicked;
 
-        if (ActionMessage != null)
+        if (TakeAllButton != null)
+            TakeAllButton.Pressed += OnTakeAllPressed;
+
+        if (StoreAllButton != null)
+            StoreAllButton.Pressed += OnStoreAllPressed;
+
+        if (DropPanel != null)
         {
-            ActionMessage.Confirmed += OnDropConfirmed;
-            ActionMessage.Canceled += OnDropCanceled;
+            DropPanel.Confirmed += OnDropConfirmed;
+            DropPanel.Canceled += OnDropCanceled;
         }
     }
 
@@ -37,6 +49,7 @@ public partial class InventoryPage : Control
         if (PlayerInventoryGrid != null)
         {
             PlayerInventoryGrid.SlotDropped -= OnSlotDropped;
+            PlayerInventoryGrid.SlotLeftClicked -= OnSlotLeftClicked;
             PlayerInventoryGrid.SlotRightClicked -= OnSlotRightClicked;
             PlayerInventoryGrid.SlotMiddleClicked -= OnSlotMiddleClicked;
         }
@@ -44,31 +57,34 @@ public partial class InventoryPage : Control
         if (ExtraInventoryGrid != null)
         {
             ExtraInventoryGrid.SlotDropped -= OnSlotDropped;
+            ExtraInventoryGrid.SlotLeftClicked -= OnSlotLeftClicked;
             ExtraInventoryGrid.SlotRightClicked -= OnSlotRightClicked;
             ExtraInventoryGrid.SlotMiddleClicked -= OnSlotMiddleClicked;
         }
 
-        if (ActionMessage != null)
+        if (TakeAllButton != null)
+            TakeAllButton.Pressed -= OnTakeAllPressed;
+
+        if (StoreAllButton != null)
+            StoreAllButton.Pressed -= OnStoreAllPressed;
+
+        if (DropPanel != null)
         {
-            ActionMessage.Confirmed -= OnDropConfirmed;
-            ActionMessage.Canceled -= OnDropCanceled;
+            DropPanel.Confirmed -= OnDropConfirmed;
+            DropPanel.Canceled -= OnDropCanceled;
         }
     }
 
-    /// <summary>
-    /// Привязывает инвентари к сеткам.
-    /// </summary>
-    /// <param name="playerInv">Инвентарь игрока.</param>
-    /// <param name="extraInv">Второй инвентарь для лута, если он открыт.</param>
-    /// <param name="player">Игрок, рядом с которым появляются выброшенные предметы.</param>
     public void Bind(Inventory playerInv, Inventory extraInv = null, Player player = null)
     {
         if (player != null)
             _player = player;
 
         PlayerInventoryGrid.Bind(playerInv);
-        
-        if (extraInv != null)
+
+        bool hasExtra = extraInv != null;
+
+        if (hasExtra)
         {
             ExtraInventoryGrid.Bind(extraInv);
             ExtraInventoryGrid.Visible = true;
@@ -76,8 +92,14 @@ public partial class InventoryPage : Control
         else
         {
             ExtraInventoryGrid.Unbind();
-            ExtraInventoryGrid.Visible = false; // Скрываем, если второго инвентаря нет
+            ExtraInventoryGrid.Visible = false;
         }
+
+        if (TakeAllButton != null)
+            TakeAllButton.Visible = hasExtra;
+
+        if (StoreAllButton != null)
+            StoreAllButton.Visible = hasExtra;
     }
 
     public void Unbind()
@@ -95,35 +117,47 @@ public partial class InventoryPage : Control
         if (sourceGrid?.BoundInventory == null || targetGrid?.BoundInventory == null)
             return;
 
-        // Один инвентарь — обычный обмен слотов.
         if (sourceGrid == targetGrid)
         {
             targetGrid.BoundInventory.SwapSlots(source.SlotIndex, target.SlotIndex);
             return;
         }
 
-        // Разные инвентари — перенос предмета (лут).
         sourceGrid.BoundInventory.MoveTo(targetGrid.BoundInventory, source.SlotIndex);
     }
 
-    /// <summary>
-    /// ПКМ по инвентарю игрока использует предмет, ПКМ по инвентарю лута
-    /// переносит предмет игроку.
-    /// </summary>
-    private void OnSlotRightClicked(InventoryGrid grid, InventorySlot slot)
+    private void OnSlotLeftClicked(InventoryGrid grid, InventorySlot slot)
     {
         if (slot?.CurrentData?.Item == null)
             return;
 
+        if (InspectPanel == null)
+        {
+            GD.PushError("[InventoryPage] InspectPanel is not assigned");
+            return;
+        }
+
+        InspectPanel.ShowItem(slot.CurrentData.Item);
+    }
+
+    private void OnSlotRightClicked(InventoryGrid grid, InventorySlot slot, bool shift)
+    {
+        if (slot?.CurrentData?.Item == null)
+            return;
+
+        if (shift)
+        {
+            if (grid == PlayerInventoryGrid)
+                MoveSlot(PlayerInventoryGrid, ExtraInventoryGrid, slot);
+            else if (grid == ExtraInventoryGrid)
+                MoveSlot(ExtraInventoryGrid, PlayerInventoryGrid, slot);
+
+            return;
+        }
+
         if (grid == ExtraInventoryGrid)
         {
-            var extra = ExtraInventoryGrid.BoundInventory;
-            var playerInventory = PlayerInventoryGrid.BoundInventory;
-
-            if (extra == null || playerInventory == null)
-                return;
-
-            extra.MoveTo(playerInventory, slot.SlotIndex);
+            MoveSlot(ExtraInventoryGrid, PlayerInventoryGrid, slot);
             return;
         }
 
@@ -133,23 +167,53 @@ public partial class InventoryPage : Control
         }
     }
 
-    /// <summary>
-    /// СКМ по слоту открывает окно выброса с выбором количества.
-    /// </summary>
+    private void MoveSlot(InventoryGrid source, InventoryGrid target, InventorySlot slot)
+    {
+        var sourceInventory = source?.BoundInventory;
+        var targetInventory = target?.BoundInventory;
+
+        if (sourceInventory == null || targetInventory == null)
+            return;
+
+        sourceInventory.MoveTo(targetInventory, slot.SlotIndex);
+    }
+
+    private void OnTakeAllPressed()
+    {
+        var extra = ExtraInventoryGrid.BoundInventory;
+        var player = PlayerInventoryGrid.BoundInventory;
+
+        if (extra == null || player == null)
+            return;
+
+        extra.MoveAllTo(player);
+    }
+
+    private void OnStoreAllPressed()
+    {
+        var extra = ExtraInventoryGrid.BoundInventory;
+        var player = PlayerInventoryGrid.BoundInventory;
+
+        if (extra == null || player == null)
+            return;
+
+        player.MoveAllTo(extra);
+    }
+
     private void OnSlotMiddleClicked(InventoryGrid grid, InventorySlot slot)
     {
         if (slot?.CurrentData?.Item == null || grid?.BoundInventory == null)
             return;
 
-        if (ActionMessage == null)
+        if (DropPanel == null)
         {
-            GD.PushError("[InventoryPage] Не назначено окно ActionMessage");
+            GD.PushError("[InventoryPage] DropPanel is not assigned");
             return;
         }
 
         _dropGrid = grid;
         _dropSlot = slot;
-        ActionMessage.Ask("Выбросить", slot.CurrentData.Count);
+        DropPanel.Ask(null, slot.CurrentData.Count);
     }
 
     private void OnDropConfirmed(int count)
@@ -188,7 +252,7 @@ public partial class InventoryPage : Control
 
         if (_player == null || _player.GetParent() == null)
         {
-            GD.PushError("[InventoryPage] Не удалось выбросить предмет: игрок не привязан");
+            GD.PushError("[InventoryPage] Cannot drop item: player is not bound");
             return;
         }
 
@@ -204,7 +268,7 @@ public partial class InventoryPage : Control
         _dropGrid = null;
         _dropSlot = null;
 
-        if (ActionMessage != null)
-            ActionMessage.Hide();
+        if (DropPanel != null)
+            DropPanel.HidePanel();
     }
 }

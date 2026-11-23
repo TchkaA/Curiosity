@@ -25,6 +25,12 @@ window/stretch/aspect="expand"
 
 project/assembly_name="Curiosity"
 
+[file_customization]
+
+folder_colors={
+"res://Game/Panels/": "purple"
+}
+
 [global_group]
 
 Player=""

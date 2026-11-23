@@ -7,10 +7,9 @@ public class Inventory
     public readonly Node2D _owner;
     public int Capacity => _slots.Length;
 
-    // Событие для обновления конкретного слота
     public event Action<int> OnSlotChanged;
 
-    public Action<Item,int> OnItemAdded;
+    public Action<Item, int> OnItemAdded;
 
     public Inventory(Node2D owner, int capacity = 20)
     {
@@ -33,7 +32,6 @@ public class Inventory
         int remaining = count;
         int added = 0;
 
-        // 1. Пытаемся добавить в существующие стаки с таким же ID
         for (int i = 0; i < Capacity && remaining > 0; i++)
         {
             if (_slots[i] != null && _slots[i].Item.Id == item.Id && _slots[i].Count < item.MaxStack)
@@ -44,26 +42,25 @@ public class Inventory
                 _slots[i].Count += addCount;
                 remaining -= addCount;
                 added += addCount;
-                
-                OnSlotChanged?.Invoke(i); // Обновляем только этот слот в UI
+
+                OnSlotChanged?.Invoke(i);
             }
         }
 
-        // 2. Если осталось, ищем первый пустой слот
         while (remaining > 0)
         {
             int emptyIndex = Array.FindIndex(_slots, slot => slot == null);
             if (emptyIndex == -1)
             {
-                GD.PrintErr("[Inventory] Инвентарь полон!");
-                break; // Инвентарь заполнен
+                GD.PrintErr("[Inventory] Inventory is full");
+                break;
             }
 
             int newStack = Math.Min(remaining, item.MaxStack > 0 ? item.MaxStack : remaining);
             _slots[emptyIndex] = new InventorySlotData(item, newStack);
             remaining -= newStack;
             added += newStack;
-            
+
             OnSlotChanged?.Invoke(emptyIndex);
         }
 
@@ -72,10 +69,6 @@ public class Inventory
         return added;
     }
 
-    /// <summary>
-    /// Перекладывает предмет из слота в другой инвентарь.
-    /// </summary>
-    /// <returns>Сколько предметов удалось переместить.</returns>
     public int MoveTo(Inventory target, int sourceIndex)
     {
         if (target == null || target == this) return 0;
@@ -91,6 +84,20 @@ public class Inventory
             _slots[sourceIndex] = null;
 
         OnSlotChanged?.Invoke(sourceIndex);
+        return moved;
+    }
+
+    public int MoveAllTo(Inventory target)
+    {
+        if (target == null || target == this) return 0;
+
+        int moved = 0;
+        for (int i = 0; i < Capacity; i++)
+        {
+            if (_slots[i]?.Item == null) continue;
+            moved += MoveTo(target, i);
+        }
+
         return moved;
     }
 
@@ -111,19 +118,15 @@ public class Inventory
                 int changedIndex = i;
                 if (_slots[i].Count <= 0)
                 {
-                    _slots[i] = null; // Очищаем слот полностью
+                    _slots[i] = null;
                 }
-                
+
                 OnSlotChanged?.Invoke(changedIndex);
             }
         }
         return remaining == 0;
     }
 
-    /// <summary>
-    /// Удаляет предмет из конкретного слота.
-    /// </summary>
-    /// <returns>Сколько предметов удалось удалить.</returns>
     public int RemoveFromSlot(int slotIndex, int count)
     {
         if (slotIndex < 0 || slotIndex >= Capacity || count <= 0) return 0;
@@ -162,9 +165,7 @@ public class Inventory
         }
         return false;
     }
-    /// <summary>
-    /// Меняет местами содержимое двух слотов. Поддерживает частичное слияние стаков.
-    /// </summary>
+
     public void SwapSlots(int sourceIndex, int targetIndex)
     {
         if (sourceIndex < 0 || sourceIndex >= Capacity) return;
@@ -174,13 +175,11 @@ public class Inventory
         var sourceData = _slots[sourceIndex];
         var targetData = _slots[targetIndex];
 
-        // Если целевой слот пустой, просто меняем местами
         if (targetData == null)
         {
             _slots[targetIndex] = sourceData;
             _slots[sourceIndex] = null;
         }
-        // Если предметы одинаковые и в целевом есть место, пытаемся слить
         else if (sourceData != null && sourceData.Item.Id == targetData.Item.Id && targetData.Count < targetData.Item.MaxStack)
         {
             int spaceInTarget = targetData.Item.MaxStack - targetData.Count;
@@ -194,7 +193,6 @@ public class Inventory
                 _slots[sourceIndex] = null;
             }
         }
-        // Если предметы разные или стак полный, просто меняем их местами
         else
         {
             _slots[targetIndex] = sourceData;

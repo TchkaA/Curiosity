@@ -8,7 +8,7 @@ using Godot;
 public partial class InventorySlot : Control
 {
     [Signal] public delegate void LeftClickedEventHandler(InventorySlot slot);
-    [Signal] public delegate void RightClickedEventHandler(InventorySlot slot);
+    [Signal] public delegate void RightClickedEventHandler(InventorySlot slot, bool shift);
     [Signal] public delegate void MiddleClickedEventHandler(InventorySlot slot);
     [Signal] public delegate void ItemDroppedEventHandler(InventorySlot sourceSlot, InventorySlot targetSlot);
 
@@ -17,6 +17,9 @@ public partial class InventorySlot : Control
 
     public InventorySlotData CurrentData { get; private set; }
     public int SlotIndex { get; set; }
+
+    private bool _leftPressed;
+    private bool _isDragging;
 
     public override void _Ready()
     {
@@ -58,24 +61,53 @@ public partial class InventorySlot : Control
 
     public override void _GuiInput(InputEvent @event)
     {
-        if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed)
+        if (@event is not InputEventMouseButton mouseEvent)
+            return;
+
+        if (mouseEvent.ButtonIndex == MouseButton.Left)
         {
-            if (mouseEvent.ButtonIndex == MouseButton.Right)
+            if (mouseEvent.Pressed)
             {
-                EmitSignal(SignalName.RightClicked, this);
-                AcceptEvent();
+                _leftPressed = true;
+                _isDragging = false;
             }
-            else if (mouseEvent.ButtonIndex == MouseButton.Middle)
+            else if (_leftPressed)
             {
-                EmitSignal(SignalName.MiddleClicked, this);
-                AcceptEvent();
+                _leftPressed = false;
+
+                // Release after drag is not a click.
+                if (!_isDragging)
+                {
+                    EmitSignal(SignalName.LeftClicked, this);
+                    AcceptEvent();
+                }
+
+                _isDragging = false;
             }
+
+            return;
+        }
+
+        if (!mouseEvent.Pressed)
+            return;
+
+        if (mouseEvent.ButtonIndex == MouseButton.Right)
+        {
+            EmitSignal(SignalName.RightClicked, this, mouseEvent.ShiftPressed);
+            AcceptEvent();
+        }
+        else if (mouseEvent.ButtonIndex == MouseButton.Middle)
+        {
+            EmitSignal(SignalName.MiddleClicked, this);
+            AcceptEvent();
         }
     }
 
     public override Variant _GetDragData(Vector2 atPosition)
     {
         if (CurrentData == null) return default;
+
+        _isDragging = true;
 
         var preview = new TextureRect
         {

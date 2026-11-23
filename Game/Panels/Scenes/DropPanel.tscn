@@ -1,19 +1,17 @@
 [gd_scene format=3 uid="uid://t5u7eovauxc3"]
 
-[ext_resource type="Theme" uid="uid://bxdfkqnkw736p" path="res://Assets/Origin/Theme/UI/UITheme.tres" id="1_plr33"]
-[ext_resource type="Script" uid="uid://c4m8x2vq7n1ke" path="res://Game/ActionMessage/Scripts/ActionMessage.cs" id="2_script"]
+[ext_resource type="Theme" uid="uid://bxdfkqnkw736p" path="res://Assets/Origin/Theme/UI/UITheme.tres" id="1_aq4au"]
+[ext_resource type="Script" uid="uid://c4m8x2vq7n1ke" path="res://Game/Panels/Scripts/DropPanel.cs" id="2_lr8s2"]
 
-[node name="ActionMessage" type="Control" unique_id=1237889130 node_paths=PackedStringArray("TitleLabel", "CountLabel", "CountSlider", "ConfirmButton", "CancelButton")]
+[node name="DropPanel" type="Control" unique_id=1237889130 node_paths=PackedStringArray("TitleLabel", "CountLabel", "CountSlider", "ConfirmButton", "CancelButton")]
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_plr33")
-script = ExtResource("2_script")
+theme = ExtResource("1_aq4au")
+script = ExtResource("2_lr8s2")
 TitleLabel = NodePath("Panel/Label")
 CountLabel = NodePath("Panel/Label2")
 CountSlider = NodePath("Panel/HSlider")
@@ -33,7 +31,7 @@ offset_right = 105.0
 offset_bottom = 68.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_plr33")
+theme = ExtResource("1_aq4au")
 
 [node name="HSlider" type="HSlider" parent="Panel" unique_id=808796664]
 layout_mode = 1

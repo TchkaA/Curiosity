@@ -7,10 +7,17 @@
 [ext_resource type="Script" uid="uid://cjjn6kfc1igv" path="res://Game/BookMenu/Scripts/InventoryPage.cs" id="5_7anev"]
 [ext_resource type="PackedScene" uid="uid://o30vjs13ky7r" path="res://Game/Inventory/scenes/inventory_page.tscn" id="6_25quv"]
 [ext_resource type="Script" uid="uid://7f00gj6p8o5f" path="res://Game/BookMenu/Scripts/ProfilePage.cs" id="7_7anev"]
+[ext_resource type="Theme" uid="uid://bxdfkqnkw736p" path="res://Assets/Origin/Theme/UI/UITheme.tres" id="7_8163m"]
+[ext_resource type="Texture2D" uid="uid://dbwjihvu0vgsy" path="res://Assets/Origin/UI/Player_UI.png" id="8_2l40i"]
 [ext_resource type="PackedScene" uid="uid://nx8ida0yi52c" path="res://Game/Profile/scenes/profile_interface.tscn" id="8_wrl5x"]
 [ext_resource type="AudioStream" uid="uid://dpgykps83c756" path="res://Assets/Origin/Sounds/UI/swapPaper2.wav" id="9_cfyto"]
 [ext_resource type="AudioStream" uid="uid://da2cgdsqcj367" path="res://Assets/Origin/Sounds/UI/swapPaper.wav" id="10_1nqj4"]
-[ext_resource type="PackedScene" uid="uid://t5u7eovauxc3" path="res://Game/ActionMessage/Scenes/action_message.tscn" id="11_action"]
+[ext_resource type="PackedScene" uid="uid://t5u7eovauxc3" path="res://Game/Panels/Scenes/DropPanel.tscn" id="11_action"]
+[ext_resource type="PackedScene" uid="uid://5iwdgum5njf3" path="res://Game/Panels/Scenes/InspectPanel.tscn" id="12_inspect"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4iymr"]
+atlas = ExtResource("8_2l40i")
+region = Rect2(208, 79, 16, 17)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_te5gi"]
 playback_mode = 1
@@ -67,15 +74,18 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="InventoryPage" type="Control" parent="Screens" unique_id=251557428 node_paths=PackedStringArray("PlayerInventoryGrid", "ExtraInventoryGrid", "ActionMessage")]
+[node name="InventoryPage" type="Control" parent="Screens" unique_id=251557428 node_paths=PackedStringArray("PlayerInventoryGrid", "ExtraInventoryGrid", "DropPanel", "InspectPanel", "TakeAllButton", "StoreAllButton")]
 visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("5_7anev")
 PlayerInventoryGrid = NodePath("PlayerInventory")
-ExtraInventoryGrid = NodePath("ExtraInventory")
-ActionMessage = NodePath("../../ActionMessage")
+ExtraInventoryGrid = NodePath("ExtraPanel/ExtraInventory")
+DropPanel = NodePath("../../DropPanel")
+InspectPanel = NodePath("../../InspectPanel")
+TakeAllButton = NodePath("TakeAllButton")
+StoreAllButton = NodePath("StoreAllButton")
 
 [node name="PlayerInventory" parent="Screens/InventoryPage" unique_id=1042492033 instance=ExtResource("6_25quv")]
 layout_mode = 0
@@ -85,7 +95,34 @@ offset_right = 320.48553
 offset_bottom = 303.575
 scale = Vector2(2.2, 2.2)
 
-[node name="ExtraInventory" parent="Screens/InventoryPage" unique_id=294969645 instance=ExtResource("6_25quv")]
+[node name="TakeAllButton" type="Button" parent="Screens/InventoryPage" unique_id=1354372068]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 123.0
+offset_right = 139.0
+offset_bottom = 167.0
+theme = ExtResource("7_8163m")
+icon = SubResource("AtlasTexture_4iymr")
+icon_alignment = 1
+expand_icon = true
+
+[node name="StoreAllButton" type="Button" parent="Screens/InventoryPage" unique_id=2109471146]
+layout_mode = 0
+offset_left = 1013.0
+offset_top = 123.0
+offset_right = 1066.0
+offset_bottom = 167.0
+theme = ExtResource("7_8163m")
+icon = SubResource("AtlasTexture_4iymr")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ExtraPanel" type="Control" parent="Screens/InventoryPage" unique_id=1902234987]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ExtraInventory" parent="Screens/InventoryPage/ExtraPanel" unique_id=294969645 instance=ExtResource("6_25quv")]
 layout_mode = 0
 offset_left = 643.63
 offset_top = 112.575
@@ -108,5 +145,8 @@ layout_mode = 1
 stream = SubResource("AudioStreamRandomizer_te5gi")
 bus = &"UI"
 
-[node name="ActionMessage" parent="." instance=ExtResource("11_action")]
+[node name="DropPanel" parent="." unique_id=1237889130 instance=ExtResource("11_action")]
+visible = false
+
+[node name="InspectPanel" parent="." instance=ExtResource("12_inspect")]
 visible = false
