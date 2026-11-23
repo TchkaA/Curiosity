@@ -5,6 +5,7 @@ using Godot;
 /// Все значения задаются в ресурсе <c>Healing_potion.tres</c>.
 /// </summary>
 [GlobalClass]
+[Tool]
 public partial class HealingPotion : Item
 {
     /// <summary>

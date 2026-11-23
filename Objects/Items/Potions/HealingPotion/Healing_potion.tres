@@ -1,13 +1,12 @@
-[gd_resource type="Resource" format=3 uid="uid://cw4cmwglh8shn"]
+[gd_resource type="Resource" script_class="HealingPotion" format=3 uid="uid://cw4cmwglh8shn"]
 
 [ext_resource type="Texture2D" uid="uid://tpx2s5gqeo5g" path="res://Objects/Items/Potions/HealingPotion/Healing_potion_texture.tres" id="1_dslsw"]
 [ext_resource type="Script" uid="uid://dcem4mjf2ccen" path="res://Objects/Items/Potions/HealingPotion/HealingPotion.cs" id="2_62rvg"]
 
 [resource]
 script = ExtResource("2_62rvg")
+Id = 2
 Name = "Зелье лечения"
 Icon = ExtResource("1_dslsw")
 Description = "Восстанавливает здоровье при использовании."
 MaxStack = 8
-Id = 2
-HealAmount = 50

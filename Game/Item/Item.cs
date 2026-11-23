@@ -5,6 +5,7 @@ using Godot;
 /// Предмет — это ресурс (<c>.tres</c>), который настраивается в редакторе
 /// и используется сценами напрямую, без создания экземпляров из кода.
 /// </summary>
+[Tool]
 [GlobalClass]
 public abstract partial class Item : Resource
 {

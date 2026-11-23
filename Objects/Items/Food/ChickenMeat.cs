@@ -4,6 +4,7 @@ using Godot;
 /// Съедобное мясо. Восстанавливает здоровье при использовании.
 /// Все значения задаются в ресурсе <c>Chicken_meat.tres</c>.
 /// </summary>
+[Tool]
 [GlobalClass]
 public partial class ChickenMeat : Item
 {

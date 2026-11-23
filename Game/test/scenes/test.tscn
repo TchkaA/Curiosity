@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://qne05bv78y38" path="res://Objects/Chest/Chest.cs" id="11_qia5k"]
 [ext_resource type="Script" uid="uid://n8igyjeh5ljl" path="res://Game/Item/Item.cs" id="12_0217j"]
 [ext_resource type="Resource" uid="uid://cw4cmwglh8shn" path="res://Objects/Items/Potions/HealingPotion/Healing_potion.tres" id="13_7p1e4"]
+[ext_resource type="Resource" uid="uid://d3n8v5t2y7r1k" path="res://Objects/Items/Food/Chicken_meat.tres" id="14_7p1e4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4iymr"]
 radius = 44.59
@@ -106,9 +107,17 @@ Direction = 1
 Resource = ExtResource("9_2wgon")
 metadata/_custom_type_script = "uid://qne05bv78y38"
 
-[node name="PickUp" type="Area2D" parent="." unique_id=981530795]
+[node name="PickUp" type="Area2D" parent="." unique_id=1846045063]
 z_index = -1
-position = Vector2(-43.727264, 128.00002)
+position = Vector2(-56, 124)
+script = ExtResource("3_600mi")
+Item = ExtResource("14_7p1e4")
+Count = 3
+metadata/_custom_type_script = "uid://4spcpn08s5n5"
+
+[node name="PickUp2" type="Area2D" parent="." unique_id=619982968]
+z_index = -1
 script = ExtResource("3_600mi")
 Item = ExtResource("13_7p1e4")
+Count = 4
 metadata/_custom_type_script = "uid://4spcpn08s5n5"

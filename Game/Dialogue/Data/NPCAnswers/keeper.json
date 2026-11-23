@@ -45,7 +45,7 @@
         {
           "playerText": "Спасибо.",
           "effects": [
-            { "type": "item", "arg": 3, "value": 1 }
+            { "type": "item", "arg": 2, "value": 1 }
           ]
         }
       ]

@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="ItemCatalog" format=3 uid="uid://f6q1m8c4x2v9b"]
+[gd_resource type="Resource" script_class="ItemCatalog" format=3 uid="uid://ccc516fveu1ij"]
 
-[ext_resource type="Script" uid="uid://b7x2k9m4q1w8e" path="res://Game/Item/ItemCatalog.cs" id="1_catalog"]
+[ext_resource type="Script" uid="uid://b7x2lam4q1w8e" path="res://Game/Item/ItemCatalog.cs" id="1_catalog"]
 [ext_resource type="Script" uid="uid://n8igyjeh5ljl" path="res://Game/Item/Item.cs" id="2_item"]
 [ext_resource type="Resource" uid="uid://bsrykxr84a0sf" path="res://Objects/Items/Empty_item/Empty_item.tres" id="3_empty"]
 [ext_resource type="Resource" uid="uid://cw4cmwglh8shn" path="res://Objects/Items/Potions/HealingPotion/Healing_potion.tres" id="4_healing"]

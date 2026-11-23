@@ -91,15 +91,19 @@ public partial class PickUp : Area2D, IInteractable
     private CollisionShape2D _collision;
     private bool _isInRange;
 
-    public int Count;
+    [Export]
+    public int Count = 1;
+    
+    public Label LabelCount;
 
     /// <summary>
     /// Задать предмет до того, как нода попадёт в дерево сцены.
     /// Вся остальная настройка (визуал, коллизия, шейдер) произойдёт один раз в _Ready.
     /// </summary>
-    public void Init(Item item)
+    public void Init(Item item, int count = 1)
     {
         Item = item;
+        Count = count;
     }
 
     public override void _Ready()
@@ -231,21 +235,8 @@ public partial class PickUp : Area2D, IInteractable
 
     public void Interact(BaseEntity interactor)
     {
-        #if DEBUG
-        GD.Print("Interact with item " + Name);
+        interactor.Inventory.AddItem(_item, Count);
         QueueFree();
-        #endif
-        // TODO: Реализовать добавление в инвентарь через IInventoryOwner.
-        // Пример:
-        // if (interactor is IInventoryOwner owner)
-        // {
-        //     owner.Inventory.AddItem(Item);
-        //     QueueFree();
-        // }
-        // else
-        // {
-        //     GD.PushWarning("Cannot add item " + Item.Name + ": у " + interactor.Name + " нет инвентаря");
-        // }
     }
 
     public void Inspect()
@@ -261,6 +252,7 @@ public partial class PickUp : Area2D, IInteractable
     public virtual void InteractEnter()
     {
         _isInRange = true;
+        ShowInfo();
 
         if (_material != null)
         {
@@ -271,10 +263,31 @@ public partial class PickUp : Area2D, IInteractable
     public virtual void InteractExit()
     {
         _isInRange = false;
+        HideInfo();
 
         if (_material != null)
         {
             _material.SetShaderParameter("outline_size", 0.0f);
+        }
+    }
+
+
+    public void ShowInfo()
+    {
+        LabelCount = new Label() {
+            GlobalPosition = new Vector2(-5,-30),
+            Text = $"{Count}",
+            Size = new Vector2(1,1)
+        };
+
+        AddChild(LabelCount);
+    }
+
+    public void HideInfo()
+    {
+        if (GodotObject.IsInstanceValid(LabelCount))
+        {
+            LabelCount.QueueFree();
         }
     }
 }
