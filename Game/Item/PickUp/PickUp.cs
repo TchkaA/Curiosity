@@ -235,8 +235,28 @@ public partial class PickUp : Area2D, IInteractable
 
     public void Interact(BaseEntity interactor)
     {
-        interactor.Inventory.AddItem(_item, Count);
-        QueueFree();
+        if (Item == null || interactor?.Inventory == null)
+        {
+            return;
+        }
+
+        int added = interactor.Inventory.AddItem(Item, Count);
+        if (added <= 0)
+        {
+            return;
+        }
+
+        Count -= added;
+        if (Count <= 0)
+        {
+            QueueFree();
+            return;
+        }
+
+        if (GodotObject.IsInstanceValid(LabelCount))
+        {
+            LabelCount.Text = Count.ToString();
+        }
     }
 
     public void Inspect()

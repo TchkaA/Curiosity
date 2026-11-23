@@ -116,6 +116,14 @@ offset_bottom = 366.0
 texture = SubResource("AtlasTexture_su7ka")
 stretch_mode = 5
 
+[node name="HPProgressBar" type="ProgressBar" parent="visual" unique_id=1708346499]
+layout_mode = 0
+offset_left = 343.0
+offset_top = 213.0
+offset_right = 501.0
+offset_bottom = 240.0
+step = 3.0
+
 [node name="stats" type="Control" parent="." unique_id=513945280]
 anchors_preset = 0
 offset_right = 40.0

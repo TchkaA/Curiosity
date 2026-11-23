@@ -9,6 +9,7 @@ public partial class InventorySlot : Control
 {
     [Signal] public delegate void LeftClickedEventHandler(InventorySlot slot);
     [Signal] public delegate void RightClickedEventHandler(InventorySlot slot);
+    [Signal] public delegate void MiddleClickedEventHandler(InventorySlot slot);
     [Signal] public delegate void ItemDroppedEventHandler(InventorySlot sourceSlot, InventorySlot targetSlot);
 
     [Export] public TextureRect IconTexture;
@@ -62,6 +63,11 @@ public partial class InventorySlot : Control
             if (mouseEvent.ButtonIndex == MouseButton.Right)
             {
                 EmitSignal(SignalName.RightClicked, this);
+                AcceptEvent();
+            }
+            else if (mouseEvent.ButtonIndex == MouseButton.Middle)
+            {
+                EmitSignal(SignalName.MiddleClicked, this);
                 AcceptEvent();
             }
         }

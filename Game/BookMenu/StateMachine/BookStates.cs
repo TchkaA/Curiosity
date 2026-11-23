@@ -13,7 +13,7 @@ public class InventoryPageState : IState
     }
     public void Enter()
     {
-        _inventoryPage.Bind(_player.Inventory);
+        _inventoryPage.Bind(_player.Inventory, null, _player);
         _inventoryPage.Visible = true;
         _inventoryButton.ButtonPressed = true;
     }

@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://nx8ida0yi52c" path="res://Game/Profile/scenes/profile_interface.tscn" id="8_wrl5x"]
 [ext_resource type="AudioStream" uid="uid://dpgykps83c756" path="res://Assets/Origin/Sounds/UI/swapPaper2.wav" id="9_cfyto"]
 [ext_resource type="AudioStream" uid="uid://da2cgdsqcj367" path="res://Assets/Origin/Sounds/UI/swapPaper.wav" id="10_1nqj4"]
+[ext_resource type="PackedScene" uid="uid://t5u7eovauxc3" path="res://Game/ActionMessage/Scenes/action_message.tscn" id="11_action"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_te5gi"]
 playback_mode = 1
@@ -66,7 +67,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="InventoryPage" type="Control" parent="Screens" unique_id=251557428 node_paths=PackedStringArray("PlayerInventoryGrid", "ExtraInventoryGrid")]
+[node name="InventoryPage" type="Control" parent="Screens" unique_id=251557428 node_paths=PackedStringArray("PlayerInventoryGrid", "ExtraInventoryGrid", "ActionMessage")]
 visible = false
 anchors_preset = 0
 offset_right = 40.0
@@ -74,6 +75,7 @@ offset_bottom = 40.0
 script = ExtResource("5_7anev")
 PlayerInventoryGrid = NodePath("PlayerInventory")
 ExtraInventoryGrid = NodePath("ExtraInventory")
+ActionMessage = NodePath("../../ActionMessage")
 
 [node name="PlayerInventory" parent="Screens/InventoryPage" unique_id=1042492033 instance=ExtResource("6_25quv")]
 layout_mode = 0
@@ -105,3 +107,6 @@ layout_mode = 1
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=799191249]
 stream = SubResource("AudioStreamRandomizer_te5gi")
 bus = &"UI"
+
+[node name="ActionMessage" parent="." instance=ExtResource("11_action")]
+visible = false

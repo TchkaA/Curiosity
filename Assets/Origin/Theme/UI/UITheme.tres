@@ -1,0 +1,47 @@
+[gd_resource type="Theme" format=3 uid="uid://bxdfkqnkw736p"]
+
+[ext_resource type="Texture2D" uid="uid://cteey4mcgmitk" path="res://Assets/Origin/Scroll/HSlider.tres" id="1_dgxnv"]
+[ext_resource type="FontFile" uid="uid://cd8p4r546xbcv" path="res://Assets/Origin/Fonts/Pixel/Classic-Console-Neue-Regular.ttf" id="1_f45yk"]
+[ext_resource type="Texture2D" uid="uid://oeu24nqh16be" path="res://Assets/Origin/Scroll/ScrollTexture1.tres" id="2_8jegw"]
+[ext_resource type="Texture2D" uid="uid://ca64v3st0b80b" path="res://Assets/Origin/Buttons/UIButton2.tres" id="2_qexpe"]
+[ext_resource type="Texture2D" uid="uid://dgpy0js3blomi" path="res://Assets/Origin/Scroll/ScrollTexture2.tres" id="3_6l7x3"]
+[ext_resource type="Texture2D" uid="uid://cuotgxhci8y1y" path="res://Assets/Origin/Buttons/UIButton1.tres" id="3_f6ney"]
+[ext_resource type="Texture2D" uid="uid://pd7p2w1lwyou" path="res://Assets/Origin/Panel/PanelMessage.tres" id="4_o7vx0"]
+[ext_resource type="Texture2D" uid="uid://epdvswim5pbt" path="res://Assets/Origin/Buttons/UIButton3.tres" id="4_y74bf"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_efj76"]
+texture = ExtResource("2_qexpe")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cyy54"]
+texture = ExtResource("3_f6ney")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8kt7y"]
+texture = ExtResource("4_y74bf")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yvrnx"]
+texture = ExtResource("2_8jegw")
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ifthl"]
+texture = ExtResource("3_6l7x3")
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5xbwf"]
+texture = ExtResource("4_o7vx0")
+
+[resource]
+Button/fonts/font = ExtResource("1_f45yk")
+Button/styles/hover = SubResource("StyleBoxTexture_efj76")
+Button/styles/normal = SubResource("StyleBoxTexture_cyy54")
+Button/styles/pressed = SubResource("StyleBoxTexture_8kt7y")
+HSlider/icons/grabber = ExtResource("1_dgxnv")
+HSlider/icons/grabber_disabled = ExtResource("1_dgxnv")
+HSlider/icons/grabber_highlight = ExtResource("1_dgxnv")
+HSlider/styles/grabber_area = SubResource("StyleBoxTexture_yvrnx")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxTexture_yvrnx")
+HSlider/styles/slider = SubResource("StyleBoxTexture_ifthl")
+Label/font_sizes/font_size = 20
+Label/fonts/font = ExtResource("1_f45yk")
+Panel/styles/panel = SubResource("StyleBoxTexture_5xbwf")

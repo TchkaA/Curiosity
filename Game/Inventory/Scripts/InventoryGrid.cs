@@ -18,6 +18,17 @@ public partial class InventoryGrid : GridContainer
     /// </summary>
     public event Action<InventorySlot, InventorySlot> SlotDropped;
 
+    /// <summary>
+    /// Нажата правая кнопка мыши на слоте.
+    /// Если подписчиков нет, для инвентаря игрока предмет используется.
+    /// </summary>
+    public event Action<InventoryGrid, InventorySlot> SlotRightClicked;
+
+    /// <summary>
+    /// Нажата средняя кнопка мыши на слоте.
+    /// </summary>
+    public event Action<InventoryGrid, InventorySlot> SlotMiddleClicked;
+
     public override void _Ready()
     {
         int index = 0;
@@ -29,6 +40,7 @@ public partial class InventoryGrid : GridContainer
                 _slots.Add(slot);
                 
                 slot.RightClicked += OnSlotRightClicked;
+                slot.MiddleClicked += OnSlotMiddleClicked;
                 slot.ItemDropped += OnSlotItemDropped;
             }
         }
@@ -75,13 +87,21 @@ public partial class InventoryGrid : GridContainer
 
     private void OnSlotRightClicked(InventorySlot slot)
     {
-        if (_boundInventory != null)
+        if (SlotRightClicked != null)
         {
-            if (_boundInventory._owner is Player)
-            {
-                _boundInventory.UseItem(slot.SlotIndex);
-            }
+            SlotRightClicked.Invoke(this, slot);
+            return;
         }
+
+        if (_boundInventory?._owner is Player)
+        {
+            _boundInventory.UseItem(slot.SlotIndex);
+        }
+    }
+
+    private void OnSlotMiddleClicked(InventorySlot slot)
+    {
+        SlotMiddleClicked?.Invoke(this, slot);
     }
 
     private void OnSlotItemDropped(InventorySlot sourceSlot, InventorySlot targetSlot)
@@ -101,6 +121,7 @@ public partial class InventoryGrid : GridContainer
         foreach (var slot in _slots)
         {
             slot.RightClicked -= OnSlotRightClicked;
+            slot.MiddleClicked -= OnSlotMiddleClicked;
             slot.ItemDropped -= OnSlotItemDropped;
         }
     }

@@ -120,6 +120,29 @@ public class Inventory
         return remaining == 0;
     }
 
+    /// <summary>
+    /// Удаляет предмет из конкретного слота.
+    /// </summary>
+    /// <returns>Сколько предметов удалось удалить.</returns>
+    public int RemoveFromSlot(int slotIndex, int count)
+    {
+        if (slotIndex < 0 || slotIndex >= Capacity || count <= 0) return 0;
+
+        var slot = _slots[slotIndex];
+        if (slot?.Item == null) return 0;
+
+        int removed = Math.Min(count, slot.Count);
+        slot.Count -= removed;
+
+        if (slot.Count <= 0)
+        {
+            _slots[slotIndex] = null;
+        }
+
+        OnSlotChanged?.Invoke(slotIndex);
+        return removed;
+    }
+
     public bool UseItem(int slotIndex, Node2D user = null)
     {
         if (slotIndex < 0 || slotIndex >= Capacity || _slots[slotIndex] == null) return false;

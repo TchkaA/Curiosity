@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://t5u7eovauxc3"]
+
+[ext_resource type="Theme" uid="uid://bxdfkqnkw736p" path="res://Assets/Origin/Theme/UI/UITheme.tres" id="1_plr33"]
+[ext_resource type="Script" uid="uid://c4m8x2vq7n1ke" path="res://Game/ActionMessage/Scripts/ActionMessage.cs" id="2_script"]
+
+[node name="ActionMessage" type="Control" unique_id=1237889130 node_paths=PackedStringArray("TitleLabel", "CountLabel", "CountSlider", "ConfirmButton", "CancelButton")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_plr33")
+script = ExtResource("2_script")
+TitleLabel = NodePath("Panel/Label")
+CountLabel = NodePath("Panel/Label2")
+CountSlider = NodePath("Panel/HSlider")
+ConfirmButton = NodePath("Panel/HBoxContainer/Button")
+CancelButton = NodePath("Panel/HBoxContainer/Button2")
+
+[node name="Panel" type="Panel" parent="." unique_id=580621986]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -105.0
+offset_top = -68.5
+offset_right = 105.0
+offset_bottom = 68.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_plr33")
+
+[node name="HSlider" type="HSlider" parent="Panel" unique_id=808796664]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = -60.0
+offset_right = -13.0
+offset_bottom = -52.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 32.0
+value = 8.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel" unique_id=564793481]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -41.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="Button" type="Button" parent="Panel/HBoxContainer" unique_id=1103326564]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Да"
+
+[node name="VSeparator" type="VSeparator" parent="Panel/HBoxContainer" unique_id=1569129732]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="Panel/HBoxContainer" unique_id=361538044]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "нет"
+
+[node name="Label" type="Label" parent="Panel" unique_id=1530446481]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -38.285
+offset_right = 45.0
+offset_bottom = -15.284977
+grow_horizontal = 2
+grow_vertical = 2
+text = "Выбросить"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Panel" unique_id=215045557]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -15.5
+offset_right = 45.0
+offset_bottom = 7.500023
+grow_horizontal = 2
+grow_vertical = 2
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1

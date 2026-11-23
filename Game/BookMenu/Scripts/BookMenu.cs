@@ -84,7 +84,7 @@ public partial class BookMenu : CanvasLayer
     {
         Page = Pages.Inventory;
         Open();
-        InventoryPage.Bind(_player.Inventory, extraInventory);
+        InventoryPage.Bind(_player.Inventory, extraInventory, _player);
     }
 
     public override void _Input(InputEvent @event)
