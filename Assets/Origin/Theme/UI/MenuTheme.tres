@@ -1,0 +1,20 @@
+[gd_resource type="Theme" format=3 uid="uid://c7x4hhoiifqud"]
+
+[ext_resource type="FontFile" uid="uid://cd8p4r546xbcv" path="res://Assets/Origin/Fonts/Pixel/Classic-Console-Neue-Regular.ttf" id="1_2p4vl"]
+[ext_resource type="Texture2D" uid="uid://b2unpubidmbxe" path="res://Assets/Origin/Panel/PausePanel.tres" id="2_n8h21"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4iymr"]
+bg_color = Color(0.8500505, 0.85005057, 0.8500507, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l3qb"]
+bg_color = Color(0.04026879, 0.040268816, 0.04026875, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_klv3v"]
+texture = ExtResource("2_n8h21")
+
+[resource]
+Button/font_sizes/font_size = 20
+Button/fonts/font = ExtResource("1_2p4vl")
+Button/styles/hover = SubResource("StyleBoxFlat_4iymr")
+Button/styles/normal = SubResource("StyleBoxFlat_0l3qb")
+Panel/styles/panel = SubResource("StyleBoxTexture_klv3v")

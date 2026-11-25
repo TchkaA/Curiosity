@@ -292,3 +292,30 @@ public partial class PlayerInteractionState : IState
         Camera.Instance.AddTarget(interactor);
     }
 }
+
+
+
+public class PlayerDiedState : IState
+{
+    private Player _player;
+    public PlayerDiedState(Player player)
+    {
+        _player = player;
+    }
+
+    public void Enter()
+    {
+        _player.animation.Play("lie");
+    }
+
+    public void Exit()
+    {
+        
+    }
+
+    public void Update(double delta)
+    {
+        
+    }
+
+}
