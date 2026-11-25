@@ -4,7 +4,7 @@
 [ext_resource type="LabelSettings" uid="uid://4grer2l2y4tu" path="res://Assets/Origin/Theme/AnswerLabel.tres" id="2_bt76s"]
 [ext_resource type="Script" uid="uid://dom518sn8025f" path="res://Game/Dialogue/Scripts/DialogueUI.cs" id="3_ui"]
 [ext_resource type="AudioStream" uid="uid://c8sox1fis8g67" path="res://Assets/Origin/Sounds/GameUI/click/input.wav" id="4_i21tg"]
-[ext_resource type="Script" uid="uid://bqgrx1ope6qck" path="res://Game/Dialogue/Scripts/Audio/DialogueAudioStream.cs" id="5_1irmw"]
+[ext_resource type="Script" uid="uid://dgrghih83l051" path="res://Game/Dialogue/Scripts/Audio/UIAudioStream.cs" id="5_1irmw"]
 [ext_resource type="AudioStream" uid="uid://cfqv3csifj83w" path="res://Assets/Origin/Sounds/GameUI/click/select.wav" id="6_1irmw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4iymr"]

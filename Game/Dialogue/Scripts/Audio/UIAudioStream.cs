@@ -1,9 +1,14 @@
 using Godot;
 
-public partial class DialogueAudioStream : AudioStreamPlayer
+public partial class UIAudioStream : AudioStreamPlayer
 {
     [Export] public AudioStream MouseEnteredSound;
     [Export] public AudioStream MouseClickSound;
+
+    public override void _Ready()
+    {
+        ProcessMode = Node.ProcessModeEnum.Always;
+    }
 
     public void PlayMouseEnteredSound()
     {

@@ -21,12 +21,6 @@ public class InputComponent
 
     public void Update()
     {
-        if( Input.IsActionJustPressed("ui_cancel"))
-        {
-            var scene = _player.GetTree();
-            var StopScene = GD.Load<PackedScene>("res://Game/Panels/Scenes/pause_menu.tscn").Instantiate();
-            scene.Root.AddChild(StopScene);
-        }
         // В диалоге действия недоступны (Esc закрывает диалог).
         if (_player.InDialogue)
             return;

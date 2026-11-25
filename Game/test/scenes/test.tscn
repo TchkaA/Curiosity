@@ -23,17 +23,17 @@ vertices = PackedVector2Array(1120.3125, -204.20313, 1150.6406, 728.03125, 1037.
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 0, 6), PackedInt32Array(6, 7, 4), PackedInt32Array(6, 0, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-129, 733, 936, 713, 936, 502, 1038, 505, 1027, 727, 1161, 739, 1130, -214, -220, -243)])
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0217j"]
-shader = ExtResource("8_2wgon")
-shader_parameter/outline_color = Color(1, 1, 1, 1)
-shader_parameter/outline_size = 0.0
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7p1e4"]
 shader = ExtResource("8_2wgon")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/outline_size = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0iwdr"]
+shader = ExtResource("8_2wgon")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_size = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_agx4t"]
 shader = ExtResource("8_2wgon")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/outline_size = 0.0
@@ -84,7 +84,7 @@ visible = false
 navigation_polygon = SubResource("NavigationPolygon_4iymr")
 
 [node name="WorldObject" type="StaticBody2D" parent="." unique_id=1335184155]
-material = SubResource("ShaderMaterial_0217j")
+material = SubResource("ShaderMaterial_7p1e4")
 position = Vector2(-136, 101)
 script = ExtResource("8_r88qa")
 Direction = 3
@@ -92,14 +92,14 @@ Resource = ExtResource("9_2wgon")
 metadata/_custom_type_script = "uid://cupmvfq6fqswg"
 
 [node name="WorldObject2" type="StaticBody2D" parent="." unique_id=663633552]
-material = SubResource("ShaderMaterial_7p1e4")
+material = SubResource("ShaderMaterial_0iwdr")
 position = Vector2(-107, 221)
 script = ExtResource("8_r88qa")
 Resource = ExtResource("9_2wgon")
 metadata/_custom_type_script = "uid://cupmvfq6fqswg"
 
 [node name="Chest" type="StaticBody2D" parent="." unique_id=312331944]
-material = SubResource("ShaderMaterial_0iwdr")
+material = SubResource("ShaderMaterial_agx4t")
 position = Vector2(-76.45453, 346.18182)
 script = ExtResource("11_qia5k")
 Loot = Array[ExtResource("12_0217j")]([ExtResource("13_7p1e4")])

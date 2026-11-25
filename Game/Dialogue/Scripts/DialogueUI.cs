@@ -19,7 +19,7 @@ public partial class DialogueUI : Control
     /// </summary>
     [Export] public string ContinueText = "...";
 
-    [Export] public DialogueAudioStream AudioStream;
+    [Export] public UIAudioStream AudioStream;
 
     private static DialogueUI _instance;
 

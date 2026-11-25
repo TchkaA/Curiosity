@@ -13,8 +13,11 @@ bg_color = Color(0.04026879, 0.040268816, 0.04026875, 1)
 texture = ExtResource("2_n8h21")
 
 [resource]
+Button/colors/font_focus_color = Color(0.08078321, 0.080783345, 0.08078361, 1)
+Button/colors/font_hover_color = Color(0.08468982, 0.08468992, 0.084690206, 1)
 Button/font_sizes/font_size = 20
 Button/fonts/font = ExtResource("1_2p4vl")
+Button/styles/focus = SubResource("StyleBoxFlat_4iymr")
 Button/styles/hover = SubResource("StyleBoxFlat_4iymr")
 Button/styles/normal = SubResource("StyleBoxFlat_0l3qb")
 Panel/styles/panel = SubResource("StyleBoxTexture_klv3v")

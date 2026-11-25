@@ -2,18 +2,20 @@
 
 [ext_resource type="Theme" uid="uid://c7x4hhoiifqud" path="res://Assets/Origin/Theme/UI/MenuTheme.tres" id="1_pd48f"]
 [ext_resource type="Script" uid="uid://bcsynlj857k3i" path="res://Game/Panels/Scripts/PauseMenu.cs" id="1_t8pfr"]
+[ext_resource type="AudioStream" uid="uid://c8sox1fis8g67" path="res://Assets/Origin/Sounds/GameUI/click/input.wav" id="3_thkhg"]
+[ext_resource type="Script" uid="uid://dgrghih83l051" path="res://Game/Dialogue/Scripts/Audio/UIAudioStream.cs" id="4_thkhg"]
+[ext_resource type="AudioStream" uid="uid://cfqv3csifj83w" path="res://Assets/Origin/Sounds/GameUI/click/select.wav" id="5_my64f"]
 
-[node name="PauseMenu" type="CanvasLayer" unique_id=1423813929 node_paths=PackedStringArray("ContinueButton", "SettingsButton", "ExitButton")]
+[node name="PauseMenu" type="CanvasLayer" unique_id=1423813929 node_paths=PackedStringArray("ContinueButton", "SettingsButton", "ExitButton", "_audioStream")]
 layer = 100
 script = ExtResource("1_t8pfr")
 ContinueButton = NodePath("Panel/VBoxContainer/Continue")
 SettingsButton = NodePath("Panel/VBoxContainer/Continue2")
 ExitButton = NodePath("Panel/VBoxContainer/Continue3")
-
-[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=828024138]
-color = Color(0.8431839, 0.8431839, 0.84318376, 1)
+_audioStream = NodePath("AudioStreamPlayer")
 
 [node name="Panel" type="Panel" parent="." unique_id=1939141311]
+z_index = 100
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -54,3 +56,18 @@ text = "Настройки"
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 text = "Выход"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=896192268]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14509805, 0.14509805, 0.14509805, 0.5803922)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=767626314]
+stream = ExtResource("3_thkhg")
+volume_db = -30.79
+script = ExtResource("4_thkhg")
+MouseEnteredSound = ExtResource("3_thkhg")
+MouseClickSound = ExtResource("5_my64f")
